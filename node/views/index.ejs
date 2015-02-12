@@ -112,7 +112,15 @@
 
     $(document).ready(function(){
 		isItLateYet();
-
+	$('h3').click(function(){
+		console.log(this);
+		var panel = $($(this).parent().find('.panel'));
+		if (panel.css('display')=='none'){
+			panel.slideUp();
+		} else {
+			panel.slideDown();
+		}
+	});
         $('#tweet_feed').jTweetsAnywhere({
             searchParams: ['q=bash3w'],
             count: 10,
@@ -181,6 +189,7 @@
 		$('.minecraft').html(html);
     });
     });
+
 </script>
 
   </head>
@@ -297,6 +306,16 @@
           </div>
 
           <div class="row">
+            <div class="large-12 columns" id='techpanel'>
+              <h3 class='techshuttle-header'>Public Transport</h3>
+              <div class='panel'>
+                <ul id="predictions"></ul>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
             <div class="large-12 column" id='menupanel'>
               <h3 class='menu-header'>Dining</h3>
               <div class='panel'>
@@ -305,14 +324,6 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="large-12 columns" id='techpanel'>
-              <h3 class='techshuttle-header'>Public Transport</h3>
-              <div class='panel'>
-                <ul id="predictions"></ul>
-              </div>
-            </div>
-          </div>
 <!--
           <div class="row">
             <div class="large-12 columns" id='imgpanel'>
