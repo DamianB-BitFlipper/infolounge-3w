@@ -61,7 +61,7 @@ function getMenu(req, res) {
                 res.json({
                     'Brunch': comforts
                 });
-            } else if (time > '13:15' && time < '20:45' && brunchIndex != -1) {
+            } else if (time > '13:15' && time < '20:45' && dinnerIndex != -1) {
                 var comfortsIndex = todaysMenu.indexOf('[comforts]', dinnerIndex) + '[comforts]'.length;
                 var grillIndex = todaysMenu.indexOf('[smokehouse grill]', dinnerIndex) + '[smokehouse grill]'.length;
                 var stirfryIndex = todaysMenu.indexOf('[action]', dinnerIndex) + '[action]'.length;
