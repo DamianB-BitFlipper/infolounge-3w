@@ -78,7 +78,7 @@ function getMITAlert(req, res) {
 	//console.log(data);
 
   var alertsStr = sanitizeText(data).split('<p>');
-    //console.log(alertsStr);
+    console.log(alertsStr);
   var alerts = {};
   for (i = 0; ++i < alertsStr.length;){
 	head = sanitizeText(alertsStr[i]);
