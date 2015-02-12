@@ -13,14 +13,15 @@ function getMenu() {
 
         var elem = '';
         for (var type in data) {
-            elem += ('<li><span class="foodtype">' + type + '</span> ' + data[type] + '</li>');
+            item = data[type].replace('steamed', '');
+            elem += ('<li><span class="foodtype">' + type + '</span> <b>' + item + '</b></li>');
         }
         $("#menu").html(elem);
 
         /* Search for images */
         for (var type in data) {
             var query = data[type].split('&nbsp;')[0];
-            console.log(query)
+            //console.log(query)
             if (menuCache[query]) {
                 document.getElementById("menu").innerHTML += menuCache[query];
             } else {
@@ -28,6 +29,7 @@ function getMenu() {
                 $.getScript("https://www.googleapis.com/customsearch/v1?key=AIzaSyBppxBXCGoVew1fU1DjV_Ii8r6kUgred2s&cx=013902053734636094783:5ckniww7ndi&q=" + encodeURIComponent(query) + "&callback=menuHandler&searchType=image");
             }
         }
+        $('.menu-img').fadeIn();
     });
 };
 
