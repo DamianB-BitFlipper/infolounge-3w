@@ -455,6 +455,10 @@ ul.jta-tweet-list li a{
 	font-size: 30px;
 }
 
+.menu-img {
+	border-radius: 50%;
+}
+
 #birthdaybanner {
   position: absolute;
   z-index: 1337;

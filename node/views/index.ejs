@@ -117,15 +117,15 @@
             searchParams: ['q=bash3w'],
             count: 10,
             showTweetFeed: {
-                autoConformToTwitterStyleguide: false,
+              autoConformToTwitterStyleguide: false,
 	            showActionFavorite: false,
-                showTimestamp: {
+              showTimestamp: {
                     refreshInterval: 60
                 },
                 autorefresh: {
                     mode: 'auto-insert',
                     interval: 30,
-	                duration: -1
+	                  duration: -1
                 },
                 paging: { mode: 'none' }
                 },
@@ -139,7 +139,7 @@
             }
         });
 
-      // Update the time
+    // Update the time
       window.setInterval(function() {
           now = new Date();
           document.getElementById('clock').innerHTML=dateFormat(now, 'H:MM');
