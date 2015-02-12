@@ -1,330 +1,280 @@
 <DOCTYPE html>
-<html>
-  <head>
-    <title>InfoLounge</title>
-    <!-- STYLESHEETS -->
-    <link rel='stylesheet' href='/stylesheets/reset.css' />
-    <link rel='stylesheet' href='/plugins/foundation/css/foundation.css' />
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <html>
 
-    <!-- FONTS -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <head>
+        <title>InfoLounge</title>
+        <!-- STYLESHEETS -->
+        <link rel='stylesheet' href='/stylesheets/reset.css' />
+        <link rel='stylesheet' href='/plugins/foundation/css/foundation.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
 
-    <!-- JAVASCRIPT -->
-    <script src="/javascripts/lib/jquery.min.js"></script>
-    <script src="http://tweet.seaofclouds.com/jquery.tweet.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/javascripts/jquery.simpleWeather.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/javascripts/jquery.jtweetsanywhere-1.3.1.js"></script>
-    <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
-    <script src="/javascripts/dateformat.js"></script>
-    <script src="/javascripts/date.js"></script>
-    <script src="/javascripts/weather.js"></script>
-    <script src="/javascripts/tech.js"></script>
-    <script src="/javascripts/menu.js"></script>
-    <script src="/javascripts/news.js"></script>
-    <script src="/javascripts/fancy.js"></script>
-    <script src="/javascripts/alerts.js"></script>
-    <script src="/javascripts/institute_alerts.js"></script>
-    <script src="/javascripts/img.js"></script>
-    <script src="/javascripts/speech.js"></script>
+        <!-- FONTS -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 
-<script type='text/javascript'>
-    lastUpdated = -1;
-	var isItLateYet = function() {
+        <!-- JAVASCRIPT -->
+        <script src="/javascripts/lib/jquery.min.js"></script>
+        <script src="http://tweet.seaofclouds.com/jquery.tweet.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/javascripts/jquery.simpleWeather.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/javascripts/jquery.jtweetsanywhere-1.3.1.js"></script>
+        <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
+        <script src="/javascripts/dateformat.js"></script>
+        <script src="/javascripts/date.js"></script>
+        <script src="/javascripts/weather.js"></script>
+        <script src="/javascripts/tech.js"></script>
+        <script src="/javascripts/menu.js"></script>
+        <script src="/javascripts/news.js"></script>
+        <script src="/javascripts/fancy.js"></script>
+        <script src="/javascripts/alerts.js"></script>
+        <script src="/javascripts/institute_alerts.js"></script>
+        <script src="/javascripts/img.js"></script>
+        <script src="/javascripts/interface.js"></script>
+        <script src="/javascripts/speech.js"></script>
 
-		var today = new Date().getHours();
-		if (today >= 2 && today <= 7) {
-			$('.shutthefuckup').show();
-			if (new Date().getHours == 2 && new Date().getMinutes() == 0 && newDate().getSeconds() < 3) {
-				baymaxSpeak("It is now 2 AM. No loud noises please.");
-			}
-		} else {
-			$('.shutthefuckup').hide();
-		}
-
-		var hour0 = new Date().getHours();
-		var year0 = new Date().getFullYear();
-		var month0 = new Date().getMonth();
-		var date0 = new Date().getDate();
-/**
-
-		if(year0 == 2015 && month0 == 1 && date0 < 10){
-			if (hour0 > 0) {
-				$('.warning').show();
-				//$('.clockB').show();
-				//$('.clock').hide();
-
-			} else {
-				$('.warning').hide();
-				//$('.clockB').hide();
-				//$('.clock').show();
-
-			}
-		}
-		else if(year0 == 2015 && month0 == 1 && date0 == 6){
-			if (hour0 >= 0 && hour0 <= 10) {
-				//$('.clock').hide();
-
-			} else {
-				$('.warning').hide();
-				//$('.clockB').hide();
-				//$('.clock').show();
-
-			}
-		}
-		else{
-			$('.warning').hide();
-			//$('.clockB').hide();
-		} **/
-		// $('.warning').show();
-		setTimeout(isItLateYet, 1000);
-	}
-	$('.shutthefuckup').hide();
-	//$('.clockB').hide();
-
-/*	var isWarnTime = function() {
-		var hour0 = new Date().getHours();
-		var year0 = new Date().getFullYear();
-		var month0 = new Date().getMonth();
-		var date0 = new Date().getDate();
-		if(year0 = 2013 && month0 = 12 && date0 = 14){
-			if (hour0 >= 13 && hour0 <= 24) {
-				$('.warning').show();
-				console.log(hour0);
-			} else {
-				$('.warning').hide();
-				console.log(hour0);
-			}
-		}
-		if(year0 = 2013 && month0 = 12 && date0 = 15){
-			if (hour0 >= 0 && hour0 <= 13) {
-				$('.warning').show();
-				console.log(hour0);
-			} else {
-				$('.warning').hide();
-				console.log(hour0);
-			}
-		}
-		setTimeout(isWarnTime, 1000);
-	}
-	$('.warning').hide();
-*/
-
-    $(document).ready(function(){
-		isItLateYet();
-	$('h3').click(function(){
-		console.log(this);
-		var panel = $($(this).parent().find('.panel'));
-		if (panel.css('display')=='none'){
-			panel.slideUp();
-		} else {
-			panel.slideDown();
-		}
-	});
-        $('#tweet_feed').jTweetsAnywhere({
-            searchParams: ['q=bash3w'],
-            count: 10,
-            showTweetFeed: {
-              autoConformToTwitterStyleguide: false,
-	            showActionFavorite: false,
-              showTimestamp: {
-                    refreshInterval: 60
-                },
-                autorefresh: {
-                    mode: 'auto-insert',
-                    interval: 30,
-	                  duration: -1
-                },
-                paging: { mode: 'none' }
-                },
-            onDataRequestHandler: function(stats, options) {
-                if (stats.dataRequestCount < 4321) {
-                    return true;
+        <script type='text/javascript'>
+            lastUpdated = -1;
+            var isItLateYet = function() {
+                var today = new Date().getHours();
+                if (today >= 2 && today <= 7) {
+                    $('.shutthefuckup').show();
+                    if (new Date().getHours == 2 && new Date().getMinutes() == 0 && newDate().getSeconds() < 3) {
+                        baymaxSpeak("It is now 2 AM. No loud noises please.");
+                    }
+                } else {
+                    $('.shutthefuckup').hide();
                 }
-                else {
-                    stopAutorefresh(options);
-                }
+                // $('.warning').show();
+                setTimeout(isItLateYet, 1000);
             }
-        });
+            $('.shutthefuckup').hide();
 
-    // Update the time
-      window.setInterval(function() {
-          now = new Date();
-          document.getElementById('clock').innerHTML=dateFormat(now, 'H:MM');
-	  //document.getElementById('clockB').innerHTML=dateFormat(now, 'H:MM');
-          getDate();
+            $('h3').on('click', function(e) {
+                var elem = e.target;
+                var panel = $($(elem).parent().find('.panel'));
+                if (panel.css('display') == 'none') {
+                    panel.slideDown();
+                    return;
+                } else {
+                    panel.slideUp();
+                }
+            });
 
-          if (now.getMinutes() != lastUpdated) {
-	      console.log("123update");
-              lastUpdated = now.getMinutes();
-              getWeather();
-              getAlerts();
-	            getMITAlert();
-              getPredictions();
-              getMenu();
-              getNews();
-              getImg();
-          }
-      }, 1000);
+            $(document).ready(function() {
+                isItLateYet();
+                $('#tweet_feed').jTweetsAnywhere({
+                    searchParams: ['q=bash3w'],
+                    count: 10,
+                    showTweetFeed: {
+                        autoConformToTwitterStyleguide: false,
+                        showActionFavorite: false,
+                        showTimestamp: {
+                            refreshInterval: 60
+                        },
+                        autorefresh: {
+                            mode: 'auto-insert',
+                            interval: 30,
+                            duration: -1
+                        },
+                        paging: {
+                            mode: 'none'
+                        }
+                    },
+                    onDataRequestHandler: function(stats, options) {
+                        if (stats.dataRequestCount < 4321) {
+                            return true;
+                        } else {
+                            stopAutorefresh(options);
+                        }
+                    }
+                });
 
-      $("#tweetpanel").delay(600).slideDown("slow");
+                // Update the time
+                window.setInterval(function() {
+                    now = new Date();
+                    document.getElementById('clock').innerHTML = dateFormat(now, 'H:MM');
+                    getDate();
+                    if (now.getMinutes() != lastUpdated) {
+                        console.log("Global update...");
+                        lastUpdated = now.getMinutes();
+                        getWeather();
+                        getAlerts();
+                        getMITAlert();
+                        getPredictions();
+                        getMenu();
+                        getNews();
+                        getImg();
 
-	var url = "https://simple-minecraft.firebaseIO.com/userStatus/";
-	var myRootRef = new Firebase(url);
-	myRootRef.on('value', function(snapshot){
-		data = snapshot.val()
-		html = ''
-		if (Object.keys(data).length == 1){
-			$('#minecraftpanel').slideUp();
-		} else {
-			$('#minecraftpanel').slideDown();
-			for (user in Object.keys(data)) {
-				if (Object.keys(data)[user] !== 'server'){
-					html += Object.keys(data)[user] + ', ';
-				}
-			}
-			html = html.slice(0,-2);
-		}
+                    }
+                }, 1000);
 
-		$('.minecraft').html(html);
-    });
-    });
+                $("#tweetpanel").delay(600).slideDown("slow");
 
-</script>
+                var url = "https://simple-minecraft.firebaseIO.com/userStatus/";
+                var myRootRef = new Firebase(url);
+                myRootRef.on('value', function(snapshot) {
+                    data = snapshot.val()
+                    html = ''
+                    if (Object.keys(data).length == 1) {
+                        $('#minecraftpanel').slideUp();
+                    } else {
+                        $('#minecraftpanel').slideDown();
+                        for (user in Object.keys(data)) {
+                            if (Object.keys(data)[user] !== 'server') {
+                                html += Object.keys(data)[user] + ', ';
+                            }
+                        }
+                        html = html.slice(0, -2);
+                    }
 
-  </head>
-  <body>
+                    $('.minecraft').html(html);
+                });
+            });
+        </script>
 
-      <div class='shutthefuckup flash-header'>
-    	  <div class='block'>
-    	  	<h1>No loud noises!</h1>
-    	  </div>
-      </div>
+    </head>
 
-      <div class='birthday'>
-    	  <div class='block'>
-    	  </div>
-      </div>
+    <body>
 
-<!--
+        <div class='shutthefuckup flash-header'>
+            <div class='block'>
+                <h1>No loud noises!</h1>
+            </div>
+        </div>
+
+        <div class='birthday'>
+            <div class='block'>
+            </div>
+        </div>
+
+        <!--
       <div class='warning flash-header'>
-    	  <div class='block'>
-    	  	<h1>EMERGENCY; MBTA trains closed 19:00-Wed</h1>
-    	  </div>
+        <div class='block'>
+          <h1>EMERGENCY; MBTA trains closed 19:00-Wed</h1>
+        </div>
       </div>
  -->
 
 
-  <div id='content'>
-      <div class="row">
-        <div class="large-6 columns">
-          <div id='header'>
-              <h1>infolounge</h1>
-              <h2>beta v2.8</h2>
-          </div>
-        </div>
+        <div id='content'>
+            <div class="row">
+                <div class="large-6 columns">
+                    <div id='header'>
+                        <h1>infolounge</h1>
+                        <h2>beta v2.8</h2>
+                    </div>
+                </div>
 
-        <div class="large-6 columns">
-            <div id='clock'></div>
-       </div>
-<!--
-	<div class="large-6 columns">
+                <div class="large-6 columns">
+                    <div id='clock'></div>
+                </div>
+                <!--
+  <div class="large-6 columns">
             <div id='clockB'></div>
         </div>
 -->
-      </div>
-
-	<div class="row">
-		<div class="large-12 columns">
-
-          <div class="row">
-            <div class="large-12 column" id='MITalertspanel'>
-              <h3 class='MITalerts-header'>emergency information</h3>
-              <div class='EMRGpanel'>
-                  <div id='MITalerts'>
-<!-- <script id="feed-1423496958723602" type="text/javascript" src="http://rss.bloople.net/?url=http%3A%2F%2Femergency.mit.net%2Femergency%2Frss&limit=1&showtitle=false&type=js&id=1423496958723602"></script> -->
-		</div>
-              </div>
             </div>
-          </div>
 
-<!--	<script type='text/javascript'>getMITAlerts()</script> -->
+            <div class="row">
+                <div class="large-12 columns">
+
+                    <div class="row">
+                        <div class="large-12 column" id='MITalertspanel'>
+                            <h3 class='MITalerts-header'>emergency information</h3>
+                            <div class='EMRGpanel'>
+                                <div id='MITalerts'>
+                                    <!-- <script id="feed-1423496958723602" type="text/javascript" src="http://rss.bloople.net/?url=http%3A%2F%2Femergency.mit.net%2Femergency%2Frss&limit=1&showtitle=false&type=js&id=1423496958723602"></script> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--	<script type='text/javascript'>getMITAlerts()</script> -->
 
 
-		</div>
-	</div>
-
-
-      <div class="row">
-        <div class="large-7 columns">
-
-          <div class="row">
-            <div class="large-12 column" id='alertspanel'>
-              <h3 class='alerts-header'>MBTA service changes</h3>
-              <div class='panel'>
-                  <div id='alerts'></div>
-              </div>
+                </div>
             </div>
-          </div>
 
 
-          <div class="row">
-            <div class="large-12 columns" id='weatherpanel'>
-              <h3 class='weather-header'>Weather</h3>
-              <div class='panel'>
-                <div id='weather'></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-12 columns" id='tweetpanel'>
-              <h3 class='twitter-header'>Twitter #bash3w</h3>
-              <div  class='panel'>
-                <div id='tweet_feed' style='width: 520px; margin-left: auto; margin-right: auto;'>
+            <div class="row">
+                <div class="large-7 columns">
 
-<a class="twitter-timeline"  width="520px" href="https:/s/twitter.com/search?q=%23bash3w"  data-chrome="noheader nofooter transparent noscrollbar" data-widget-id="373316916703539200">Tweets about "#bash3w"</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    <div class="row">
+                        <div class="large-12 column" id='alertspanel'>
+                            <h3 class='alerts-header'>MBTA service changes</h3>
+                            <div class='panel'>
+                                <div id='alerts'></div>
+                            </div>
+                        </div>
+                    </div>
 
 
-		</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="large-5 columns">
+                    <div class="row">
+                        <div class="large-12 columns" id='weatherpanel'>
+                            <h3 class='weather-header'>Weather</h3>
+                            <div class='panel'>
+                                <div id='weather'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns" id='tweetpanel'>
+                            <h3 class='twitter-header'>Twitter #bash3w</h3>
+                            <div class='panel'>
+                                <div id='tweet_feed' style='width: 520px; margin-left: auto; margin-right: auto;'>
+
+                                    <a class="twitter-timeline" width="520px" href="https:/s/twitter.com/search?q=%23bash3w" data-chrome="noheader nofooter transparent noscrollbar" data-widget-id="373316916703539200">Tweets about "#bash3w"</a>
+                                    <script>
+                                        ! function(d, s, id) {
+                                            var js, fjs = d.getElementsByTagName(s)[0],
+                                                p = /^http:/.test(d.location) ? 'http' : 'https';
+                                            if (!d.getElementById(id)) {
+                                                js = d.createElement(s);
+                                                js.id = id;
+                                                js.src = p + "://platform.twitter.com/widgets.js";
+                                                fjs.parentNode.insertBefore(js, fjs);
+                                            }
+                                        }(document, "script", "twitter-wjs");
+                                    </script>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-5 columns">
 
 
 
-          <div class="row">
-            <div class="large-12 columns" id='datepanel' >
-              <h3 class="date-header">Today</h3>
-              <div class='panel' style="display: block;">
-                  <div id="date">
-                  </div>
-              </div>
-            </div>
-          </div>
+                    <div class="row">
+                        <div class="large-12 columns" id='datepanel'>
+                            <h3 class="date-header">Today</h3>
+                            <div class='panel' style="display: block;">
+                                <div id="date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-          <div class="row">
-            <div class="large-12 columns" id='techpanel'>
-              <h3 class='techshuttle-header'>Public Transport</h3>
-              <div class='panel'>
-                <ul id="predictions"></ul>
-              </div>
-            </div>
-          </div>
+                    <div class="row">
+                        <div class="large-12 columns" id='techpanel'>
+                            <h3 class='techshuttle-header'>Public Transport</h3>
+                            <div class='panel'>
+                                <ul id="predictions"></ul>
+                            </div>
+                        </div>
+                    </div>
 
 
-          <div class="row">
-            <div class="large-12 column" id='menupanel'>
-              <h3 class='menu-header'>Dining</h3>
-              <div class='panel'>
-                  <ul id="menu"></ul>
-              </div>
-            </div>
-          </div>
+                    <div class="row">
+                        <div class="large-12 column" id='menupanel'>
+                            <h3 class='menu-header'>Dining</h3>
+                            <div class='panel'>
+                                <ul id="menu"></ul>
+                            </div>
+                        </div>
+                    </div>
 
-<!--
+                    <!--
           <div class="row">
             <div class="large-12 columns" id='imgpanel'>
               <h3 class='img-header'>Image</h3>
@@ -334,15 +284,15 @@
             </div>
           </div>
 -->
-          <div class="row">
-            <div class="large-12 columns" id="minecraftpanel">
-              <h3 class='minecraft-header'>Current Crafters</h3>
-              <div class='panel minecraft'>
+                    <div class="row">
+                        <div class="large-12 columns" id="minecraftpanel">
+                            <h3 class='minecraft-header'>Current Crafters</h3>
+                            <div class='panel minecraft'>
 
-              </div>
-            </div>
-          </div>
-<!--
+                            </div>
+                        </div>
+                    </div>
+                    <!--
           <div class="row">
             <div class="large-12 columns" id='webcampanel'>
               <h3 class='img-header'>Video</h3>
@@ -353,8 +303,8 @@
           </div>
           -->
 
-        </div>
-        <!--
+                </div>
+                <!--
           <div class="row">
             <div class="large-12 columns">
               <div id='newspanel' class='panel'>
@@ -364,10 +314,11 @@
             </div>
           </div>
         -->
-      </div>
-    </div>
+            </div>
+        </div>
 
-    <div id = "audio"></div>
+        <div id="audio"></div>
 
-  </body>
-</html>
+    </body>
+
+    </html>
