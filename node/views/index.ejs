@@ -36,7 +36,7 @@
 		if (today >= 2 && today <= 7) {
 			$('.shutthefuckup').show();
 			if (new Date().getHours == 2 && new Date().getMinutes() == 0 && newDate().getSeconds() < 3) {
-				speak("It is now 2 AM. No loud noises please.");
+				baymaxSpeak("It is now 2 AM. No loud noises please.");
 			}
 		} else {
 			$('.shutthefuckup').hide();
@@ -355,6 +355,8 @@
         -->
       </div>
     </div>
+
+    <div id = "audio"></div>
 
   </body>
 </html>
