@@ -1,37 +1,34 @@
+var people = [
+  ['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany'],
+  ['xtnbui', 'January 4, 1996 00:00:00', 'Xuan'],
+  ['yzhang17', 'February 14, 1996 00:00:00', 'Yaning', '#33ADFF'],
+  ['evayeung', 'February 14, 1993 00:00:00', 'Eva', "#ADFFAD"],
+  ['akwasio', 'February 15, 1995 00:00:00', 'Akwasi', 'green'],
+  ['jwei314', 'March 14, 1993 04:00:00', 'Jenny W'],
+  ['jenniez', 'March 24, 1993 00:00:00', 'Jennie Z'],
+  ['lotusez3', 'March 24, 1995 00:00:00'],
+  ['mwu2015', 'April 8, 1993 00:00:00', 'Michael Wu']
+  ['juesato', 'April 21, 1995 00:00:00', 'Jonathan U'],
+  ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
+  ['eurahko', 'May 17, 1993 00:00:00', 'Eurah'],
+  ['sallylin', 'May 22, 1993 00:00:00', 'Sally'],
+  ['tricias', 'May 23, 1995 00:00:00', 'Tricia', '#33CCFF'],
+  ['huangjd', 'May 26, 1994 00:00:00', 'William', '#990033'],
+  ['chenbon', 'August 28, 1996 00:00:00', 'Bonnie'],
+  ['kkarthur', 'August 29, 1995 00:00:00', 'Bena', 'green'],
+  ['mabrams', 'September 2, 1995 00:00:00', 'Melanie', "#CC66FF"],
+  ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
+  ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
+  ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
+  ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red']
+    ];
 
 function getDate() {
     var now = new Date();
-
-var people = [
-  ['evayeung', 'February 13, 1993 00:00:00', 'Eva'],
-	['3dg42', 'April 19, 1993 00:00:00'],
-	['jcorzo', 'January 18, 1993 00:00:00'],
-	['zsheinko', 'October 28, 1994 00:00:00', 'Zoe'],
-	['mabrams', 'September 2, 1995 00:00:00', 'Melanie'],
-	['jenniez', 'March 24, 1993 00:00:00', 'Jennie'],
-	['jwei314', 'March 14, 1993 04:00:00', 'Jenny'],
-	['cmzhang', 'October 8, 1993 00:00:00', 'Clare'],
-	['eurahko', 'May 17, 1993 00:00:00', 'Yourah'],
-	['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
-	['rliu42', 'February 10, 1994 00:00:00', 'Runpeng'],
-	['juesato', 'April 21, 1995 00:00:00', 'Jonathan'],
-	['yzhang17', 'February 13, 1996 00:00:01', 'Yaning'],
-	['xtnbui', 'January 4, 1996 00:00:00', 'Swun'],
-	['tricias', 'May 23, 1995 00:00:00', 'Tricia'],
-	['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany'],
-	['lotusez3', 'March 24, 1995 00:00:00'],
-	['kkarthur', 'August 29, 1995 00:00:00', 'Bena'],
-	['chenbon', 'August 28, 1996 00:00:00', 'Bonnie'],
-	['akwasio', 'February 15, 1995 00:00:00', 'Akwahsi'],
-	['mwu2015', 'April 8, 1993 00:00:00', 'Michael Wu'],
-	['sallylin', 'May 22, 1993 00:00:00', 'Sally'],
-	['huangjd', 'May 26, 1994 00:00:00', 'William'],
-	['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh']
-    ];
-
+    var bg_color;
     var dict = [];
     var elem = '';
-    for (var i = 0; i < people.length; i += 1) {
+  for (var i = 0; i < people.length; i++) {
 	var age = 0;
 	var date = new Date(people[i][1]);
 	while (date < now) {
@@ -48,11 +45,14 @@ var people = [
 		partyTime();
 		//happyBirthday(people[i][2]);
 	}
-	if (Number(fracpart) < 0.0025) {
-		elem += 'Happy Birthday ' + people[i][0] + '! &nbsp;';
+	if (Number(fracpart) < 0.0026) {
+		elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
+    var bg_color = people[i][3] || "orange";
 	}
 	if (elem.length > 1) {
 		$('.birthday').find('div').html('<h1>' + elem + '</h1>');
+    console.log(people[i][3]);
+    $('.birthday').css('background-color', bg_color);
 		$('.birthday').show();
 		$('.warning').hide();
 	} else {
