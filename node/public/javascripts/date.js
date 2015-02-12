@@ -1,29 +1,28 @@
-var people = [
-  ['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany'],
-  ['xtnbui', 'January 4, 1996 00:00:00', 'Xuan'],
-  ['yzhang17', 'February 14, 1996 00:00:00', 'Yaning', '#33ADFF'],
-  ['evayeung', 'February 14, 1993 00:00:00', 'Eva', "#ADFFAD"],
-  ['akwasio', 'February 15, 1995 00:00:00', 'Akwasi', 'green'],
-  ['jwei314', 'March 14, 1993 04:00:00', 'Jenny W'],
-  ['jenniez', 'March 24, 1993 00:00:00', 'Jennie Z'],
-  ['lotusez3', 'March 24, 1995 00:00:00'],
-  ['mwu2015', 'April 8, 1993 00:00:00', 'Michael Wu']
-  ['juesato', 'April 21, 1995 00:00:00', 'Jonathan U'],
-  ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
-  ['eurahko', 'May 17, 1993 00:00:00', 'Eurah'],
-  ['sallylin', 'May 22, 1993 00:00:00', 'Sally'],
-  ['tricias', 'May 23, 1995 00:00:00', 'Tricia', '#33CCFF'],
-  ['huangjd', 'May 26, 1994 00:00:00', 'William', '#990033'],
-  ['chenbon', 'August 28, 1996 00:00:00', 'Bonnie'],
-  ['kkarthur', 'August 29, 1995 00:00:00', 'Bena', 'green'],
-  ['mabrams', 'September 2, 1995 00:00:00', 'Melanie', "#CC66FF"],
-  ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
-  ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
-  ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
-  ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red']
-    ];
-
 function getDate() {
+  var people = [
+    ['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany'],
+    ['xtnbui', 'January 4, 1996 00:00:00', 'Xuan'],
+    ['yzhang17', 'February 14, 1996 00:00:00', 'Yaning', '#33ADFF'],
+    ['evayeung', 'February 14, 1993 00:00:00', 'Eva', "#ADFFAD"],
+    ['akwasio', 'February 15, 1995 00:00:00', 'Akwasi', 'green'],
+    ['jwei314', 'March 14, 1993 04:00:00', 'Jenny W'],
+    ['jenniez', 'March 24, 1993 00:00:00', 'Jennie Z'],
+    ['lotusez3', 'March 24, 1995 00:00:00'],
+    ['mwu2015', 'April 8, 1993 00:00:00', 'Michael Wu'],
+    ['juesato', 'April 21, 1995 00:00:00', 'Jonathan U'],
+    ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
+    ['eurahko', 'May 17, 1993 00:00:00', 'Eurah'],
+    ['sallylin', 'May 22, 1993 00:00:00', 'Sally'],
+    ['tricias', 'May 23, 1995 00:00:00', 'Tricia', '#33CCFF'],
+    ['huangjd', 'May 26, 1994 00:00:00', 'William', '#990033'],
+    ['chenbon', 'August 28, 1996 00:00:00', 'Bonnie'],
+    ['kkarthur', 'August 29, 1995 00:00:00', 'Bena', 'green'],
+    ['mabrams', 'September 2, 1995 00:00:00', 'Melanie', "#CC66FF"],
+    ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
+    ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
+    ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
+    ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red']
+      ];
     var now = new Date();
     var bg_color;
     var dict = [];
