@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+var windowSize;
+
 adjustScreenSize();
 
 var headers = document.body.getElementsByTagName('h3');
@@ -27,6 +29,7 @@ var adjustScreenSize = function() {
       width: window.innerWidth || document.body.clientWidth,
       height: window.innerHeight || document.body.clientHeight
     }
+  windowSize = size;
 
   if (size.width < 1000) {
     //console.log("narrow width");
@@ -60,7 +63,7 @@ var adjustScreenSize = function() {
     $('#date').removeClass('date-m').addClass('date');
     $('#menu').removeClass('menu-m').addClass('menu');
     $('#predictions').removeClass('pred-m').addClass('pred');
-    $('.birthday').show();
+    $('.birthday-m').hide();
   }
 }
 

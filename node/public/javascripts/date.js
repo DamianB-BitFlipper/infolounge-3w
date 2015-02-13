@@ -49,10 +49,17 @@ function getDate() {
     var bg_color = people[i][3] || "orange";
 	}
 	if (elem.length > 1) {
-		$('.birthday').find('div').html('<h1>' + elem + '</h1>');
+		$('.birthday-m').find('div').html('<h1>' + elem + '</h1>');
+    $('.birthday').find('div').html('<h1>' + elem + '</h1>');
     console.log(people[i][3]);
+    $('.birthday-m').css('background-color', bg_color);
     $('.birthday').css('background-color', bg_color);
-		$('.birthday').show();
+    var windowWidth = window.innerWidth || document.body.clientWidth
+    if (windowWidth < 1000){
+      $('.birthday-m').show();
+    } else {
+      $('.birthday').show();
+    }
 		$('.warning').hide();
 	} else {
 		$('.birthday').hide();
