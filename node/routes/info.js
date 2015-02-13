@@ -23,7 +23,7 @@ function getMenu(req, res) {
             }
             now = new Date();
             var date = dateformat.dateFormat(now, 'ddd, dd mmm yyyy');
-            console.log(date);
+            //console.log(date);
             //var dateIndex = body.indexOf(date);
             //if (dateIndex == -1) {
             //res.json({});
@@ -31,11 +31,11 @@ function getMenu(req, res) {
             //}
             //var endIndex = body.indexOf('The Story Behind Your Food', dateIndex); // always at end
             //var today = body.substring(dateIndex, endIndex);
-            //console.log("Menu", result);
+            ////console.log("Menu", result);
             weeklyMenu = result.channel.item;
             todaysMenu = false;
             for (var day in weeklyMenu) {
-                console.log(weeklyMenu[day]);
+                //console.log(weeklyMenu[day]);
                 if (weeklyMenu[day].title[0] == date) {
                     todaysMenu = weeklyMenu[day].description[0];
                     break;
@@ -71,7 +71,7 @@ function getMenu(req, res) {
                 grill = grill.substring(0, grill.indexOf('<'));
                 var stirfry = todaysMenu.substring(stirfryIndex);
                 stirfry = stirfry.substring(0, stirfry.indexOf('&nbsp;'));
-                //console.log({'Comfort': comforts, 'Grill': grill, 'Stir Fry': stirfry})
+                ////console.log({'Comfort': comforts, 'Grill': grill, 'Stir Fry': stirfry})
                 res.json({
                     'Comfort': comforts,
                     'Grill': grill,
@@ -88,14 +88,14 @@ function getMenu(req, res) {
 };
 
 function sanitizeText(text) {
-    //console.log(text);
+    ////console.log(text);
     text = text.replace(/[\n\r]/g, ' ').replace('</p>', '').replace('<b>', '').replace('</b>', '');
     return text;
 }
 
 
 function getMITAlert(req, res) {
-    //console.log('Begin test!');
+    ////console.log('Begin test!');
     request(alertURL, function(error, response, body){
 	if (error || response.statusCode != 200){
 		res.json({});
@@ -107,11 +107,11 @@ function getMITAlert(req, res) {
 
     var data = body.substring(startIndex, body.indexOf('</div>', startIndex));
 
-	//console.log('DATAING');
-	//console.log(data);
+	////console.log('DATAING');
+	////console.log(data);
 
   var alertsStr = sanitizeText(data).split('<p>');
-    console.log(alertsStr);
+    //console.log(alertsStr);
   var alerts = {};
   for (i = 0; ++i < alertsStr.length;){
 	head = sanitizeText(alertsStr[i]);
@@ -123,7 +123,7 @@ function getMITAlert(req, res) {
 		break;
 	}
     }
-    //console.log(alerts);
+    ////console.log(alerts);
     res.json(alerts);
 
     });

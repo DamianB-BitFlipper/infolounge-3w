@@ -14,7 +14,7 @@ function getMenu() {
         var elem = '';
         for (var type in data) {
             var item = data[type]
-            .replace('steamed', '');
+            item = item.replace('steamed', '');
             elem += ('<li><span class="foodtype">' + type + '</span> <b>' + item + '</b></li>');
         }
         $("#menu").html(elem);
@@ -31,11 +31,12 @@ function getMenu() {
             }
         }
         $('.menu-img').fadeIn();
+
     });
 };
 
 function menuHandler(response) {
     query = response.queries.request[0].searchTerms;
-    menuCache[query] = "<img class = 'menu-img' src=" + response.items[0].link + " alt='' width=150 style='padding:3px;'>";
+    menuCache[query] = "<img class = 'menu-img' src=" + response.items[0].link + " alt='' width=10vw style='padding:3px;'>";
     document.getElementById("menu").innerHTML += menuCache[query];
 }

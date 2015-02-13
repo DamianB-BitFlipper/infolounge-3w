@@ -1,6 +1,7 @@
-$(document).ready(function () {
-
+var loaded = false;
 var windowSize;
+
+$(document).ready(function () {
 
 adjustScreenSize();
 
@@ -37,7 +38,11 @@ var adjustScreenSize = function() {
     //$('.right-panel').hide();
     $('#left-pane').addClass('large-12').removeClass('large-7');
     $('#right-pane').addClass('large-12').removeClass('large-5');
-    $('#alertspanel').find('.panel').hide();
+    if (!loaded) {
+      $('#tweetpanel').find('.panel').hide();
+      $('#alertspanel').find('.panel').hide();
+      loaded = true;
+    }
     $('h3').removeClass('header').addClass('header-m');
     $('#version').addClass('version-m').html('mobile');
     $('#title').addClass('title-m');
