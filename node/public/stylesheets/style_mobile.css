@@ -1,10 +1,10 @@
 .header-m {
   text-align: center;
-  height: 13.5vh;
+  height: 7.5%;
   font-size: 10vh;
   color: #ffffff;
   opacity: 0.9;
-  padding: 2vh;
+  padding: 2vmin;
   font-weight: bold;
 }
 
@@ -13,11 +13,11 @@
 }
 
 .title-m {
-  font-size: 8vh !important;
+  font-size: 8vmin !important;
 }
 
 .version-m {
-  font-size: 6vh !important;
+  font-size: 6vmin !important;
 }
 
 .date-m {
