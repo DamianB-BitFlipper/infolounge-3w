@@ -38,7 +38,6 @@ var adjustScreenSize = function() {
     $('#left-pane').addClass('large-12').removeClass('large-7');
     $('#right-pane').addClass('large-12').removeClass('large-5');
     $('#alertspanel').find('.panel').hide();
-    $('#tweetpanel').find('.panel').hide();
     $('h3').removeClass('header').addClass('header-m');
     $('#version').addClass('version-m').html('mobile');
     $('#title').addClass('title-m');
