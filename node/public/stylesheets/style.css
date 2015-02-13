@@ -271,7 +271,7 @@ ul.jta-tweet-list li a{
 }
 
 .weather-feel{
-    font-size: 2.0vw;
+    font-size: 1.75vw;
     font-weight: 750;
 }
 
@@ -300,54 +300,55 @@ ul.jta-tweet-list li a{
 
 .tech-route2{
     font-size: 4.0vmin;
-		padding: 2px;
+		padding: 0.20vh;
 }
 
 .tech-route{
 	font-size: 3.5vmin;
-  padding: 2px;
+  padding: 0.20vh;
 }
 
 .tech-route-plus{
 		font-size: 4.0vmin;
-		padding: 2px;
+		padding: 0.20vh;
 }
 
 .red{
-    background-color: red;
+		color: #aaa;
+    background-color: #720000;
 }
 
 .yellow{
     color: white;
-    background-color: gray;
+    background-color: #333;
 }
 
 .tech-time{
     font-weight: 500;
     background-color: black;
 		font-size: 3.5vmin;
-		padding: 2px;
+		padding: 0.20vh;
 }
 
 .tech-next-time{
     color: gray;
     background-color: black;
     font-size: 3.5vmin;
-		padding: 2px;
+		padding: 0.20vh;
 }
 
 .tech-time-plus{
 		font-weight: 500;
 		background-color: black;
 		font-size: 4.0vmin;
-		padding: 2px;
+		padding: 0.20vh;
 }
 
 .tech-next-time-plus{
     color: gray;
 		background-color: black;
     font-size: 3.5vmin;
-    padding: 2px;
+    padding: 0.20vh;
 }
 
 .menu{

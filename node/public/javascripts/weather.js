@@ -19,7 +19,8 @@ function getWeather() {
             html += '<span class="weather-temp">' + (weather.alt.temp) + '&deg; (' + weather.temp + '&deg;C)</span>';
 
 	    if (weather.temp != weather.wind.chill) {
-	    html += '<br/><span class="weather-feel">Feel ' + ((weather.wind.chill)*(9/5)+32).toFixed() + '&deg; (' + weather.wind.chill + '&deg;C)</span>';}
+	    html += '<br/><br/><span class="weather-feel">Feel ' + ((weather.wind.chill)*(9/5)+32).toFixed() + '&deg; (' + weather.wind.chill + '&deg;C)</span>';
+      }
 
 	    html += '</div><div class="small-3 columns"><img src="images/weather/' + weather.forecast[0].code + '.png"><br/>';
             html += '<span class="weather-temp">' + weather.forecast[0].alt.high + '&deg; / ' + weather.forecast[0].alt.low + '&deg;</span></div>';

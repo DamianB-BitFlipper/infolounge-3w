@@ -1,5 +1,4 @@
 var predictionsTEK = "http://proximobus.appspot.com/agencies/mit/stops/51/predictions.json";
-	// tech shuttle and saferide cambridge, at tang/westgate
 
 var predictionsSFBOS = "http://proximobus.appspot.com/agencies/mit/stops/62/predictions.json";
 	// saferide boston, at audrey/vassar sts
@@ -21,9 +20,7 @@ var predictions;
 
 function handleAlerts(data) {
     var alerts0 = data.alerts;
-    console.log(alerts0);
-
-
+    //console.log(alerts0);
 
     if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[0].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[0].effect_end)) {
 	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
@@ -39,6 +36,8 @@ function handleAlerts(data) {
 	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';}
 
 }
+
+/**
 
 function handlePredictions3(data) {
     pre_predictions0 = data.mode;
@@ -71,7 +70,7 @@ function handlePredictions3(data) {
     }
 
     var route = predictions[0].trip_headsign;
-    console.log(predictions[0].trip_headsign);
+    //console.log(predictions[0].trip_headsign);
 
     elem += ('<li><div class="row"><span class="tech-route red">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + time_elem0 + '</span><span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
 
@@ -79,7 +78,7 @@ function handlePredictions3(data) {
     $("#predictions").html(elem);
 }
 
-
+**/
 
 function handlePredictions2(data) {
 	var predictions = data.items;
@@ -87,13 +86,13 @@ function handlePredictions2(data) {
 	time_elem0 = '';
 	time_elem1 = '';
 
-        if (predictions[0].minutes == 0) {
-            time_elem0 = (predictions[0].is_departing ? "Arrv " : "Arrv ");
-        } else {
-            time_elem0 = (predictions[0].minutes + 'm ');
-        }
+  if (predictions[0] && predictions[0].minutes == 0) {
+      time_elem0 = (predictions[0].is_departing ? "Arrv " : "Arrv ");
+  } else if (predictions[0]) {
+      time_elem0 = (predictions[0].minutes + 'm ');
+  }
 
-	console.log(time_elem0);
+	//console.log(time_elem0);
 	var route1 = '';
 
 	if (predictions.length > 1) {
@@ -111,9 +110,9 @@ function handlePredictions2(data) {
         	    route1 = 'Cambridge All';
         	} else if (predictions[1].route_id == 'traderjwf') {
         	    route1 = 'Trader Joe\'s';
-		} else if (predictions[1].route_id == 'saferidebostonall') {
+	      	} else if (predictions[1].route_id == 'saferidebostonall') {
         	    route1 = 'Boston All';
-		} else if (predictions[1].route_id == 'saferidecampshut') {
+		      } else if (predictions[1].route_id == 'saferidecampshut') {
         	    route1 = 'Saferide Campus';
         	} else if (predictions[1].route_id == 'saferidebostonw') {
         	    route1 = 'Boston West';
@@ -133,11 +132,11 @@ function handlePredictions2(data) {
             route = 'Cambridge West';
         } else if (predictions[0].route_id == 'saferidecamball') {
             route = 'Cambridge All';
-	} else if (predictions[1].route_id == 'saferidecampshut') {
+	      } else if (predictions[0].route_id == 'saferidecampshut') {
        	    route = 'Saferide Campus';
         } else if (predictions[0].route_id == 'traderjwf') {
             route = 'Trader Joe\'s';
-	} else if (predictions[0].route_id == 'saferidebostonall') {
+	      } else if (predictions[0].route_id == 'saferidebostonall') {
             route = 'Boston All';
         } else if (predictions[0].route_id == 'saferidebostonw') {
             route = 'Boston West';
@@ -149,46 +148,43 @@ function handlePredictions2(data) {
             route = predictions[0].route_id;
         }
 
-	console.log(route);
+	//console.log(route);
     if (route != 'Tech Shuttle') {
 
     if (route1 == '') {
-	console.log("cond1");
+	//console.log("cond1");
     elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
-	console.log("cond2a");
-	console.log(route);
-	console.log(route1);
+	//console.log("cond2a");
+	//console.log(route);
+	//console.log(route1);
     elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
     elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
-	console.log("cond3");
+	//console.log("cond3");
     elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
     }
 
     } else {
-
     if (route1 == '') {
-	console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus yellow">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
+	//console.log("cond1");
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
-	console.log("cond2");
-	console.log(route);
-	console.log(route1);
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus yellow">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
+	//console.log("cond2");
+	//console.log(route);
+	//console.log(route1);
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
-	console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus yellow">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
+	//console.log("cond3");
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
     }
 
     }
-
-
     $("#techpanel").slideDown("slow");
     $("#predictions").html(elem);
 }
-
+/**
 function handlePredictions1(data) {
     var predictions = data.items;
 
@@ -222,7 +218,7 @@ function handlePredictions1(data) {
     $("#techpanel").slideDown("slow");
     $("#predictions").html(elem);
 }
-
+**/
 
 function getPredictions() {
     elem = '';
@@ -232,19 +228,18 @@ function getPredictions() {
     setTimeout(southtime, 1500);
     function southtime() {
        	tone = 0;
-	$.getJSON(predictionsCT2S, handlePredictions2);
+	      $.getJSON(predictionsCT2S, handlePredictions2);
     }
     tone = 1;
     setTimeout(northtime, 3000);
     function northtime() {
-	tone = 1;
+	      tone = 1;
         $.getJSON(predictionsCT2N, handlePredictions2);
     }
     setTimeout(rollup, 3000);
     function rollup() {
-        if (elem.length == 0) {
-	    $("#techpanel").slideUp("slow");
-        }
+      if (elem.length == 0) {
+	       $("#techpanel").slideUp("slow");
+      }
     }
-
 };
