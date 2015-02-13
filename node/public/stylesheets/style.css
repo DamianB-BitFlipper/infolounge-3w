@@ -254,6 +254,7 @@ ul.jta-tweet-list li a{
 
 #weather{
     text-align: center;
+		margin-bottom: 2.5vh;
 }
 
 .weather-temp{
@@ -264,6 +265,10 @@ ul.jta-tweet-list li a{
 .weather-feel{
     font-size: 1.5vw;
     font-weight: 750;
+}
+
+#tweetpanel{
+	margin-bottom: 2.5vh;
 }
 
 .pred{
