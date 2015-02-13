@@ -1,4 +1,3 @@
-@import('style_mobile.css');
 
 @font-face {
 	font-family: airplane;
@@ -19,6 +18,10 @@ body{
 	-moz-animation-name: rotate;
 	overflow: hidden;
 */
+}
+
+.icon-m{
+	display:none;
 }
 
 /*

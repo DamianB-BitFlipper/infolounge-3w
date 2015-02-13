@@ -55,6 +55,7 @@ var adjustScreenSize = function() {
     $('.birthday').hide();
     $('.column').css('margin-bottom', '2.5vh');
     $('.row').css('margin-bottom', '1.0vh');
+    $('.icon-m').show();
   } else {
     //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
@@ -68,6 +69,7 @@ var adjustScreenSize = function() {
     $('#menu').removeClass('menu-m').addClass('menu');
     $('#predictions').removeClass('pred-m').addClass('pred');
     $('.birthday-m').hide();
+    $('icon-m').hide();
   }
 }
 
