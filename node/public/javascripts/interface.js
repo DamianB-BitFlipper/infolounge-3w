@@ -43,7 +43,7 @@ var adjustScreenSize = function() {
     $('#menu').removeClass('menu').addClass('menu-m');
     $('#predictions').removeClass('pred').addClass('pred-m');
     $('#clock').hide();
-    $('.row').css('margin-bottom', '5%');
+    $('.row').css('margin-bottom', '2%');
   } else {
     //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
