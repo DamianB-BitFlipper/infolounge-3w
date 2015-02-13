@@ -28,15 +28,21 @@ var adjustScreenSize = function() {
     }
   if (size.width < 1000) {
     //console.log("narrow width");
+    //$('.mobile').show();
+    //$('.right-panel').hide();
     $('#left-pane').addClass('large-12').removeClass('large-7');
     $('#right-pane').addClass('large-12').removeClass('large-5');
     $('#alertspanel').find('.panel').hide();
     $('#tweetpanel').find('.panel').hide();
+    $('h3').removeClass('header').addClass('header-m');
   } else {
+    $('.mobile').hide();
+    //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
     $('#right-pane').addClass('large-5').removeClass('large-12');
     $('#alertspanel').find('.panel').show();
     $('#tweetpanel').find('.panel').show();
+    $('h3').removeClass('header-m').addClass('header');
   }
 }
 

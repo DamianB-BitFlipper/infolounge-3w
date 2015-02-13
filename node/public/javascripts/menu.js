@@ -13,7 +13,8 @@ function getMenu() {
 
         var elem = '';
         for (var type in data) {
-            item = data[type].replace('steamed', '');
+            var item = data[type]
+            .replace('steamed', '');
             elem += ('<li><span class="foodtype">' + type + '</span> <b>' + item + '</b></li>');
         }
         $("#menu").html(elem);
