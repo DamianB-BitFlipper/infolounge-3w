@@ -70,7 +70,7 @@ var adjustScreenSize = function() {
     $('#menu').removeClass('menu-m').addClass('menu');
     $('#predictions').removeClass('pred-m').addClass('pred');
     $('.birthday-m').hide();
-    $('icon-m').hide();
+    $('#content').css("overflow", "hidden");
   }
 }
 
