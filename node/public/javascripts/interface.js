@@ -45,6 +45,7 @@ var adjustScreenSize = function() {
     $('.weather-temp').addClass('weather-temp-m').removeClass('weather-temp');
     $('.weather-feel').addClass('weather-feel-m').removeClass('weather-feel');
     $('#clock').hide();
+    $('.birthday').hide();
     $('.column').css('margin-bottom', '2.5vh');
     $('.row').css('margin-bottom', '1.0vh');
   } else {
