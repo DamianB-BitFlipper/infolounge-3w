@@ -185,7 +185,7 @@ b{
 	color: #cccccc;
 }
 #twitimg{
-	height: 10.0vh;
+	height: 10.0vmin;
 	position: relative;
 	padding: 0;
 }
@@ -262,7 +262,7 @@ ul.jta-tweet-list li a{
 }
 
 .weather-feel{
-    font-size: 2.0vw;
+    font-size: 1.5vw;
     font-weight: 750;
 }
 

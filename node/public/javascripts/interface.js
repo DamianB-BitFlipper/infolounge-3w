@@ -42,8 +42,10 @@ var adjustScreenSize = function() {
     $('#date').removeClass('date').addClass('date-m');
     $('#menu').removeClass('menu').addClass('menu-m');
     $('#predictions').removeClass('pred').addClass('pred-m');
+    $('.weather-temp').removeClass('weather-temp').addClass('weather-temp-m');
+    $('.weather-feel').removeClass('weather-feel').addClass('weather-feel-m');
     $('#clock').hide();
-    $('.row').css('margin-bottom', '2%');
+    $('.row').css('margin-bottom', '2vh');
   } else {
     //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
