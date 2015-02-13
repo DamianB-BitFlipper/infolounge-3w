@@ -26,17 +26,17 @@ function handleAlerts(data) {
 
 
     if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[0].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[0].effect_end)) {
-	elem = '<li><span class="tech-route2-red">&nbsp;' + alerts0[0].header_text + '</span>';
+	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
     } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[0].effect_start) && (alerts0[0].effect_periods[0].effect_end == '')) {
-	elem = '<li><span class="tech-route2-red">&nbsp;' + alerts0[0].header_text + '</span>';
+	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
     } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[1].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[1].effect_end)) {
-	elem = '<li><span class="tech-route2-red">&nbsp;' + alerts0[0].header_text + '</span>';
+	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
     } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[2].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[2].effect_end)) {
-	elem = '<li><span class="tech-route2-red">&nbsp;' + alerts0[0].header_text + '</span>';
+	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
     } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[3].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[3].effect_end)) {
-	elem = '<li><span class="tech-route2-red">&nbsp;' + alerts0[0].header_text + '</span>';
+	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
     } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[4].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[4].effect_end)) {
-	elem = '<li><span class="tech-route2-red">&nbsp;' + alerts0[0].header_text + '</span>';}
+	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';}
 
 }
 
@@ -73,7 +73,7 @@ function handlePredictions3(data) {
     var route = predictions[0].trip_headsign;
     console.log(predictions[0].trip_headsign);
 
-    elem += ('<li><div class="row"><span class="tech-route-red">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + time_elem0 + '</span><span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row"><span class="tech-route red">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + time_elem0 + '</span><span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
 
     $("#techpanel").slideDown("slow");
     $("#predictions").html(elem);
@@ -154,32 +154,32 @@ function handlePredictions2(data) {
 
     if (route1 == '') {
 	console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
 	console.log("cond2a");
 	console.log(route);
 	console.log(route1);
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
 	console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
     }
 
     } else {
 
     if (route1 == '') {
 	console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow-plus">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus yellow">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
 	console.log("cond2");
 	console.log(route);
 	console.log(route1);
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow-plus">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus yellow">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
 	console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-yellow-plus">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus yellow">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
     }
 
     }

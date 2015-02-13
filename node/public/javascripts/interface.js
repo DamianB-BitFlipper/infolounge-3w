@@ -37,6 +37,13 @@ var adjustScreenSize = function() {
     $('#alertspanel').find('.panel').hide();
     $('#tweetpanel').find('.panel').hide();
     $('h3').removeClass('header').addClass('header-m');
+    $('#version').addClass('version-m').html('mobile');
+    $('#title').addClass('title-m');
+    $('#date').removeClass('date').addClass('date-m');
+    $('#menu').removeClass('menu').addClass('menu-m');
+    $('#predictions').removeClass('pred').addClass('pred-m');
+    $('#clock').hide();
+    $('.row').css('margin-bottom', '5%');
   } else {
     //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
@@ -44,6 +51,11 @@ var adjustScreenSize = function() {
     $('#alertspanel').find('.panel').show();
     $('#tweetpanel').find('.panel').show();
     $('h3').removeClass('header-m').addClass('header');
+    $('#version').html('beta v2.8');
+    $('#clock').show();
+    $('#date').removeClass('date-m').addClass('date');
+    $('#menu').removeClass('menu-m').addClass('menu');
+    $('#predictions').removeClass('pred').addClass('pred');
   }
 }
 

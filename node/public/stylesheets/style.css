@@ -46,7 +46,7 @@ h2{
 }
 .header {
 	color: #ffffff;
-	font-size: 3.2vmin;
+	font-size: 24px;
 	opacity: 0.9;
 	padding: 4px 4px 6px 6px;
 	font-weight: 400;
@@ -173,14 +173,14 @@ b{
 	font-size: 1.6em;
 	font-weight: 300;
 }
-#date{
-	font-size: 8.0vmin;
+.date{
+	font-size: 50px;
 	text-align: center;
 	font-weight: bold;
 }
-#date .subdate{
+.date .subdate{
 	font-weight: 200;
-	font-size: 2.75vmin;
+	font-size: 20px;
 	margin-top: 10px;
 	color: #cccccc;
 }
@@ -266,87 +266,82 @@ ul.jta-tweet-list li a{
     font-weight: 750;
 }
 
-.tech-minutes2{
+.tech-alert{
+		font-weight: 600;
+}
+
+.tech-minutes2 {
     font-size: 72px;
     font-weight: 600;
 }
 
-.tech-minutes{
+.tech-minutes {
     font-size: 40px;
     font-weight: 600;
 }
 
 .tech-route2{
-    font-size: 4.0vmin;
-}
-
-.tech-alert{
-    font-weight: 600;
+    font-size: 40px;
+		padding: 2px;
 }
 
 .tech-route{
-    padding: 2px;
-    font-size: 3.2vmin;
+	font-size: 30px;
+  padding: 2px;
 }
 
-.tech-route-red{
-    background-color: red;
-    font-size: 3.2vmin;
+.tech-route-plus{
+		font-size: 40px;
 		padding: 2px;
 }
 
-.tech-route-yellow{
+.red{
+    background-color: red;
+}
+
+.yellow{
     color: white;
     background-color: gray;
-    font-size: 3.2vmin;
-		padding: 2px;
 }
 
 .tech-time{
-    font-size: 3.2vmin;
     font-weight: 500;
     background-color: black;
+		font-size: 30px;
 		padding: 2px;
 }
 
 .tech-next-time{
     color: gray;
     background-color: black;
-    font-size: 3.2vmin;
-		padding: 2px;
-}
-
-.tech-route-yellow-plus{
-    color: white;
-    font-size: 4.0vmin;
-    background-color: gray;
+    font-size: 30px;
 		padding: 2px;
 }
 
 .tech-time-plus{
-    font-size: 4.0vmin;
-    font-weight: 500;
-    background-color: black;
+		font-weight: 500;
+		background-color: black;
+		font-size: 40px;
 		padding: 2px;
 }
 
 .tech-next-time-plus{
     color: gray;
-    font-size: 4.0vmin;
-    background-color: black;
+		background-color: black;
+    font-size: 30px;
     padding: 2px;
 }
 
 
-#menu{
-    font-size: 18px;
+.menu{
+    font-size: 24px;
     line-height: 120%;
     font-weight: 400;
     text-transform: lowercase;
 }
 
 .foodtype{
-	opacity: 0.4;
+	opacity: 0.5;
 	font-weight: 300;
 }
 
