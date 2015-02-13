@@ -60,6 +60,7 @@ var adjustScreenSize = function() {
     $('#date').removeClass('date-m').addClass('date');
     $('#menu').removeClass('menu-m').addClass('menu');
     $('#predictions').removeClass('pred-m').addClass('pred');
+    $('.birthday').show();
   }
 }
 
