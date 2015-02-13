@@ -54,9 +54,9 @@ function getDate() {
     console.log(people[i][3]);
     $('.birthday-m').css('background-color', bg_color);
     $('.birthday').css('background-color', bg_color);
-    var windowWidth = window.innerWidth || document.body.clientWidth
+    var windowWidth = window.innerWidth || document.body.clientWidth;
     if (windowWidth < 1000){
-      $('.birthday-m').show();
+      //$('.birthday-m').show();
     } else {
       $('.birthday').show();
     }
