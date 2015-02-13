@@ -52,7 +52,6 @@ h2{
 	font-weight: 400;
 	text-transform: lowercase;
 	border-top-left-radius: 1vh;
-	border-top-right-radius: 1vh;
 }
 
 b{
@@ -106,7 +105,6 @@ b{
 	background-color: rgba(0,0,0,0.3);
 	margin-bottom: 20px;
 	padding: 15px;
-	border-bottom-left-radius: 3vh;
 	border-bottom-right-radius: 3vh;
 }
 
@@ -309,16 +307,19 @@ ul.jta-tweet-list li a{
 .tech-route2{
     font-size: 4.2vmin;
 		padding: 0.15vh;
+		border-top-left-radius: 1vh;
 }
 
 .tech-route{
 	font-size: 3.5vmin;
   padding: 0.15vh;
+	border-top-left-radius: 1vh;
 }
 
 .tech-route-plus{
 		font-size: 4.2vmin;
 		padding: 0.15vh;
+		border-top-left-radius: 1vh;
 }
 
 .red{
@@ -344,6 +345,7 @@ ul.jta-tweet-list li a{
     background-color: black;
     font-size: 3.5vmin;
 		padding: 0.15vh;
+		border-bottom-right-radius: 1vh;
 }
 
 .tech-time-plus{
@@ -358,6 +360,7 @@ ul.jta-tweet-list li a{
 		background-color: black;
     font-size: 4.2vmin;
     padding: 0.15vh;
+		border-bottom-right-radius: 1vh;
 }
 
 .menu{
