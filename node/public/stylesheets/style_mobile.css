@@ -1,6 +1,6 @@
 .header-m {
   text-align: center;
-  height: 6%;
+  height: 7%;
   font-size: 125%;
   color: #ffffff;
   opacity: 0.9;
@@ -13,11 +13,11 @@
 }
 
 .title-m {
-  font-size: 8vh !important;
+  font-size: 8vmin !important;
 }
 
 .version-m {
-  font-size: 6vh !important;
+  font-size: 6vmin !important;
 }
 
 .date-m {
