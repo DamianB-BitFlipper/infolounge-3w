@@ -43,7 +43,7 @@ var adjustScreenSize = function() {
     $('#menu').removeClass('menu').addClass('menu-m');
     $('#predictions').removeClass('pred').addClass('pred-m');
     $('#clock').hide();
-    $('.row').css('margin-bottom', '5%');
+    $('.row').css('margin-bottom', '2%');
   } else {
     //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
@@ -55,7 +55,7 @@ var adjustScreenSize = function() {
     $('#clock').show();
     $('#date').removeClass('date-m').addClass('date');
     $('#menu').removeClass('menu-m').addClass('menu');
-    $('#predictions').removeClass('pred').addClass('pred');
+    $('#predictions').removeClass('pred-m').addClass('pred');
   }
 }
 

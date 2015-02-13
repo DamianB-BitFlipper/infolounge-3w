@@ -266,8 +266,13 @@ ul.jta-tweet-list li a{
     font-weight: 750;
 }
 
+.pred{
+	width: 100%;
+}
+
 .tech-alert{
 		font-weight: 600;
+		width: 100%;
 }
 
 .tech-minutes2 {
@@ -337,6 +342,7 @@ ul.jta-tweet-list li a{
     font-size: 24px;
     line-height: 120%;
     font-weight: 400;
+		width: 100%;
     text-transform: lowercase;
 }
 
