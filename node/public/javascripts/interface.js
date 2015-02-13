@@ -22,10 +22,12 @@ for (var i = 0; i< headers.length; i++) {
 });
 
 var adjustScreenSize = function() {
+  $('.mobile').hide();
   var size = {
       width: window.innerWidth || document.body.clientWidth,
       height: window.innerHeight || document.body.clientHeight
     }
+
   if (size.width < 1000) {
     //console.log("narrow width");
     //$('.mobile').show();
@@ -36,7 +38,6 @@ var adjustScreenSize = function() {
     $('#tweetpanel').find('.panel').hide();
     $('h3').removeClass('header').addClass('header-m');
   } else {
-    $('.mobile').hide();
     //$('.right-panel').show();
     $('#left-pane').addClass('large-7').removeClass('large-12');
     $('#right-pane').addClass('large-5').removeClass('large-12');
