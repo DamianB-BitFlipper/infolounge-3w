@@ -311,7 +311,7 @@ ul.jta-tweet-list li a{
 }
 
 .tech-route{
-	font-size: 3.5vmin;
+	font-size: 3.2vmin;
   padding: 0.15vh;
 	border-top-left-radius: 1vh;
 }
@@ -336,14 +336,14 @@ ul.jta-tweet-list li a{
 .tech-time{
     font-weight: 500;
     background-color: black;
-		font-size: 3.5vmin;
+		font-size: 3.2vmin;
 		padding: 0.15vh;
 }
 
 .tech-next-time{
     color: gray;
     background-color: black;
-    font-size: 3.5vmin;
+    font-size: 3.2vmin;
 		padding: 0.15vh;
 		border-bottom-right-radius: 1vh;
 }
@@ -478,7 +478,7 @@ ul.jta-tweet-list li a{
 
 .minecraft {
 	text-align: center;
-	font-size: 3.5vmin;
+	font-size: 3.2vmin;
 }
 
 .menu-img {
@@ -501,6 +501,25 @@ ul.jta-tweet-list li a{
     -webkit-animation:spin 10s linear infinite;
     -moz-animation:spin 10s linear infinite;
     animation:spin 10s linear infinite;
+}
+
+
+/* Track */
+::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+		background: rgba(225,225,225,0.8);
+		-webkit-box-shadow: inset 0 0 6px rgba(225,225,225,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(225,225,225,0.4);
 }
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
