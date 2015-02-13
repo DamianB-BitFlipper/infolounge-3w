@@ -103,7 +103,7 @@ function handlePredictions2(data) {
        		}
 
         	if (predictions[1].route_id == 'tech') {
-        	    route1 = 'Tech Shuttle';
+        	    route1 = 'tech shuttle';
         	} else if (predictions[1].route_id == 'saferidecambwest') {
         	    route1 = 'Cambridge West';
         	} else if (predictions[1].route_id == 'saferidecamball') {
@@ -127,7 +127,7 @@ function handlePredictions2(data) {
 
         var route = '';
         if (predictions[0].route_id == 'tech') {
-            route = 'Tech Shuttle';
+            route = 'tech shuttle';
         } else if (predictions[0].route_id == 'saferidecambwest') {
             route = 'Cambridge West';
         } else if (predictions[0].route_id == 'saferidecamball') {
@@ -149,11 +149,11 @@ function handlePredictions2(data) {
         }
 
 	//console.log(route);
-    if (route != 'Tech Shuttle') {
+    if (route != 'tech shuttle') {
 
     if (route1 == '') {
 	//console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time"> | ' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
 	//console.log("cond2a");
 	//console.log(route);
@@ -162,13 +162,13 @@ function handlePredictions2(data) {
     elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
 	//console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time"> | ' + time_elem1 + '&nbsp;</span></div></li>');
     }
 
     } else {
     if (route1 == '') {
 	//console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus"> | ' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
 	//console.log("cond2");
 	//console.log(route);
@@ -177,7 +177,7 @@ function handlePredictions2(data) {
     elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
 	//console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus">' + time_elem1 + '&nbsp;</span></div></li>');
+    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus"> | ' + time_elem1 + '&nbsp;</span></div></li>');
     }
 
     }

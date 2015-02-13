@@ -25,14 +25,14 @@ for (var i = 0; i< headers.length; i++) {
 });
 
 var adjustScreenSize = function() {
-  $('.mobile').hide();
+
   var size = {
       width: window.innerWidth || document.body.clientWidth,
       height: window.innerHeight || document.body.clientHeight
     }
   windowSize = size;
 
-  if (size.width < 1000) {
+  if (size.width < 961) {
     //console.log("narrow width");
     //$('.mobile').show();
     //$('.right-panel').hide();
@@ -64,7 +64,8 @@ var adjustScreenSize = function() {
     $('#alertspanel').find('.panel').show();
     $('#tweetpanel').find('.panel').show();
     $('h3').removeClass('header-m').addClass('header');
-    $('#version').html('beta v2.8');
+    $('#title').removeClass('title-m');
+    $('#version').removeClass('version-m').html('beta v2.8');
     $('#clock').show();
     $('#date').removeClass('date-m').addClass('date');
     $('#menu').removeClass('menu-m').addClass('menu');
