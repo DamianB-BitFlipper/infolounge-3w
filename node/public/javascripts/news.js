@@ -11,4 +11,3 @@ function getNews() {
         $("#news").html(data.news);
     });
 };
-

@@ -11,7 +11,7 @@ for (var i = 0; i< headers.length; i++) {
   var elem = headers[i];
   elem.addEventListener("click", function(e){
     var elem = e.target;
-    console.log(elem);
+    //console.log(elem);
     var panel = $($(elem).parent().find('.panel'));
     if (panel.css('display') == 'none') {
         panel.slideDown();
