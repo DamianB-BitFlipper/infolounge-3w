@@ -4,7 +4,7 @@
     <head>
         <title>InfoLounge</title>
         <!-- STYLESHEETS -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/reset.css' />
         <link rel='stylesheet' href='/plugins/foundation/css/foundation.css' />
         <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -36,7 +36,8 @@
             lastUpdated = -1;
             var isItLateYet = function() {
                 var today = new Date().getHours();
-                if (today >= 2 && today <= 7) {
+                var windowWidth = window.innerWidth || document.body.clientWidth;
+                if (today >= 2 && today <= 7 && windowWidth > 1000) {
                     $('.shutthefuckup').show();
                     if (new Date().getHours == 2 && new Date().getMinutes() == 0 && newDate().getSeconds() < 3) {
                         baymaxSpeak("It is now 2 AM. No loud noises please.");

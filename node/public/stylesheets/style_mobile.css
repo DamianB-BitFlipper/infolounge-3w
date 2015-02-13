@@ -14,15 +14,15 @@
 }
 
 .title-m {
-  font-size: 8vmin !important;
+  font-size: 7vmin !important;
 }
 
 .version-m {
-  font-size: 6vmin !important;
+  font-size: 5vmin !important;
 }
 
 .date-m {
-  font-size: 8vw;
+  font-size: 7vh;
   text-align: center;
   font-weight: bold;
 }
