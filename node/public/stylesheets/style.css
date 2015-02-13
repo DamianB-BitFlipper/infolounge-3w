@@ -185,7 +185,7 @@ b{
 	color: #cccccc;
 }
 #twitimg{
-	height: 300px;
+	height: 8.0vmin;
 	position: relative;
 	padding: 0;
 }
@@ -197,7 +197,7 @@ ul.jta-tweet-list{
 ul.jta-tweet-list li{
 	clear: both;
 	min-height: 60px;
-	font-size: 1.3em;
+	font-size: 3.0vw;
 	font-weight: 300;
 	border-bottom: solid 1px #333333;
 	padding: 10px;
@@ -212,12 +212,12 @@ ul.jta-tweet-list li a{
 }
 .jta-tweet-profile-image{
 	float: left;
-	margin-right: 10px;
+	margin-right: 1.0vw;
 }
 .jta-tweet-profile-image img
 {
-    width: 84px;
-    height: 84px;
+    width: 6.0vw;
+    height: 6.0vw;
 }
 .jta-tweet-attributes
 {
@@ -240,14 +240,14 @@ ul.jta-tweet-list li a{
 
 
 #alerts{
-    font-size: 24px;
+    font-size: 3.0vmin;
     line-height: 120%;
     font-weight: 400;
 }
 
 #MITalerts{
     color: black;
-    font-size: 24px;
+    font-size: 3.0vmin;
     line-height: 120%;
     font-weight: 250;
 }
@@ -256,14 +256,22 @@ ul.jta-tweet-list li a{
     text-align: center;
 }
 
+#weatherpanel{
+	margin-bottom: 2.5vh;
+}
+
 .weather-temp{
-    font-size: 32px;
+    font-size: 2.5vw;
     font-weight: 600;
 }
 
 .weather-feel{
-    font-size: 20px;
+    font-size: 1.5vw;
     font-weight: 750;
+}
+
+#tweetpanel{
+	margin-bottom: 2.5vh;
 }
 
 .pred{
@@ -281,22 +289,22 @@ ul.jta-tweet-list li a{
 }
 
 .tech-minutes {
-    font-size: 40px;
+    font-size: 4.0vmin;
     font-weight: 600;
 }
 
 .tech-route2{
-    font-size: 40px;
+    font-size: 4.0vmin;
 		padding: 2px;
 }
 
 .tech-route{
-	font-size: 30px;
+	font-size: 3.5vmin;
   padding: 2px;
 }
 
 .tech-route-plus{
-		font-size: 40px;
+		font-size: 4.0vmin;
 		padding: 2px;
 }
 
@@ -312,28 +320,28 @@ ul.jta-tweet-list li a{
 .tech-time{
     font-weight: 500;
     background-color: black;
-		font-size: 30px;
+		font-size: 3.5vmin;
 		padding: 2px;
 }
 
 .tech-next-time{
     color: gray;
     background-color: black;
-    font-size: 30px;
+    font-size: 3.5vmin;
 		padding: 2px;
 }
 
 .tech-time-plus{
 		font-weight: 500;
 		background-color: black;
-		font-size: 40px;
+		font-size: 4.0vmin;
 		padding: 2px;
 }
 
 .tech-next-time-plus{
     color: gray;
 		background-color: black;
-    font-size: 30px;
+    font-size: 3.5vmin;
     padding: 2px;
 }
 
@@ -454,7 +462,7 @@ ul.jta-tweet-list li a{
 
 .minecraft {
 	text-align: center;
-	font-size: 30px;
+	font-size: 3.5vmin;
 }
 
 .menu-img {
