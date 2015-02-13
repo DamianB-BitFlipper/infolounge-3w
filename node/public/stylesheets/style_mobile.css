@@ -1,7 +1,7 @@
 .header-m {
   text-align: center;
-  height: 7%;
-  font-size: 125%;
+  height: 7vh;
+  font-size: 150%;
   color: #ffffff;
   opacity: 0.9;
   padding: 2.0%;
@@ -21,7 +21,7 @@
 }
 
 .date-m {
-  font-size: 6vh;
+  font-size: 8vw;
   text-align: center;
   font-weight: bold;
 }

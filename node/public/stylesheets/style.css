@@ -185,7 +185,7 @@ b{
 	color: #cccccc;
 }
 #twitimg{
-	height: 10.0vmin;
+	height: 8.0vmin;
 	position: relative;
 	padding: 0;
 }
@@ -254,7 +254,10 @@ ul.jta-tweet-list li a{
 
 #weather{
     text-align: center;
-		margin-bottom: 2.5vh;
+}
+
+#weatherpanel{
+	margin-bottom: 2.5vh;
 }
 
 .weather-temp{
@@ -459,7 +462,7 @@ ul.jta-tweet-list li a{
 
 .minecraft {
 	text-align: center;
-	font-size: 3.0vmin;
+	font-size: 3.5vmin;
 }
 
 .menu-img {
