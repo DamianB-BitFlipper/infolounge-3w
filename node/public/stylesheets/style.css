@@ -240,14 +240,14 @@ ul.jta-tweet-list li a{
 
 
 #alerts{
-    font-size: 24px;
+    font-size: 3.0vmin;
     line-height: 120%;
     font-weight: 400;
 }
 
 #MITalerts{
     color: black;
-    font-size: 24px;
+    font-size: 3.0vmin;
     line-height: 120%;
     font-weight: 250;
 }
@@ -257,12 +257,12 @@ ul.jta-tweet-list li a{
 }
 
 .weather-temp{
-    font-size: 32px;
+    font-size: 3.5vmin;
     font-weight: 600;
 }
 
 .weather-feel{
-    font-size: 20px;
+    font-size: 3.0vmin;
     font-weight: 750;
 }
 
@@ -281,22 +281,22 @@ ul.jta-tweet-list li a{
 }
 
 .tech-minutes {
-    font-size: 40px;
+    font-size: 4.0vmin;
     font-weight: 600;
 }
 
 .tech-route2{
-    font-size: 40px;
+    font-size: 4.0vmin;
 		padding: 2px;
 }
 
 .tech-route{
-	font-size: 30px;
+	font-size: 3.5vmin;
   padding: 2px;
 }
 
 .tech-route-plus{
-		font-size: 40px;
+		font-size: 4.0vmin;
 		padding: 2px;
 }
 
@@ -312,28 +312,28 @@ ul.jta-tweet-list li a{
 .tech-time{
     font-weight: 500;
     background-color: black;
-		font-size: 30px;
+		font-size: 3.5vmin;
 		padding: 2px;
 }
 
 .tech-next-time{
     color: gray;
     background-color: black;
-    font-size: 30px;
+    font-size: 3.5vmin;
 		padding: 2px;
 }
 
 .tech-time-plus{
 		font-weight: 500;
 		background-color: black;
-		font-size: 40px;
+		font-size: 4.0vmin;
 		padding: 2px;
 }
 
 .tech-next-time-plus{
     color: gray;
 		background-color: black;
-    font-size: 30px;
+    font-size: 3.5vmin;
     padding: 2px;
 }
 
