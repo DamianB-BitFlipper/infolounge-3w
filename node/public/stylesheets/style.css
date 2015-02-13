@@ -58,7 +58,7 @@ b{
 }
 
 #content{
-	margin: 20px;
+	margin: 1.2vw;
 	height: calc(100% - 40px);
 	height: -webkit-calc(100% - 40px);
 	overflow: hidden;
