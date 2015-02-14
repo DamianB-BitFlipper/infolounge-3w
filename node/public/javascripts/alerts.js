@@ -94,6 +94,10 @@ function handleAlerts(data) {
 					elemt = '<span class="tech-alert">' + alerts0[4].header_text + '</span>';}
 				} }}}
 
+elemt = '<span class="tech-alert"><div style="color: black">All MBTA bus, rail, and boat services will be SUSPENDED from 24:30 Saturday night until MONDAY at earliest. Buses replace Braintree and Mattapan trains through Saturday.</div></span>';
+// REMOVE ABOVE LINE AFTER SUNDAY NIGHT !!!
+
+
 setTimeout(rollup, 1500);
 //console.log("LengthA:"+elemt.length+" Content:"+elemt+"X");
     function rollup() {
@@ -101,6 +105,7 @@ setTimeout(rollup, 1500);
 		//console.log("ZERO LENGTH");
 		$("#alertspanel").slideUp("slow");
         } else {
+
 		//console.log("ACTIVE ALERT");
 		$("#alertspanel").slideDown("slow");
 	}
