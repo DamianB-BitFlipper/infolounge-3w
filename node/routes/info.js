@@ -1,5 +1,7 @@
 var dateformat = require('../public/javascripts/dateformat.js');
 var request = require('request');
+var Firebase = require('firebase');
+var newsRef = new Firebase("https://rliu42.firebaseio.com/infolounge/notifications");
 var fs = require('fs');
 var parseString = require('xml2js').parseString;
 
@@ -23,25 +25,18 @@ function getMenu(req, res) {
             }
             now = new Date();
             var date = dateformat.dateFormat(now, 'ddd, dd mmm yyyy');
-            //console.log(date);
-            //var dateIndex = body.indexOf(date);
-            //if (dateIndex == -1) {
-            //res.json({});
-            //return;
-            //}
-            //var endIndex = body.indexOf('The Story Behind Your Food', dateIndex); // always at end
-            //var today = body.substring(dateIndex, endIndex);
-            ////console.log("Menu", result);
             weeklyMenu = result.channel.item;
             todaysMenu = false;
             for (var day in weeklyMenu) {
-                //console.log(weeklyMenu[day]);
                 if (weeklyMenu[day].title[0] == date) {
                     todaysMenu = weeklyMenu[day].description[0];
                     break;
                 }
             }
-
+            if (!todaysMenu){
+              res.json({});
+              return;
+            }
             var breakfastIndex = todaysMenu.indexOf('Breakfast');
             var brunchIndex = todaysMenu.indexOf('Brunch');
             var dinnerIndex = todaysMenu.indexOf('Dinner');
@@ -97,31 +92,31 @@ function sanitizeText(text) {
 function getMITAlert(req, res) {
     ////console.log('Begin test!');
     request(alertURL, function(error, response, body){
-	if (error || response.statusCode != 200){
-		res.json({});
-		return;
-	}
+  if (error || response.statusCode != 200){
+    res.json({});
+    return;
+  }
 
     var now = new Date();
     var startIndex = body.indexOf('<div id="contentannouncebox">');
 
     var data = body.substring(startIndex, body.indexOf('</div>', startIndex));
 
-	////console.log('DATAING');
-	////console.log(data);
+  ////console.log('DATAING');
+  ////console.log(data);
 
   var alertsStr = sanitizeText(data).split('<p>');
     //console.log(alertsStr);
   var alerts = {};
   for (i = 0; ++i < alertsStr.length;){
-	head = sanitizeText(alertsStr[i]);
-	alert = sanitizeText(alertsStr[i+1]);
+  head = sanitizeText(alertsStr[i]);
+  alert = sanitizeText(alertsStr[i+1]);
   if (alert.length > 10 && head.length > 10){
-		alerts[head] = alert;
-	}
+    alerts[head] = alert;
+  }
   if (Object.keys(alerts).length >= 1) {
-		break;
-	}
+    break;
+  }
     }
     ////console.log(alerts);
     res.json(alerts);
@@ -132,18 +127,15 @@ function getMITAlert(req, res) {
 
 
 function getNews(req, res) {
-    if (fs.existsSync(newsFile)) {
-        data = fs.readFileSync(newsFile, 'utf8').split('\n');
-        code = dateformat.dateFormat('m/dd');
-        for (var i = 0; i < data.length; i += 2) {
-            if (code == data[i]) {
-                res.json({
-                    'news': data[i + 1]
-                });
-                return;
-            }
+   console.log("Retrieving news...")
+    newsRef.once("value", function(ss){
+        if (ss.val()) {
+          console.log(ss.val());
+          res.json({ notification: ss.val().message, timestamp: ss.val().timestamp })
+        } else{
+          res.json({});
         }
-    }
+    });
     res.json({});
     return;
 };
