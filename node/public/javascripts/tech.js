@@ -82,13 +82,14 @@ function handlePredictions3(data) {
 
 function techImage(minutes){
 	minutesToImage = new Object();
+	minutesToImage['23'] = '7'; minutesToImage['22'] = '7'; minutesToImage['21'] = '7';
 	minutesToImage['20'] = '7'; minutesToImage['19'] = '7'; minutesToImage['18'] = '7';
-	minutesToImage['17'] = '9'; minutesToImage['16'] = '9';
+	minutesToImage['17'] = '9'; minutesToImage['16'] = '9'; // Simmons
 	minutesToImage['15'] = '10'; // Vassar/Mass Ave
 	minutesToImage['14'] = '11'; minutesToImage['13'] = '11'; // Stata
 	minutesToImage['12'] = '1';	minutesToImage['11'] = '1'; // Kendall
-	minutesToImage['10'] = '2'; minutesToImage['9'] = '2';
-	minutesToImage['8'] = '3'; minutesToImage['7'] = '3'; minutesToImage['6'] = '3';
+	minutesToImage['10'] = '2'; minutesToImage['9'] = '2'; // Amherst/Wadswordth
+	minutesToImage['8'] = '3'; minutesToImage['7'] = '3'; minutesToImage['6'] = '3'; // Ames St./Media Lab
 	minutesToImage['5'] = '4'; minutesToImage['4'] = '4'; minutesToImage['3'] = '4'; // Kresge
 	minutesToImage['2'] = '5'; minutesToImage['1'] = '5'; // Burton
   var imageId = minutesToImage[minutes.toString()];
@@ -112,7 +113,7 @@ function handlePredictions2(data) {
 	time_elem0 = '';
 	time_elem1 = '';
 
-	if (dateFormat(new Date, "HH:MM") > "19:20" || dateFormat(new Date, "HH:MM") < "06:00") {
+	if (dateFormat(new Date, "HH:MM") > "19:10" || dateFormat(new Date, "HH:MM") < "06:00") {
 		$('.tech-map').attr("src", "").fadeOut();
 	}
 
@@ -174,7 +175,7 @@ function handlePredictions2(data) {
 							});
 						} else {
 							time_elem0 += "&nbsp;&nbsp;"
-							console.log("Loading image...")
+							//console.log("Loading image...")
 							techImage(predictions[0]["minutes"]);
 						}
         } else if (predictions[0].route_id == 'saferidecambwest') {
