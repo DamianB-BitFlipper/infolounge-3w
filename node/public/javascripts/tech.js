@@ -18,7 +18,7 @@ var pre_predictions1;
 var pre_predictions2;
 var predictions;
 
-function handleAlerts(data) {
+/** function handleAlerts(data) {
     var alerts0 = data.alerts;
     //console.log(alerts0);
 
@@ -35,7 +35,7 @@ function handleAlerts(data) {
     } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[4].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[4].effect_end)) {
 	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';}
 
-}
+} **/
 
 /**
 
@@ -80,13 +80,43 @@ function handlePredictions3(data) {
 
 **/
 
+function techImage(minutes){
+	minutesToImage = new Object();
+	minutesToImage['20'] = '7'; minutesToImage['19'] = '7'; minutesToImage['18'] = '7';
+	minutesToImage['17'] = '9'; minutesToImage['16'] = '9';
+	minutesToImage['15'] = '10'; // Vassar/Mass Ave
+	minutesToImage['14'] = '11'; minutesToImage['13'] = '11'; // Stata
+	minutesToImage['12'] = '1';	minutesToImage['11'] = '1'; // Kendall
+	minutesToImage['10'] = '2'; minutesToImage['9'] = '2';
+	minutesToImage['8'] = '3'; minutesToImage['7'] = '3'; minutesToImage['6'] = '3';
+	minutesToImage['5'] = '4'; minutesToImage['4'] = '4'; minutesToImage['3'] = '4'; // Kresge
+	minutesToImage['2'] = '5'; minutesToImage['1'] = '5'; // Burton
+  var imageId = minutesToImage[minutes.toString()];
+	if (typeof imageId !== "undefined"){
+		var src =  "images/tech/" + minutesToImage[minutes.toString()] + '.png';
+		$('.tech-map').attr('src', src).fadeIn();
+		return src;
+	} else {
+		$('.tech-map').attr("src", "").fadeOut();
+		return -1;
+	}
+}
+
 function handlePredictions2(data) {
 	var predictions = data.items;
+
+//  if (jQuery.isEmptyObject(predictions)){
+  //  return;
+//  }
 
 	time_elem0 = '';
 	time_elem1 = '';
 
-  if (predictions[0] && predictions[0].minutes == 0) {
+	if (dateFormat(new Date, "HH:MM") > "19:20" || dateFormat(new Date, "HH:MM") < "6:00") {
+		$('.tech-map').attr("src", "").fadeOut();
+	}
+
+  if (predictions[0].minutes == 0) {
       time_elem0 = (predictions[0].is_departing ? "Arrv " : "Arrv ");
   } else if (predictions[0]) {
       time_elem0 = (predictions[0].minutes + 'm ');
@@ -101,9 +131,16 @@ function handlePredictions2(data) {
         	} else {
         	    time_elem1 = (predictions[1].minutes + 'm ');
        		}
-
         	if (predictions[1].route_id == 'tech') {
         	    route1 = 'tech shuttle';
+							if (predictions[0].is_departing) {
+								$(".tech-map").fadeOut(400, function(){
+									$(this).attr('src', 'images/tech/6.png' );
+									$(this).fadeIn();
+								});
+							} else if ($(".tech-map").attr("src").length == 0) {
+								techImage(predictions[1].minutes);
+							}
         	} else if (predictions[1].route_id == 'saferidecambwest') {
         	    route1 = 'Cambridge West';
         	} else if (predictions[1].route_id == 'saferidecamball') {
@@ -125,9 +162,20 @@ function handlePredictions2(data) {
         	}
 	}
 
-        var route = '';
+  console.log(route1);
+
+      var route = '';
+      if (predictions[0]) {
         if (predictions[0].route_id == 'tech') {
             route = 'tech shuttle';
+						if (predictions[0].is_departing) {
+							$(".tech-map").fadeOut(400, function(){
+								$(this).attr('src', 'images/tech/6.png' );
+								$(this).fadeIn();
+							});
+						} else {
+							techImage(predictions[0].minutes);
+						}
         } else if (predictions[0].route_id == 'saferidecambwest') {
             route = 'Cambridge West';
         } else if (predictions[0].route_id == 'saferidecamball') {
@@ -147,40 +195,32 @@ function handlePredictions2(data) {
         } else {
             route = predictions[0].route_id;
         }
+      }
+      console.log(route);
 
 	//console.log(route);
-    if (route != 'tech shuttle') {
-
+  if (route != 'tech shuttle' && route != '') {
     if (route1 == '') {
-	//console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time"> | ' + time_elem1 + '&nbsp;</span></div></li>');
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time"> | ' + time_elem1 + '&nbsp;</span></div></li>');
     } else if (route != route1) {
-	//console.log("cond2a");
-	//console.log(route);
-	//console.log(route1);
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
     } else {
-	//console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time"> | ' + time_elem1 + '&nbsp;</span></div></li>');
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route yellow">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time"> | ' + time_elem1 + '&nbsp;</span></div></li>');
     }
+  } else if (route == "tech shuttle") {
+      if (route1 == '') {
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus"> | ' + time_elem1 + '&nbsp;</span></div></li>');
+      } else if (route != route1) {
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
+      } else {
+        elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus"> | ' + time_elem1 + '&nbsp;</span></div></li>');
+      }
+ } else {
+    return;
+  }
 
-    } else {
-    if (route1 == '') {
-	//console.log("cond1");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus"> | ' + time_elem1 + '&nbsp;</span></div></li>');
-    } else if (route != route1) {
-	//console.log("cond2");
-	//console.log(route);
-	//console.log(route1);
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '&nbsp;</span></div></li>');
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route">&nbsp;' + route1 + ' </span><span class="tech-time">&nbsp;' + ' ' + time_elem1 + '&nbsp;</span></div></li>');
-    } else {
-	//console.log("cond3");
-    elem += ('<li><div class="row" style="margin: 15px;"><span class="tech-route-plus red">&nbsp;' + route + ' </span><span class="tech-time-plus">&nbsp;' + ' ' + time_elem0 + '</span>' + ' ' + '<span class="tech-next-time-plus"> | ' + time_elem1 + '&nbsp;</span></div></li>');
-    }
-
-    }
     $("#techpanel").slideDown("slow");
     $("#predictions").html(elem);
 }
@@ -236,7 +276,7 @@ function getPredictions() {
 	      tone = 1;
         $.getJSON(predictionsCT2N, handlePredictions2);
     }
-    setTimeout(rollup, 3000);
+    setTimeout(rollup, 1500);
     function rollup() {
       if (elem.length == 0) {
 	       $("#techpanel").slideUp("slow");
