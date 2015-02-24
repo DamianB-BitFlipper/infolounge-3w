@@ -340,14 +340,14 @@ ul.jta-tweet-list li a{
 }
 
 .tech-map{
-	max-height: 150px;
+	max-height: 200px;
 	margin: 5px 0 5px 15px;
-	opacity: 0.80;
+	opacity: 0.85;
 	border: 2px solid white;
-	border-top-right-radius: 3%;
-	border-bottom-left-radius: 3%;
-  border-top-left-radius: 7%;
-	border-bottom-right-radius: 7%;
+	border-top-right-radius: 2%;
+	border-bottom-left-radius: 2%;
+  border-top-left-radius: 6%;
+	border-bottom-right-radius: 6%;
 }
 
 .tech-time{
@@ -370,6 +370,9 @@ ul.jta-tweet-list li a{
 		background-color: black;
 		font-size: 4.2vmin;
 		padding: 0.15vh;
+		position: absolute !important;
+		left: 45% !important;
+		top: 42% !important;
 }
 
 .tech-next-time-plus{
@@ -378,6 +381,9 @@ ul.jta-tweet-list li a{
     font-size: 4.2vmin;
     padding: 0.15vh;
 		border-bottom-right-radius: 1vh;
+		position: absolute !important;
+		left: 60% !important;
+		top: 42% !important;
 }
 
 .tech-time-img{
