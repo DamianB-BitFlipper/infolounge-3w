@@ -1,3 +1,12 @@
+L.mapbox.accessToken = 'pk.eyJ1Ijoic2FmZXR5dGhpcmQiLCJhIjoiZXRHMHljWSJ9.iVYPbAJQjKnlAd5DYwY6Iw';
+var template_url = 'https://a.tiles.mapbox.com/v4/safetythird.lb5k4ajm/features.json?access_token=' + L.mapbox.accessToken;
+var techstops_url ='https://a.tiles.mapbox.com/v4/safetythird.lbg583om/features.json?access_token=' + L.mapbox.accessToken;
+var Markers = new Array();
+var Paths = new Array();
+var t = 0;
+var MAP;
+var updateMapRate = 200; // ms
+
 var predictionsTEK = "http://proximobus.appspot.com/agencies/mit/stops/51/predictions.json";
 
 var predictionsSFBOS = "http://proximobus.appspot.com/agencies/mit/stops/62/predictions.json";
@@ -18,73 +27,12 @@ var pre_predictions1;
 var pre_predictions2;
 var predictions;
 
-/** function handleAlerts(data) {
-    var alerts0 = data.alerts;
-    //console.log(alerts0);
 
-    if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[0].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[0].effect_end)) {
-	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
-    } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[0].effect_start) && (alerts0[0].effect_periods[0].effect_end == '')) {
-	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
-    } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[1].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[1].effect_end)) {
-	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
-    } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[2].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[2].effect_end)) {
-	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
-    } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[3].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[3].effect_end)) {
-	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';
-    } else if ((Math.round(new Date().getTime()/1000.0) > alerts0[0].effect_periods[4].effect_start) && (Math.round(new Date().getTime()/1000.0) < alerts0[0].effect_periods[4].effect_end)) {
-	elem = '<li><span class="tech-route2 red">&nbsp;' + alerts0[0].header_text + '</span>';}
-
-} **/
-
-/**
-
-function handlePredictions3(data) {
-    pre_predictions0 = data.mode;
-    pre_predictions1 = pre_predictions0[0].route;
-    pre_predictions2 = pre_predictions1[0].direction;
-    predictions = pre_predictions2[0].trip;
-    time_elem1 = '';
-
-    if (predictions.length == 0) {
-	time_elem0 = '';
-	time_elem1 = '';
-        return;
-    }
-
-
-    var second = predictions[0].pre_away;
-    if (second < 60) {
-        time_elem0 = ' Arrv';
-    } else {
-        time_elem0 = (' ' + Math.round(second/60) + 'm ');
-    }
-
-    if (predictions.length > 1) {
-        var second = predictions[1].pre_away;
-        if (second < 60) {
-            time_elem1 = ' Arrv';
-        } else {
-             time_elem1 = (' ' + Math.round(second/60) + 'm ');
-        }
-    }
-
-    var route = predictions[0].trip_headsign;
-    //console.log(predictions[0].trip_headsign);
-
-    elem += ('<li><div class="row"><span class="tech-route red">&nbsp;' + route + ' </span><span class="tech-time">&nbsp;' + time_elem0 + '</span><span class="tech-next-time">' + time_elem1 + '&nbsp;</span></div></li>');
-
-    $("#techpanel").slideDown("slow");
-    $("#predictions").html(elem);
-}
-
-**/
-
-function techImage(minutes){
+/** function techImage(minutes){
 	minutesToImage = new Object();
 	minutesToImage['23'] = '7'; minutesToImage['22'] = '7'; minutesToImage['21'] = '7';
 	minutesToImage['20'] = '7'; minutesToImage['19'] = '7'; minutesToImage['18'] = '7';
-	minutesToImage['17'] = '9'; minutesToImage['16'] = '9'; // Simmons
+	minutesToImage['17'] = '9'; minutesToImage['15'] = '9'; // Simmons
 	minutesToImage['15'] = '10'; // Vassar/Mass Ave
 	minutesToImage['14'] = '11'; minutesToImage['13'] = '11'; // Stata
 	minutesToImage['12'] = '1';	minutesToImage['11'] = '1'; // Kendall
@@ -101,6 +49,103 @@ function techImage(minutes){
 		$('.tech-map').attr("src", "").fadeOut();
 		return -1;
 	}
+} **/
+
+function updateMap(minutes) {
+renderMap();
+$.getJSON(techstops_url, function(data){
+	    for(var m = 0; m < Markers.length; m++){
+	    	MAP.removeLayer(Markers[m]);
+			}
+    	Markers = new Array();
+	    Paths = new Array();
+			t = 0;
+      var points = data.features;
+			var startPoint; var endPoint;
+			var startCoord; var endCoord;
+      for (var i = 0; i < points.length; i++) {
+				var properties = points[i].properties;
+				//console.log(properties);
+				if (properties.description.indexOf(minutes + ' min') == 0){
+					startPoint = points[i];
+					startCoord = startPoint.geometry.coordinates;
+					//console.log("startCoord", startCoord);
+					//console.log("startPoint", startPoint);
+					for (var j = 0; j < points.length; j++){
+						next = (parseInt(minutes)+23)%24;
+						if (points[j].properties.description.indexOf(next + ' min') == 0){
+							endPoint = points[j];
+							endCoord = endPoint.geometry.coordinates;
+							//console.log("endPoint", endPoint);
+							break;
+						}
+					}
+				}
+			}
+				var movingTitle = startPoint.properties.title;
+		   	var nextTitle = startPoint.properties.description.replace(minutes.toString(), next.toString());
+        var marker = L.marker(startCoord, {
+          icon: L.mapbox.marker.icon(startPoint.properties)
+        }).bindPopup('<div class="marker-title">' + '<p class="title-moving">' + movingTitle + '</p>' + '<p class="title-stopped" style="display:none">' + nextTitle + '</p>' + '</div>').addTo(MAP);
+        Markers.push(marker);
+				if (movingTitle.length > 0){
+					$($(".leaflet-marker-icon")[0]).click();
+					$(".title-stopped").hide();
+				}
+        Paths.push(new Object({ type: 'LineString', coordinates: [] }));
+				timeSteps = Math.floor(60000 / updateMapRate);
+				momentum = [(endCoord[0] - startCoord[0]) / timeSteps, (endCoord[1] - startCoord[1])/ timeSteps];
+				nextCoord = startCoord;
+        for (var p = 0; p < timeSteps; p++) {
+            nextCoord = [momentum[0] + nextCoord[0], momentum[1] + nextCoord[1]]
+            Paths[0].coordinates.push(nextCoord.slice());
+        }
+				MAP.setView([startCoord[1]+0.00075, startCoord[0]], 15);
+			//console.log(Paths[0].coordinates);
+      //$(".last-updated").hide();
+      //$(".last-updated").html(" Last Updated: <b>" + dateFormat(now, "H:MM tt") + "</b>").fadeIn(1000);
+			L.geoJson(Paths[0],{
+					style: {
+						"color": "#960000",
+						"weight": 5,
+						"opacity": 0.65
+					}
+			}).addTo(MAP);
+      tick();
+			setInterval(function(){
+				try{
+				MAP.setView([Paths[0].coordinates[t][1]+0.0005,
+	        Paths[0].coordinates[t][0]]);
+				} catch(e){}}, 10000);
+    }
+  );
+}
+
+function tick() {
+  //console.log(Markers.length);
+  for (var j=0; j < Markers.length; j++){
+      var marker = Markers[j];
+      marker.setLatLng(L.latLng(
+        Paths[j].coordinates[t][1],
+        Paths[j].coordinates[t][0]));
+  }
+  //console.log(Markers[0])
+	if (t==Paths[0].coordinates.length-1){
+		$(".title-moving").hide();
+		$(".title-stopped").fadeIn(1000);
+	}
+	t = Math.min(t+1, Paths[0].coordinates.length-1);
+	//console.log(t);
+  setTimeout(tick, updateMapRate);
+}
+
+function renderMap() {
+	$("#techmap").fadeIn();
+  try{
+     MAP = L.mapbox.map('techmap', 'safetythird.lbg7km06')
+    .setView([42.35866, -71.09370], 15);
+     // setTimeout(function(){setInterval(function(){$($('img')[Math.floor(Math.random()*100)]).click()}, 3000)}, 10000);
+  } catch(e){}
 }
 
 function handlePredictions2(data) {
@@ -115,6 +160,7 @@ function handlePredictions2(data) {
 
 	if (dateFormat(new Date, "HH:MM") > "19:10" || dateFormat(new Date, "HH:MM") < "06:00") {
 		$('.tech-map').attr("src", "").fadeOut();
+		$("#techmap").fadeOut();
 	}
 
   if (predictions[0].minutes == 0) {
@@ -135,12 +181,9 @@ function handlePredictions2(data) {
         	if (predictions[1].route_id == 'tech') {
         	    route1 = 'tech shuttle';
 							if (time_elem1 == "Arrv ") {
-								$(".tech-map").fadeOut(400, function(){
+							/**	$(".tech-map").fadeOut(400, function(){
 									$(this).attr('src', 'images/tech/6.png' ).fadeIn();
-								});
-							} else if ($(".tech-map").attr("src").length == 0) {
-								console.log("Loading image...")
-								techImage(predictions[1].minutes);
+								}); **/
 							}
         	} else if (predictions[1].route_id == 'saferidecambwest') {
         	    route1 = 'Cambridge West';
@@ -170,13 +213,14 @@ function handlePredictions2(data) {
         if (predictions[0].route_id == 'tech') {
             route = 'tech shuttle';
 						if (time_elem0 == "Arrv ") {
-							$(".tech-map").fadeOut(400, function(){
+						/**	$(".tech-map").fadeOut(400, function(){
 								$(this).attr('src', 'images/tech/6.png' ).fadeIn();
-							});
+							}); **/
+							updateMap("0");
 						} else {
 							time_elem0 += "&nbsp;&nbsp;"
 							//console.log("Loading image...")
-							techImage(predictions[0]["minutes"]);
+							updateMap(predictions[0]["minutes"]);
 						}
         } else if (predictions[0].route_id == 'saferidecambwest') {
             route = 'Cambridge West';
@@ -278,7 +322,7 @@ function getPredictions() {
 	      tone = 1;
         $.getJSON(predictionsCT2N, handlePredictions2);
     }
-    setTimeout(rollup, 1500);
+    setTimeout(rollup, 1000);
     function rollup() {
       if (elem.length == 0) {
 	       $("#techpanel").slideUp("slow");
