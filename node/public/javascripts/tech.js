@@ -100,7 +100,7 @@ $.getJSON(techstops_url, function(data){
             nextCoord = [momentum[0] + nextCoord[0], momentum[1] + nextCoord[1]]
             Paths[0].coordinates.push(nextCoord.slice());
         }
-				MAP.setView([startCoord[1]+0.00075, startCoord[0]], 15);
+				MAP.setView([startCoord[1]+0.002, startCoord[0]], 15);
 			//console.log(Paths[0].coordinates);
       //$(".last-updated").hide();
       //$(".last-updated").html(" Last Updated: <b>" + dateFormat(now, "H:MM tt") + "</b>").fadeIn(1000);
@@ -114,7 +114,7 @@ $.getJSON(techstops_url, function(data){
       tick();
 			setInterval(function(){
 				try{
-				MAP.setView([Paths[0].coordinates[t][1]+0.0005,
+				MAP.setView([Paths[0].coordinates[t][1]+0.002,
 	        Paths[0].coordinates[t][0]]);
 				} catch(e){}}, 10000);
     }
@@ -322,7 +322,7 @@ function getPredictions() {
 	      tone = 1;
         $.getJSON(predictionsCT2N, handlePredictions2);
     }
-    setTimeout(rollup, 1000);
+    setTimeout(rollup, 2000);
     function rollup() {
       if (elem.length == 0) {
 	       $("#techpanel").slideUp("slow");
