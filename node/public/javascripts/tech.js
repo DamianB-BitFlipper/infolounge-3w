@@ -83,7 +83,7 @@ $.getJSON(techstops_url, function(data){
 				}
 			}
 				var movingTitle = startPoint.properties.title;
-		   	var nextTitle = startPoint.properties.description.replace(minutes.toString(), next.toString());
+		   	var nextTitle = startPoint.properties.description.replace(minutes.toString() + " min ", "");
         var marker = L.marker(startCoord, {
           icon: L.mapbox.marker.icon(startPoint.properties)
         }).bindPopup('<div class="marker-title">' + '<p class="title-moving">' + movingTitle + '</p>' + '<p class="title-stopped" style="display:none">' + nextTitle + '</p>' + '</div>').addTo(MAP);

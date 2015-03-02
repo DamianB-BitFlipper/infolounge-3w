@@ -561,6 +561,10 @@ p, .leaflet-popup{
 	margin: 0 !important;
 }
 
+.leaflet-popup-content-wrapper .leaflet-popup-content{
+	padding: 7px 5px !important;
+}
+
 .marker-title{
   font-family: 'Roboto' !important;
   font-size: 12px !important;
