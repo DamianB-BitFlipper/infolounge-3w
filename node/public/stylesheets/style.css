@@ -563,6 +563,7 @@ p, .leaflet-popup{
 
 .leaflet-popup-content-wrapper .leaflet-popup-content{
 	padding: 7px 5px !important;
+	min-width: 80px !important;
 }
 
 .marker-title{
