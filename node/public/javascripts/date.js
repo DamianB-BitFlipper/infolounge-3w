@@ -21,7 +21,8 @@ function getDate() {
     ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
     ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
     ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
-    ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red']
+    ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red'],
+    ['oropp', 'March 4, 1995 00:00:00', 'Or']
       ];
     var now = new Date();
     var bg_color;
