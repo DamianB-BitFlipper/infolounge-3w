@@ -27,7 +27,8 @@ var dateToSpeech = function(text) {
 	return 	text;
 }
 
-var monthAbrevs = [['Jan.', 'January'],
+var monthAbrevs = [
+	  ['Jan.', 'January'],
 		['Feb.', 'February'],
 		['Mar.', 'March'],
 		['Apr.', 'April'],
@@ -37,4 +38,5 @@ var monthAbrevs = [['Jan.', 'January'],
 		['Sep.', 'September'],
 		['Oct.', 'October'],
 		['Nov.', 'November'],
-		['Dec.', 'December']]
+		['Dec.', 'December']
+	]

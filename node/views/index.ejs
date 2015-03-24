@@ -40,8 +40,7 @@
             lastUpdated = -1;
             var isItLateYet = function() {
                 var today = new Date().getHours();
-                var windowWidth = window.innerWidth || document.body.clientWidth;
-                if (today >= 2 && today <= 7 && windowWidth > 1000) {
+                if (today >= 2 && today <= 7) {
                     $('.shutthefuckup').show();
                     if (new Date().getHours == 2 && new Date().getMinutes() == 0 && newDate().getSeconds() < 3) {
                         baymaxSpeak("It is now 2 AM. No loud noises please.");
@@ -49,7 +48,6 @@
                 } else {
                     $('.shutthefuckup').hide();
                 }
-                // $('.warning').show();
                 setTimeout(isItLateYet, 1000);
             }
             $('.shutthefuckup').hide();
@@ -147,7 +145,6 @@
         </div>
       </div>
         -->
-
 
         <div id='content'>
 

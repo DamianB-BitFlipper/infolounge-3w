@@ -163,11 +163,13 @@ function handlePredictions2(data) {
 		$("#techmap").fadeOut();
 	}
 
-  if (predictions[0].minutes == 0) {
-      time_elem0 = (predictions[0].is_departing ? "Arrv " : "Arrv ");
-  } else if (predictions[0]) {
-      time_elem0 = (predictions[0].minutes + 'm');
-  }
+	if (!jQuery.isEmptyObject(predictions)){
+	  if (predictions[0].minutes == 0) {
+	      time_elem0 = (predictions[0].is_departing ? "Arrv " : "Arrv ");
+	  } else if (predictions[0]) {
+	      time_elem0 = (predictions[0].minutes + 'm');
+	  }
+	}
 
 	//console.log(time_elem0);
 	var route1 = '';
