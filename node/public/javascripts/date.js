@@ -7,7 +7,7 @@ function getDate() {
     ['akwasio', 'February 15, 1995 00:00:00', 'Akwasi', 'green'],
     ['jwei314', 'March 14, 1993 04:00:00', 'Jenny W'],
     ['jenniez', 'March 24, 1993 00:00:00', 'Jennie Z'],
-    ['lotusez3', 'March 24, 1995 00:00:00'],
+    ['lotusez3', 'March 24, 1995 00:00:00', 'Elton'],
     ['mwu2015', 'April 8, 1993 00:00:00', 'Michael Wu'],
     ['juesato', 'April 21, 1995 00:00:00', 'Jonathan U'],
     ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
