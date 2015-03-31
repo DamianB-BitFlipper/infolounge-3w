@@ -1,6 +1,13 @@
 function getDate() {
+
+  var aprilfools = [['Tiffany', '#00FFFF'], ['Tracy', 'pink'], ['Anita', '#551a8b'], 
+  ['Neil'], ['Kim', '#ADFFAD'], ['Michael X', 'red'], 
+  ['William','#990033'], ['Sumit', 'black'], ['Staly', 'green'], 
+  ['Noelle', '#00CED1'], ['Abra', '#ADFFAD'], ['Steph McHugh', 'green'], 
+  ['Piper', 'blue']];
+
   var people = [
-    ['tiffwang', 'April 1, 1995 00:00:00', 'Tiffany', '#00FFFF'],
+    ['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany', '#00FFFF'],
     ['xtnbui', 'January 4, 1996 00:00:00', 'Xuan', 'green'],
     ['jnation', 'February 4, 1989', 'Josh RT', 'red'],
     ['yzhang17', 'February 13, 1996 00:00:00', 'Yaning', '#29F0E2'],
@@ -27,10 +34,11 @@ function getDate() {
     ['mabrams', 'September 2, 1995 00:00:00', 'Melanie', "#9F7EE6"],
     ['ksaleeby', 'September 20, 1994 00:00:00', 'Kyle'],
     ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
-    ['julia_h', 'September 26, 1996 00:00:00', 'Julia'],
+    ['julia_h', 'July 24, 1996 00:00:00', 'Julia'],
     ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
     ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
-    ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red']
+    ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red'],
+    ['dfavela', 'November 1, 1996 00:00:00', 'Favela', 'red']
       ];
     var now = new Date();
     var bg_color;
@@ -53,26 +61,24 @@ function getDate() {
 		partyTime();
 		//happyBirthday(people[i][2]);
 	}
+    if (now.getMonth() == 3 && now.getDate() == 1) {
+      r = Math.floor(Math.random()*aprilfools.length);
+      elem = 'Happy Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
+      var bg_color = aprilfools[r][1] || "orange";  
+    } else {
 	if (Number(fracpart) < 0.0026) {
 		elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
     var bg_color = people[i][3] || "orange";
 	}
-	if (elem.length > 1) {
-		$('.birthday-m').find('div').html('<h1>' + elem + '</h1>');
-    $('.birthday').find('div').html('<h1>' + elem + '</h1>');
-    //console.log(people[i][3]);
-    $('.birthday-m').css('background-color', bg_color);
-    $('.birthday').css('background-color', bg_color);
-    var windowWidth = window.innerWidth || document.body.clientWidth;
-    if (windowWidth < 1000){
-      //$('.birthday-m').show();
-    } else {
-      $('.birthday').show();
     }
-		$('.warning').hide();
+	if (elem.length > 1) {
+    $('.birthday').find('div').html('<h1>' + elem + '</h1>');
+    $('.birthday').css('background-color', bg_color);
+    $('.birthday').show();
+	$('.warning').hide();
 	} else {
-		$('.birthday').hide();
-		$('.warning').show();
+	$('.birthday').hide();
+	$('.warning').show();
 	}
 	dict.push([fracpart, '<div class="subdate">' + people[i][0] + ' is ' + ageStr + ' years old</div>']);
 
