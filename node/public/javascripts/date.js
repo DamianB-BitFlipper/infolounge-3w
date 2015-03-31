@@ -1,10 +1,10 @@
 function getDate() {
 
-  var aprilfools = [['Tiffany', '#00FFFF'], ['Tracy', 'pink'], ['Anita', '#551a8b'], 
+  var aprilfools = [['Tiffany', '#00FFFF'], ['Tracy', '#FF3700'], ['Anita', '#551a8b'], 
   ['Neil'], ['Kim', '#ADFFAD'], ['Michael X', 'red'], 
-  ['William','#990033'], ['Sumit', 'black'], ['Staly', 'green'], 
-  ['Noelle', '#00CED1'], ['Abra', '#ADFFAD'], ['Steph McHugh', 'green'], 
-  ['Piper', 'blue']];
+  ['William','#990033'], ['Sumit', '#6FA252'], ['Staly', '#228b22'], 
+  ['Noelle', '#00CED1'], ['Abra', '#ADFFAD'], ['Steph McHugh', '#39DB4F'], 
+  ['Piper', '#4099FF']];
 
   var people = [
     ['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany', '#00FFFF'],
@@ -16,7 +16,7 @@ function getDate() {
     ['oropp', 'March 4, 1996 00:00:00', 'Or', '#7D26CD'],
     ['jwei314', 'March 14, 1993 04:00:00', 'Jenny W'],
     ['jenniez', 'March 24, 1993 00:00:00', 'Jennie Z'],
-    ['lotusez3', 'March 24, 1995 00:00:00', 'Elton'],
+    ['lotusez3', 'March 24, 1995 00:00:00', 'Elton', '#D391DB'],
     ['mwu2015', 'April 8, 1993 00:00:00', 'Michael Wu', 'red'],
     ['juesato', 'April 21, 1995 00:00:00', 'Jonathan U'],
     ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
