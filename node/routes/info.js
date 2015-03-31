@@ -136,8 +136,6 @@ function getNews(req, res) {
           res.json({});
         }
     });
-    res.json({});
-    return;
 };
 
 function getImg(req, res) {

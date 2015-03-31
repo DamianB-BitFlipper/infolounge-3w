@@ -6,8 +6,8 @@ function getNews() {
             $("#newspanel").slideUp("slow");
             return;
         }
-
+        console.log(data);
         $("#newspanel").slideDown("slow");
-        $("#news").html(data.news);
+        $("#news").html(data.notification);
     });
 };
