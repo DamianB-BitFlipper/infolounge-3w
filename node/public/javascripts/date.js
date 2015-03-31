@@ -2,10 +2,11 @@ function getDate() {
   var people = [
     ['tiffwang', 'January 1, 1995 00:00:00', 'Tiffany', '#00FFFF'],
     ['xtnbui', 'January 4, 1996 00:00:00', 'Xuan', 'green'],
+    ['jnation', 'February 4, 1989', 'Josh RT', 'red'],
     ['yzhang17', 'February 13, 1996 00:00:00', 'Yaning', '#29F0E2'],
     ['evayeung', 'February 13, 1993 00:00:00', 'Eva', "#ADFFAD"],
     ['akwasio', 'February 15, 1995 00:00:00', 'Akwasi', 'green'],
-    ['oropp', 'March 4, 1996 00:00:00', 'Or'],
+    ['oropp', 'March 4, 1996 00:00:00', 'Or', '#7D26CD'],
     ['jwei314', 'March 14, 1993 04:00:00', 'Jenny W'],
     ['jenniez', 'March 24, 1993 00:00:00', 'Jennie Z'],
     ['lotusez3', 'March 24, 1995 00:00:00', 'Elton'],
