@@ -63,7 +63,7 @@ function getDate() {
 	}
     if (now.getMonth() == 3 && now.getDate() == 1) {
       r = Math.floor(Math.random()*aprilfools.length);
-      elem = 'Happy Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
+      elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
       var bg_color = aprilfools[r][1] || "orange";  
     } else {
 	if (Number(fracpart) < 0.0026) {
