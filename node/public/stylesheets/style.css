@@ -1,8 +1,11 @@
 
 body.transform {
-  transform:rotate(180deg);
-  -ms-transform:rotate(180deg);
-  -webkit-transform:rotate(180deg);
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
 }
 
 @font-face {
