@@ -62,6 +62,7 @@ function getDate() {
 		//happyBirthday(people[i][2]);
 	}
     if (now.getMonth() == 3 && now.getDate() == 1) {
+        document.body.className = 'transform';
       r = Math.floor(Math.random()*aprilfools.length);
       elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
       var bg_color = aprilfools[r][1] || "orange";  
