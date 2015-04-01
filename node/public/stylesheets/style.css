@@ -1,4 +1,10 @@
 
+body.transform {
+  transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+}
+
 @font-face {
 	font-family: airplane;
 	font-weight: normal;
