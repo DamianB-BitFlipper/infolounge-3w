@@ -84,7 +84,7 @@ function getMenu(req, res) {
 
 function sanitizeText(text) {
     ////console.log(text);
-    text = text.replace(/[\n\r]/g, ' ').replace('</p>', '').replace('<b>', '').replace('</b>', '');
+    //text = text.replace(/[\n\r]/g, ' ').replace('</p>', '').replace('<b>', '').replace('</b>', '');
     return text;
 }
 
@@ -96,6 +96,9 @@ function getMITAlert(req, res) {
     res.json({});
     return;
   }
+
+    res.json({})
+    return;
 
     var now = new Date();
     var startIndex = body.indexOf('<div id="contentannouncebox">');
