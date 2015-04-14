@@ -60,7 +60,7 @@ h2{
 	padding: 5px 4px 6px 5px;
 	font-weight: 400;
 	text-transform: lowercase;
-	border-top-left-radius: 1vh;
+	border-top-left-radius: 0.75vh;
 }
 
 b{
@@ -103,7 +103,7 @@ b{
 	background-color: rgba(0,0,0,0.3);
 	margin-bottom: 15px;
 	padding: 15px;
-	border-bottom-right-radius: 3vh;
+	border-bottom-right-radius: 2vh;
 }
 
 #MITalertspanel{
@@ -115,7 +115,7 @@ b{
 	background-color: yellow;
 	margin-bottom: 15px;
 	padding: 15px;
-	border-bottom-right-radius: 3vh;
+	border-bottom-right-radius: 2vh;
 }
 
 .panel-content{
@@ -307,15 +307,15 @@ ul.jta-tweet-list li a{
 
 .tech-route{
 	font-size: 3.2vmin;
-  padding: 0.15vh;
-	border-top-left-radius: 1vh;
+  	padding: 0.15vh;
+	border-top-left-radius: 0.5vh;
 }
 
 .tech-route-plus{
 
 		font-size: 4.2vmin;
 		padding: 0.15vh;
-		border-top-left-radius: 1vh;
+		border-top-left-radius: 0.5vh;
 }
 
 .tech-route-img{
@@ -342,8 +342,8 @@ ul.jta-tweet-list li a{
 	border: 2px solid white;
 	border-top-right-radius: 2%;
 	border-bottom-left-radius: 2%;
-  border-top-left-radius: 6%;
-	border-bottom-right-radius: 6%;
+  	border-top-left-radius: 5%;
+	border-bottom-right-radius: 5%;
 }
 
 .tech-time{
@@ -358,7 +358,7 @@ ul.jta-tweet-list li a{
     background-color: black;
     font-size: 3.2vmin;
 		padding: 0.15vh;
-		border-bottom-right-radius: 1vh;
+		border-bottom-right-radius: 0.5vh;
 }
 
 .tech-time-plus{
@@ -373,7 +373,7 @@ ul.jta-tweet-list li a{
 		background-color: black;
     font-size: 4.2vmin;
     padding: 0.15vh;
-		border-bottom-right-radius: 1vh;
+		border-bottom-right-radius: 0.5vh;
 }
 
 .tech-time-img{
