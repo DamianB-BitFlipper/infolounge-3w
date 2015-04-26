@@ -98,37 +98,24 @@ function handleAlerts(data) {
         }
     }
 
-    //setTimeout(rollup, 1500);
-    //console.log("LengthA:"+elemt.length+" Content:"+elemt+"X");
-    function rollup() {
-        if (elemt.length == 0) {
-            //console.log("ZERO LENGTH");
-            $("#alertspanel").slideUp("slow");
-        } else {
-            //console.log("ACTIVE ALERT");
-            $("#alertspanel").slideDown("slow");
-        }
-    }
-
     //console.log("LengthC:"+elemt.length+" Content:"+elemt+"X");
     $("#alerts").html(elemt);
 }
 
 function getAlerts() {
     elemt = '';
-    setTimeout(alertss, 500);
+    try {
+        $.getJSON(alertsREDsouth, handleAlerts);
+    } catch (e) {
+        console.log(e);
+    }
 
-    function alertss() {
-            $.getJSON(alertsREDsouth, handleAlerts);
+    setTimeout(rollup, 2000);
+
+    function rollup() {
+        if ($("#alerts").html().length == 0) {
+            $("#alertspanel").slideUp("slow");
         }
-        //    $.getJSON(GetMITAlerts);
-        // setTimeout(rollup, 1500);
-        ////console.log("LengthA:"+elemt.length+" Content:"+elemt+"X");
-        //  function rollup() {
-        //    if (elemt.length == 0) {
-        ////console.log("ZERO LENGTH");
-        //	    $("#alertspanel").slideUp("slow");
-        //      }
-        //}
-        //console.log("LengthB:"+elemt.length+" Content:"+elemt+"X");
+    }
+
 }
