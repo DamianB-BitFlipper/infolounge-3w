@@ -52,6 +52,7 @@ var predictions;
 } **/
 
 function updateMap(minutes) {
+$('.leaflet-control').hide();
 renderMap();
 $.getJSON(techstops_url, function(data){
 	    for(var m = 0; m < Markers.length; m++){
@@ -86,7 +87,8 @@ $.getJSON(techstops_url, function(data){
 		   	var nextTitle = startPoint.properties.description.replace(minutes.toString() + " min ", "");
         var marker = L.marker(startCoord, {
           icon: L.mapbox.marker.icon(startPoint.properties)
-        }).bindPopup('<div class="marker-title">' + '<p class="title-moving">' + movingTitle + '</p>' + '<p class="title-stopped" style="display:none">' + nextTitle + '</p>' + '</div>').addTo(MAP);
+        }).addTo(MAP);
+        //.bindPopup('<div class="marker-title">' + '<p class="title-moving">' + movingTitle + '</p>' + '<p class="title-stopped" style="display:none">' + nextTitle + '</p>' + '</div>').addTo(MAP);
         Markers.push(marker);
 				if (movingTitle.length > 0){
 					$($(".leaflet-marker-icon")[0]).click();
@@ -100,7 +102,7 @@ $.getJSON(techstops_url, function(data){
             nextCoord = [momentum[0] + nextCoord[0], momentum[1] + nextCoord[1]]
             Paths[0].coordinates.push(nextCoord.slice());
         }
-				MAP.setView([startCoord[1]+0.002, startCoord[0]], 15);
+				MAP.setView([startCoord[1], startCoord[0]], 16);
 			//console.log(Paths[0].coordinates);
       //$(".last-updated").hide();
       //$(".last-updated").html(" Last Updated: <b>" + dateFormat(now, "H:MM tt") + "</b>").fadeIn(1000);
@@ -108,13 +110,13 @@ $.getJSON(techstops_url, function(data){
 					style: {
 						"color": "#960000",
 						"weight": 5,
-						"opacity": 0.65
+						"opacity": 0.75
 					}
 			}).addTo(MAP);
       tick();
 			setInterval(function(){
 				try{
-				MAP.setView([Paths[0].coordinates[t][1]+0.002,
+				MAP.setView([Paths[0].coordinates[t][1],
 	        Paths[0].coordinates[t][0]]);
 				} catch(e){}}, 10000);
     }
@@ -131,8 +133,8 @@ function tick() {
   }
   //console.log(Markers[0])
 	if (t==Paths[0].coordinates.length-1){
-		$(".title-moving").hide();
-		$(".title-stopped").fadeIn(1000);
+		//$(".title-moving").hide();
+		//$(".title-stopped").fadeIn(1000);
 	}
 	t = Math.min(t+1, Paths[0].coordinates.length-1);
 	//console.log(t);
