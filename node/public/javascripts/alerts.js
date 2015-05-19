@@ -1,4 +1,4 @@
-var alertsREDsouth = "http://realtime.mbta.com/developer/api/v2/alertsbyroute?api_key=rx_hA9SfFEOuTpxT4fGKrw&route=933_&include_access_alerts=false&include_service_alerts=true&format=json"
+var alertsREDsouth = "http://realtime.mbta.com/developer/api/v2/alertsbyroute?api_key=rx_hA9SfFEOuTpxT4fGKrw&route=red&include_access_alerts=false&include_service_alerts=true&format=json"
     // alert messages for Southbound Red Line
 
 function handleAlerts(data) {
@@ -118,4 +118,4 @@ function getAlerts() {
         }
     }
 
-}
+}	
