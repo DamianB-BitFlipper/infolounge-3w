@@ -35,6 +35,7 @@
         <script src="/javascripts/img.js"></script>
         <script src="/javascripts/interface.js"></script>
         <script src="/javascripts/speech.js"></script>
+        <script src="/javascripts/finals.js"></script>
 
         <script type='text/javascript'>
             lastUpdated = -1;
@@ -96,6 +97,7 @@
                         getMenu();
                         getNews();
                         getImg();
+                        getFinals();
                     }
                 }, 1000);
 
@@ -298,6 +300,15 @@
             </div>
           </div>
         -->
+
+          <div class="row">
+            <div class="large-12 columns"  id='finalspanel'>
+              <h3 class='finals-header'>&nbsp;<span class = "icon-m ion-sad"></span>&nbsp;Safety Finals</h3>
+              <div class='panel finals'>
+                    <ul id = "finals"></ul>
+              </div>
+            </div>
+          </div>
 
 
           <div class="row">
