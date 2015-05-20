@@ -11,7 +11,7 @@ if (now.getDate() == 19) {
 }
 
 if (now.getDate() == 20) {
-	finals_elem += '<li><span class="foodtype">' + 'AM' + '</span> <b>' + '2.005   6.006   6.046/18.410   9.24' + '</b></li><br>'
+	finals_elem += '<li><span class="foodtype">' + 'AM' + '</span> <b>' + '2.005   6.006   6.046/18.410   9.24   11.330' + '</b></li><br>'
 	finals_elem += '<li><span class="foodtype">' + 'PM' + '</span> <b>' + '8.284   9.00   14.02' + '</b></li>'
 }
 
