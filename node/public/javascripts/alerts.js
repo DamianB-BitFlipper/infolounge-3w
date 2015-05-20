@@ -6,7 +6,7 @@ function handleAlerts(data) {
     elemt = '';
 
     if (jQuery.isEmptyObject(alerts0)) {
-       $('#alertspanel').slideUp('slow');
+        $('#alertspanel').slideUp('slow');
         return;
     }
     //console.log(alerts0[0].effect_periods[0].effect_start);
@@ -118,4 +118,4 @@ function getAlerts() {
         }
     }
 
-}	
+}
