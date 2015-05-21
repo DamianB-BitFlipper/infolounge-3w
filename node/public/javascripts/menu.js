@@ -20,7 +20,7 @@ function getMenu() {
         $("#menu").html(elem);
 
         /* Search for images */
-      for (var type in data) {
+        for (var type in data) {
             var query = data[type].split('&nbsp;')[0];
             //console.log(query)
             if (menuCache[query]) {

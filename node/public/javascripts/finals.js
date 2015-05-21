@@ -16,12 +16,12 @@ if (now.getDate() == 20) {
 }
 
 if (now.getDate() == 21) {
-	finals_elem += '<li><span class="foodtype">' + 'AM' + '</span> <b>' + '2.003   10.301   18.02' + '</b></li><br>'
-	finals_elem += '<li><span class="foodtype">' + 'PM' + '</span> <b>' + '6.033' + '</b></li>'
+	finals_elem += '<li><span class="foodtype">' + 'AM' + '</span> <b>' + '2.003   6.042/18.062   10.301   18.02' + '</b></li><br>'
+	finals_elem += '<li><span class="foodtype">' + 'PM' + '</span> <b>' + '6.01   6.033' + '</b></li>'
 }
 
 if (now.getDate() == 22) {
-	finals_elem += '<li><span class="foodtype">' + 'AM' + '</span> <b>' + '7.02   9.40' + '</b></li><br>'
+	finals_elem += '<li><span class="foodtype">' + 'AM' + '</span> <b>' + '7.02   9.40   18.100B/C' + '</b></li><br>'
 	finals_elem += '<li><span class="foodtype">' + 'PM' + '</span> <b>' + '7.06' + '</b></li>'
 }
 
@@ -29,7 +29,7 @@ if (now.getDate() == 22) {
 
 if (finals_elem.length == 0) {
 	$('#finalspanel').slideUp();
-} else {
+} else {	
 	$('#finals').html(finals_elem);
 	$('#finalspanel').slideDown();
 }
