@@ -29,6 +29,7 @@ if (now.getDate() == 22) {
 
 if (finals_elem.length == 0) {
 	$('#finalspanel').slideUp();
+	return;
 } else {	
 	$('#finals').html(finals_elem);
 	$('#finalspanel').slideDown();

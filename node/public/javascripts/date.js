@@ -136,8 +136,8 @@ function getDate() {
         ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
         ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
         ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
-        ['pudjeeb', 'October 10, 1991 00:00:00', 'PJ'],
         ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
+        ['pudjeeb', 'October 10, 1991 00:00:00', 'PJ'],
         ['vhung', 'October 16, 1992 00:00:00', 'Victor', 'orange'],
         ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red'],
         ['fishr', 'October 31, 1992 00:00:00', 'Fish'],
@@ -195,9 +195,10 @@ function getDate() {
         age += (now - date) / 1000 / 60 / 60 / 24 / (now.getYear() % 4 == 0 ? 366 : 365);
         var ageStr = age.toFixed(8);
         var ageIncStr = (age - 0.000001).toFixed(8);
-        var fracpart = ageIncStr.substring(ageIncStr.indexOf('.'));
-        if (Number(fracpart) + 0.000001 > 1) {
-            partyTime();
+        var fracpart = ageStr.substring(ageStr.indexOf('.'));
+        var fracpartInc = ageIncStr.substring(ageIncStr.indexOf('.'));
+        if (Number(fracpart) > 0.9999980) {
+            document.getElementById('clock').innerHTML = dateFormat(now, 'H:MM:ss');
         }
         // April fools
         if (now.getMonth() == 3 && now.getDate() == 1) {
@@ -206,8 +207,8 @@ function getDate() {
             elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
             var bg_color = aprilfools[r][1] || "orange";
         } else {
-            if (Number(fracpart) < 0.0026) {
-                elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
+            if (Number(fracpart) < 0.0025) {
+                elem = 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";
             }
         }
@@ -220,7 +221,7 @@ function getDate() {
             //$('.birthday').hide();
             //$('.warning').show();
         }
-        dict.push([fracpart, '<div class="subdate">' + people[i][0] + ' is ' + ageStr + ' years old</div>']);
+        dict.push([fracpartInc, '<div class="subdate">' + people[i][0] + ' is ' + ageStr + ' years old</div>']);
 
     }
     dict.sort();

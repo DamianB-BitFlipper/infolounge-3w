@@ -9,15 +9,19 @@ function getMenu() {
             return;
         }
 
-        $("#menupanel").slideDown("slow");
-
         var elem = '';
         for (var type in data) {
             var item = data[type]
             item = item.replace('steamed', '');
             elem += ('<li><span class="foodtype">' + type + '</span> <b>' + item + '</b></li>');
         }
-        $("#menu").html(elem);
+        if (elem.length == 0) {
+            $("#menupanel").slideUp("slow");
+            return;
+        } else {
+            $("#menupanel").slideDown("slow");
+            $("#menu").html(elem);
+        }
 
         /* Search for images */
         for (var type in data) {
