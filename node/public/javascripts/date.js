@@ -101,7 +101,9 @@ function getDate() {
         "https://scontent-ord.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/378456_10150439727377217_667277377_n.jpg?oh=27eed11e47a7253173256b0b227ff62e&oe=55DBD1DE",
         "https://scontent-ord.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/384129_4332764993564_805148645_n.jpg?oh=116579af9cd3a690e490ba1aef49e380&oe=55CAAE3B",
         "https://scontent-ord.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/426084_10150517209403595_458142446_n.jpg?oh=6856e21de0494d7c25482020585fc1c9&oe=55C08F7E",
-        "https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xat1/v/t1.0-9/10915286_516708191805514_2567065416818470832_n.jpg?oh=e7ff981e3c446edd89bf590647bcfeeb&oe=55D32EF4&__gda__=1439120427_e9ab75158a831030fedfed061b0b1996"
+        "https://scontent-iad3-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/11079648_10155344503615150_4117952412261351461_n.jpg?oh=7336d6e51871689c98f8a0d1e7e82e56&oe=55FCB86A",
+        "https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xat1/v/t1.0-9/10915286_516708191805514_2567065416818470832_n.jpg?oh=e7ff981e3c446edd89bf590647bcfeeb&oe=55D32EF4&__gda__=1439120427_e9ab75158a831030fedfed061b0b1996",
+        "https://scontent-iad3-1.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11148720_956503601028350_3847431538154120182_n.jpg?oh=1842994e35f1f583dc617a72e1ff3cee&oe=55C881B2"
     ];
 
     var people = [
@@ -131,10 +133,12 @@ function getDate() {
         ['anitaliu', 'August 11, 1998 00:00:00', 'Anita', '#551a8b'],
         ['chenbon', 'August 28, 1996 00:00:00', 'Bonnie'],
         ['kkarthur', 'August 29, 1995 00:00:00', 'Bena', 'green'],
+        ['hsusilo', 'August 31, 1993 00:00:00', 'Hans'],
+        ['sayadate', 'September 2, 1993 00:00:00', 'Saya'],
         ['mabrams', 'September 2, 1995 00:00:00', 'Melanie', "#9F7EE6"],
         ['saleeby', 'September 20, 1994 00:00:00', 'Kyle'],
         ['harlin', 'September 23, 1993 00:00:00', 'Harlin'],
-        ['joshbs', 'September 26, 1996 00:00:00', 'Josh Josh'],
+        ['joshbs', 'September 26, 1996 00:00:00', 'Posh Josh'],
         ['cmzhang', 'October 8, 1993 00:00:00', 'Clare', '#000047'],
         ['rliu42', 'October 10, 1994 00:00:00', 'Runpeng', 'black'],
         ['pudjeeb', 'October 10, 1991 00:00:00', 'PJ'],
@@ -142,8 +146,10 @@ function getDate() {
         ['zsheinko', 'October 28, 1994 00:00:00', 'Zoe', 'red'],
         ['fishr', 'October 31, 1992 00:00:00', 'Fish'],
         ['dfavela', 'November 1, 1996 00:00:00', 'Favela', 'red'],
+        ['natalle', 'December 3, 1992 00:00:00', 'Natalle'],
         ['jamesvr', 'December 12, 1995 00:00:00', 'James'],
         ['tianm', 'December 24, 1993 00:00:00', 'Tian'],
+        ['jfabi', 'December 29, 1992 00:00:00', 'Josh Josh'],
         ['lolzhang', 'December 29, 1995 00:00:00', 'Linda']
     ];
 
@@ -208,7 +214,7 @@ function getDate() {
             var bg_color = aprilfools[r][1] || "orange";
         } else {
             if (Number(fracpart) < 0.0025) {
-                elem = 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
+                elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";
             }
         }
