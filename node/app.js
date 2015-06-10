@@ -8,7 +8,8 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , info = require('./routes/info');
+  , info = require('./routes/info')
+  , nigel = require('./nigel/index')
 
 var app = express();
 
@@ -37,6 +38,9 @@ app.get('/institute_alerts.json', info.getMITAlert);
 app.get('/news.json', info.getNews);
 app.get('/img.json', info.getImg);
 app.get('/', routes.index);
+app.get('/echo/:phrase', nigel.echo);
+app.get('/heard/:input', nigel.respond);
+app.post('/demand', nigel.respond);
 
 app.get('/:num', routes.index);
 

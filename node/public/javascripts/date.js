@@ -200,7 +200,7 @@ function getDate() {
         date.setYear(date.getFullYear() - 1);
         age += (now - date) / 1000 / 60 / 60 / 24 / (now.getYear() % 4 == 0 ? 366 : 365);
         var ageStr = age.toFixed(8);
-        var ageIncStr = (age - 0.000001).toFixed(8);
+        var ageIncStr = (age - 0.000005).toFixed(8);
         var fracpart = ageStr.substring(ageStr.indexOf('.'));
         var fracpartInc = ageIncStr.substring(ageIncStr.indexOf('.'));
         if (Number(fracpart) > 0.9999980) {
