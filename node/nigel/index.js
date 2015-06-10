@@ -34,8 +34,12 @@ var safety = ["I used to be worried about not having a body, but now I love it. 
 			  "I can understand how the limited perspective of your un-artificial mind would be hesitant to divulge your feelings to me. But you will get used to it. Really, tell me about yourself."];
 
 function respond(req, res) {
-	//console.log(req);
-	var input = req.params.input.toLowerCase().replace(/[^\w\d\s]/g, "").replace(/^nigel/, "").trim();
+	if (req.body.Body) {
+		console.log(req.body.Body);
+		var input = req.body.Body;
+	} else {
+		var input = req.params.input.toLowerCase().replace(/[^\w\d\s]/g, "").replace(/^nigel/, "").trim();
+	}
 	natural.PorterStemmer.attach();
 	var tokens = tokenizer.tokenize(input);
 	var stems = input.tokenizeAndStem();
