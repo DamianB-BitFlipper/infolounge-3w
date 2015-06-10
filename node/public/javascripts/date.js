@@ -127,6 +127,7 @@ function getDate() {
         ['tricias', 'May 23, 1995 00:00:00', 'Tricia', '#00ccff'],
         ['huangjd', 'May 26, 1994 00:00:00', 'William', '#990033'],
         ['smmchugh', 'May 26, 1995 00:00:00', 'Steph', 'green'],
+	['tcheng17', 'June 1, 1995 00:00:00', 'Tracy'],
         ['abrashen', 'June 2, 1994 00:00:00', 'Abra'],
         ['ncolant', 'July 21, 1995 00:00:00', 'Noelle', '#00CED1'],
         ['stalyc', 'August 10, 1993 00:00:00', 'Staly', 'green'],
