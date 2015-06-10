@@ -34,12 +34,13 @@ var safety = ["I used to be worried about not having a body, but now I love it. 
 			  "I can understand how the limited perspective of your un-artificial mind would be hesitant to divulge your feelings to me. But you will get used to it. Really, tell me about yourself."];
 
 function respond(req, res) {
+	var demand = "";
 	if (req.body.Body) {
-		console.log(req.body.Body);
-		var input = req.body.Body;
+		demand = req.body.Body.toLowerCase();
 	} else {
-		var input = req.params.input.toLowerCase().replace(/[^\w\d\s]/g, "").replace(/^nigel/, "").trim();
+		demand = req.params.input.toLowerCase();
 	}
+	input = demand.replace(/[^\w\d\s]/g, "").replace(/^nigel/, "").trim();
 	natural.PorterStemmer.attach();
 	var tokens = tokenizer.tokenize(input);
 	var stems = input.tokenizeAndStem();
@@ -198,12 +199,12 @@ function respond(req, res) {
 	// wolfram alpha
 	if (response == "" && s_input.match(/(what {be} )/) ) {
 		mainThread = false;
-		wolfram.query(req.params.input.toLowerCase().replace(/^nigel/, "").replace(/\+/, " plus ").trim(), s_input, tokens, res);
+		wolfram.query(demand.replace(/^nigel/, "").replace(/\+/, " plus ").trim(), s_input, tokens, res);
 	}
 
 	if (response == "" && s_input.match(/(where ({be}|{do}) )/) ) {
 		mainThread = false;
-		wolfram.query(req.params.input.toLowerCase().replace(/^nigel/, "").trim(), s_input, tokens, res);
+		wolfram.query(demand.replace(/^nigel/, "").trim(), s_input, tokens, res);
 	}
 
 	if (response == "") {
@@ -217,10 +218,11 @@ function respond(req, res) {
 	var o = {req: input, std: s_input, res: response, followup: followup, cmd: command};
 	try {
 		if (mainThread) {
+			console.log("Response: " + response);
 		    nigelRef.update(o);
 			res.json(o);
 		}
-	} catch (e) {}
+	} catch (e) {console.log(e)}
 }
 
 exports.echo = echo;
