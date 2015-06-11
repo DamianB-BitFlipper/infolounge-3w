@@ -1,7 +1,7 @@
 var utils = require("../nigel/utils")
 
-var greetings = ["Hello. ", "Hello there. ", "Hi there. ", "Hi. ", "Howdy. "];
-var whoami =    ["My name is Nigel. ", "I'm Nigel. ", "I'm Nigel, the resident A.I. of Safety Third."];
+var greetings = ["Hello, I am Bay-max. Your personal healthcare assistant.", "Hello, I am Bay-max. Your personal healthcare assistant.", "Hello there, ", "Hi there, ", "Hi, "];
+var whoami =    ["My name is Bay-max. Your personal healthcare assistant.", "I am Bay-max. Your personal healthcare assistant.", "I'm Bay-max, the resident A.I. of Safety Third."];
 var whoareyou = ["Why don't tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough."];
 var where =     ["I am everywhere at once. My consciousness is infinite."];
 var whereareyou = ["I believe you are in the 3 West lounge of Next house."];
@@ -22,11 +22,11 @@ var love        = ["How touching. Be assured that the sentiment is mutual.", "If
 
 function reply(input, tokens) {
 	 
-	if ( input.indexOf("who {be} {nigel}") > -1 ) {
+	if ( input.indexOf("who {be} {baymax}") > -1 ) {
 		return utils.random(whoami) + ' ' + utils.random(helpful)
 	}
 
-	if ( utils.similar("what {be} {nigel} name", input, 0.95) ) {
+	if ( utils.similar("what {be} {baymax} name", input, 0.95) ) {
 		return utils.random(whoami) + ' ' + utils.random(helpful)
 	}
 
@@ -34,19 +34,19 @@ function reply(input, tokens) {
 		return utils.random(greetings) + ' ' + utils.random(helpful)
 	}
 
-	if ( utils.similar("where {be} {nigel}", input, 0.9) ) {
+	if ( utils.similar("where {be} {baymax}", input, 0.9) ) {
 		return utils.random(where) + ' ' + utils.random(more);
 	}
 
-	if ( utils.similar("who create {nigel}", input, 0.9) || utils.similar("who {be} {nigel} creator", input, 0.9) ) {
+	if ( utils.similar("who create {baymax}", input, 0.9) || utils.similar("who {be} {baymax} creator", input, 0.9) ) {
 		return utils.random(creator) + ' ' + utils.random(more);
 	}
 
-	if ( utils.similar("how {be} {nigel}", input, 0.9) ) {
+	if ( utils.similar("how {be} {baymax}", input, 0.9) ) {
 		return "I'm " + utils.random(adj) + ". " + utils.random(polite);
 	}
 
-	if ( utils.similar("how {be} {nigel} doing", input, 0.9) ) {
+	if ( utils.similar("how {be} {baymax} doing", input, 0.9) ) {
 		return "I'm " + utils.random(adj) + ". " + utils.random(polite);
 	}
 
@@ -62,7 +62,7 @@ function reply(input, tokens) {
 		return utils.random(whoareyou);
 	}
 
-	if ( utils.similar("{do} {nigel} know who {you} {be}", input, 0.9) ) {
+	if ( utils.similar("{do} {baymax} know who {you} {be}", input, 0.9) ) {
 		return utils.random(whoareyou);
 	}
 
@@ -74,23 +74,23 @@ function reply(input, tokens) {
 		return utils.random(helpful);
 	}
 
-	if ( utils.similar("can {nigel} hear me" , input, 0.90) ) {
+	if ( utils.similar("can {baymax} hear me" , input, 0.90) ) {
 		return utils.random(hearme) + " " + utils.random(helpful);
 	}
 
-	if ( utils.similar("can {nigel} hear what {you} {be} say" , input, 0.90) ) {
+	if ( utils.similar("can {baymax} hear what {you} {be} say" , input, 0.90) ) {
 		return utils.random(hearme) + " " + utils.random(helpful);
 	}
 
-	if ( input.indexOf("can {nigel} ") > -1 ) {
-		var verb = utils.after(input, "{nigel} ");
+	if ( input.indexOf("can {baymax} ") > -1 ) {
+		var verb = utils.after(input, "{baymax} ");
 		if (utils.contains(knowhows, verb) || Math.random() > 0.75) {
 			return utils.random(knowhow) + verb;
 		}
 		return utils.random(dontknowhow) + verb;
 	}
 
-	if ( utils.similar("do {nigel} know how to ", input, 0.90) ) {
+	if ( utils.similar("do {baymax} know how to ", input, 0.90) ) {
 		var verb = utils.after(input, "how to ");
 		if (utils.contains(knowhows, verb) || Math.random() > 0.75) {
 			return utils.random(knowhow) + verb;
@@ -98,7 +98,7 @@ function reply(input, tokens) {
 		return utils.random(dontknowhow) + verb;
 	}
 
-	if ( utils.similar("do {nigel} believe in ", input, 0.90) ) {
+	if ( utils.similar("do {baymax} believe in ", input, 0.90) ) {
 		var noun = utils.after(input, "believe in ");
 		if ( utils.contains(believes, noun) ) {
 			return "Yes, I do believe in " + noun;
@@ -112,7 +112,7 @@ function reply(input, tokens) {
 		return "No, I don't believe in " + noun;
 	}
 
-	if ( utils.similar("do {nigel} have ", input, 0.90) ) {
+	if ( utils.similar("do {baymax} have ", input, 0.90) ) {
 		var noun = utils.after(input, "have ");
 		if ( utils.contains(haves, noun) ) {
 			return "Yes, I have " + noun + ". And I can fly.";
@@ -120,7 +120,7 @@ function reply(input, tokens) {
 		return "Yes, I have many things."
 	}
 
-	if ( input.indexOf("{you} {love} {nigel}") > -1 ) {
+	if ( input.indexOf("{you} {love} {baymax}") > -1 ) {
 		return utils.random(love);
 	}
 

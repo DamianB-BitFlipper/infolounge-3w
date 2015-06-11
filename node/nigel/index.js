@@ -62,15 +62,18 @@ function respond(req, res) {
 	// common things that people will ask
 	if (response == "") {
 		response = common.reply(s_input, tokens);
+		if (response != "") {
+			confidence = 1;
+		}
 	}
 
 	// nigel's favorite things
-	if (utils.similar("what {nigel} favorite ", s_input, 0.9) || s_input.indexOf("{nigel} favorite ") > -1) {
+	if (utils.similar("what {baymax} favorite ", s_input, 0.9) || s_input.indexOf("{baymax} favorite ") > -1) {
 		response = profile.query(s_input, tokens, stems);
 	}
 
 	// queries about people
-	if ( s_input.indexOf("who {be} ") > -1 || s_input.indexOf("{nigel} know who ") > -1 ) {
+	if ( response == "" && (s_input.indexOf("who {be} ") > -1 || s_input.indexOf("{baymax} know who ") > -1) ) {
 		var person = utils.after(input.replace(" is", ""), "who ").trim();
 		var result = people.query(person, tokens);
 		response = result.response;
@@ -82,7 +85,7 @@ function respond(req, res) {
 		// wikipedia query
 	}
 
-	if ( s_input.indexOf("{nigel} know ") > -1) {
+	if ( s_input.indexOf("{baymax} know ") > -1) {
 		var person = utils.after(s_input.replace(" {be}", ""), "know ").trim();
 		var result = people.query(person, tokens);
 		if (result.confidence == 1) {

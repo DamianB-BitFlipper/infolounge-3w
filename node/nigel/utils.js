@@ -65,7 +65,7 @@ function standardize(s) {
 	
 	var patterns = new Array();
 	patterns[0] = / (be|are|is|am)($| )/;
-	patterns[1] = /(nigels|nigel|youre|your|you)/;
+	patterns[1] = /(nigels|nigel|baymax|bay max|youre|your|you)/;
 	patterns[2] = / (suck|lose|dumb|derp|derpy|stink)/;
 	patterns[3] = /(mom|mother|ugly|fat|stupid|dumb|retarded|lame|boring|annoying|dead|a loser|tool|toolshed|fool|rape|derp|derpy|an idiot)/;
 	patterns[4] = / (doing|does|do)($| )/;
@@ -91,7 +91,7 @@ function standardize(s) {
 
 	var replacements = new Array();
 	replacements[0] = " {be} ";
-	replacements[1] = "{nigel}";
+	replacements[1] = "{baymax}";
 	replacements[2] = " {insult v}";
 	replacements[3] = "{insult adj}";
 	replacements[4] = " {do} ";
