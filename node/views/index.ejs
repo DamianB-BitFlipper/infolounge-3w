@@ -123,6 +123,15 @@
                     $('.minecraft').html(html);
                 });
             });
+
+            nigelRef.on("value", function(ss) {
+                var data = ss.val();
+                if (data.res.trim().length > 0) {_
+                    speak(data.res);
+                }
+            }, function (error) {
+                console.log("Firebase error: ", error);
+            });
         </script>
 
     </head>

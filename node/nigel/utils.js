@@ -87,7 +87,7 @@ function standardize(s) {
 	patterns[20] = /(^| )(lounge news)($| )/
 	patterns[21] = /(^| )(change|set|adjust|modify) /
 	patterns[22] = /(humor|humorous|sassiness|sassy|sass|intelligence) (parameter )?(to)?/
-	patterns[33] = /(whats )/
+	patterns[23] = /(whats )/
 
 	var replacements = new Array();
 	replacements[0] = " {be} ";

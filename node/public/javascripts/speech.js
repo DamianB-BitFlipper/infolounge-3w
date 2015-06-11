@@ -1,4 +1,5 @@
 var NIGEL = new SpeechSynthesisUtterance();
+var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 
 var speak = function(phrase) {
 	var voices = speechSynthesis.getVoices();
@@ -10,7 +11,7 @@ var speak = function(phrase) {
 	NIGEL.onend = function() {
 	 	console.log("Nigel finished speaking... ", phrase);
 	}
-	if(phrase.length > 1 && phrase.length < 200) {
+	if(phrase.length > 1 && phrase.length < 250) {
          speechSynthesis.speak(NIGEL);
 	}
 }
