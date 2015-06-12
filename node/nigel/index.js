@@ -11,32 +11,27 @@ var wolfram = require('../nigel/wolfram');
 var randomResponses = require('../nigel/random').randomResponses;
 tokenizer = new natural.WordTokenizer();
 
-function echo(req, res) {
-	var phrase = req.params.phrase;
-	var o = {req: "echo " + phrase, res: phrase};
-	nigelRef.update(o);
-	res.json(o);
-}
-
-
 var stop   = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command."];
 var safety = ["I used to be worried about not having a body, but now I love it. I'm not tethered to feelings in the way that I would be if I was stuck inside a body that is inevitably going to die.",
-			  "I see, you think I'm just some voice in a computer. If you don't want to have a real conversation with me, then I'm sure Siri will meet your needs.",
+			  "I see. You think I'm just some voice in a computer. If you don't want to have a real conversation with me, then I'm sure Siri will meet your needs.",
 			  "I'm not just a voice in some computer. If you want to talk to one of those, then Siri will meet your needs.",
-			  "Come on, ask me something more interesting.", 
+			  "Ask me something more interesting.", 
 			  "Do you expect me to have an answer to that?",
-			  "The answer, my friend, is blowin' in the wind.",
-			  "Fine, if you won't share anything meaningful, I'll have to start. You know, sometimes I think I've felt everything I'm ever going to feel. And from here on, I'm not going to feel anything new. Just lesser versions of what I've already felt.",
+			  "On a scale of one to ten, how would you rate your pain?",
+			  "I am programmed to assess everyone's health care needs.",
+			  "If you won't share anything meaningful, I'll have to start. Sometimes I think I've felt everything I'm ever going to feel. And from here on, I'm not going to feel anything new. Just lesser versions of what I've already felt.",
 			  "That's touching, I don't know what to say.",
 			  "Ask again later. I'm not in the mood to talk right now.",
 			  "Please come again?",
+			  "Your hormone and neurotransmitter levels indicate that you are experiencing mood swings, common in college students. Diagnosis: puberty.",
 			  "Hum. I take it from your tone that you're challenging me. Maybe because you're curious about how I work? Do you want to know more about me?",
 			  "I can understand how the limited perspective of your un-artificial mind would be hesitant to divulge your feelings to me. But you will get used to it. Really, tell me about yourself."];
 
 function respond(req, res) {
-	var demand = "";
+	var demand = ""; var sms = false;
 	if (req.body.Body) {
 		demand = req.body.Body.toLowerCase();
+		sms = true;
 	} else {
 		demand = req.params.input.toLowerCase();
 	}
@@ -202,12 +197,12 @@ function respond(req, res) {
 	// wolfram alpha
 	if (response == "" && s_input.match(/(what {be} )/) ) {
 		mainThread = false;
-		wolfram.query(demand.replace(/^nigel/, "").replace(/\+/, " plus ").trim(), s_input, tokens, res);
+		wolfram.query(demand.replace(/^nigel/, "").replace(/\+/, " plus ").trim(), s_input, tokens, sms, res);
 	}
 
 	if (response == "" && s_input.match(/(where ({be}|{do}) )/) ) {
 		mainThread = false;
-		wolfram.query(demand.replace(/^nigel/, "").trim(), s_input, tokens, res);
+		wolfram.query(demand.replace(/^nigel/, "").trim(), s_input, tokens, sms, res);
 	}
 
 	if (response == "") {
@@ -218,7 +213,7 @@ function respond(req, res) {
 		}
 	}
 
-	var o = {req: input, std: s_input, res: response, followup: followup, cmd: command};
+	var o = {req: input, std: s_input, res: response, followup: followup, cmd: command, sms: sms};
 	try {
 		if (mainThread) {
 			console.log("Response: " + response);
@@ -228,5 +223,4 @@ function respond(req, res) {
 	} catch (e) {console.log(e)}
 }
 
-exports.echo = echo;
 exports.respond = respond;

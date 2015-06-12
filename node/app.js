@@ -38,7 +38,6 @@ app.get('/institute_alerts.json', info.getMITAlert);
 app.get('/news.json', info.getNews);
 app.get('/img.json', info.getImg);
 app.get('/', routes.index);
-app.get('/echo/:phrase', nigel.echo);
 app.get('/heard/:input', nigel.respond);
 app.post('/demand', nigel.respond);
 

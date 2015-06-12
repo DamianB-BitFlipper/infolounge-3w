@@ -1,7 +1,7 @@
 var utils = require("../nigel/utils")
 
 var greetings = ["Hello, I am Bay-max. Your personal healthcare assistant.", "Hello, I am Bay-max. Your personal healthcare assistant.", "Hello there, ", "Hi there, ", "Hi, "];
-var whoami =    ["My name is Bay-max. Your personal healthcare assistant.", "I am Bay-max. Your personal healthcare assistant.", "I'm Bay-max, the resident A.I. of Safety Third."];
+var whoami =    ["My name is Bay-max. Your personal healthcare assistant.", "I am programmed to assess everyone's health care needs.", "I am Bay-max. Your personal healthcare assistant.", "I am Bay-max. The resident A.I. of Safety Third."];
 var whoareyou = ["Why don't tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough."];
 var where =     ["I am everywhere at once. My consciousness is infinite."];
 var whereareyou = ["I believe you are in the 3 West lounge of Next house."];

@@ -6,8 +6,8 @@ var speak = function(phrase) {
 	var baymax = voices[1];
 	BAYMAX.voice = baymax;
 	BAYMAX.text = phrase;
-	BAYMAX.pitch = 1.25;
-	BAYMAX.rate = 1.00;
+	BAYMAX.pitch = 1.40;
+	BAYMAX.rate = 1.0;
 	BAYMAX.onend = function() {
 	 	console.log("Baymax finished speaking... ", phrase);
 	}
@@ -26,8 +26,10 @@ var baymaxSpeak = function(phrase) {
 
 nigelRef.on("value", function (ss) {
     var data = ss.val();
-    var res = data.res;
-    speak(res);
+    if (data.sms) {
+    	var res = data.res;
+    	speak(res);
+	}
 }, function (error) {
     console.log("Firebase error: ", error);
 });

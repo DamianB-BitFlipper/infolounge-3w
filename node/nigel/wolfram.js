@@ -5,10 +5,10 @@ var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var randomResponses = require('../nigel/random').randomResponses;
 
-var highConfidence = ["I believe  ", "I'm fairly sure ", "Yawn, why do you ask such trivial questions? ", "You underestimate me. "];
+var highConfidence = ["I believe  ", "I'm fairly sure ", "Why do you ask such trivial questions? ", "You underestimate me. "];
 var dontKnow = ["Please come again?", 
 				"Ask me something more interesting.", 
-				"The answer, my friend, is blowin' in the wind.", 
+				"The answer, my friend, is blowing in the wind.", 
 				"I've been a lot of places and still I do not know",
 				"That's not the question you should be asking.",
 				"Ask again later please.",
@@ -44,7 +44,7 @@ function clean(s) {
 	return s.trim();
 }
 
-function query(input, s_input, tokens, res) {
+function query(input, s_input, tokens, sms, res) {
 	response = "";
 	var wolframURL = "http://api.wolframalpha.com/v2/query?input=" + input + "&appid=JR95G7-RR7AHKXET4&location=boston,ma";
 
@@ -81,7 +81,7 @@ function query(input, s_input, tokens, res) {
             		//console.log(response);
             		if (response.length <= 40) {
             			if ( s_input.match(/(what {be} )/) ) {
-            				response = utils.random(highConfidence) + input.replace("what is ", "").replace("whats ", "") + " is " + response;
+            				response = utils.random(highConfidence) + input.replace(/(what is |whats |what are )/, "") + " is " + response;
             			}
             		} 
             		else if (response.length > 150) {
@@ -93,7 +93,7 @@ function query(input, s_input, tokens, res) {
             		response = utils.random(dontKnow);
             	}
 
-				o = {req: input, std: s_input, res: response, cmd: "", media: "" };
+				o = {req: input, std: s_input, res: response, sms: sms, cmd: "", media: "" };
 				nigelRef.update(o);
 				res.json(o);
 
