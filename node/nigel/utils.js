@@ -35,14 +35,14 @@ function similar(s1, s2, threshold) {
 function stringifyMath(s) {
 
 	var patterns = new Array();
-	patterns[0] = /(\+)/
-	patterns[1] = /(\-)/
-	patterns[2] = /(\*)/
-	patterns[3] = /(\\)/
-	patterns[4] = /(\^3)/
-	patterns[5] = /(\^2)/
-	patterns[6] = /(\^)/
-	patterns[7] = /(sqrt)/
+	patterns[0] = /(\+)/g
+	patterns[1] = /(\-)/g
+	patterns[2] = /(\*)/g
+	patterns[3] = /(\\|\/)/g
+	patterns[4] = /(\^3)/g
+	patterns[5] = /(\^2)/g
+	patterns[6] = /(\^)/g
+	patterns[7] = /(sqrt\()/g
 
 	var replacements = new Array();
 	replacements[0] = " plus ";
@@ -78,16 +78,18 @@ function standardize(s) {
 	patterns[11] = /(hello|hi($| )|greetings|hola|bonjour|howdy|what {be} up|whats up)/
 	patterns[12] = /((^|\s)i|my)($|\s)/
 	patterns[13] = /(tell me a|tell a|tell) /
-	patterns[14] = /(play some|play a|play|^sing) /
+	patterns[14] = /(play some|play a|(^| )play|^sing) /
 	patterns[15] = /shut[a-z\s]*up|be quiet|^stop/
 	patterns[16] = /^test(ing)?/
 	patterns[17] = /(love|want|like|desire|long for) /
-	patterns[18] = /(^| )(dinner|brunch|breakfast|supper|lunch)($| )/
-	patterns[19] = /(^| )(public|buses|bus|shuttles|tech)($| )/
-	patterns[20] = /(^| )(lounge news)($| )/
-	patterns[21] = /(^| )(change|set|adjust|modify) /
-	patterns[22] = /(humor|humorous|sassiness|sassy|sass|intelligence) (parameter )?(to)?/
-	patterns[23] = /(whats )/
+	patterns[18] = /(^| )(dinner|brunch|breakfast|supper|lunch|menu|dining)($| )/
+	patterns[19] = /(^| )(public|bus[a-z]*|shuttle[a-z]*|tech|campus|transport[a-z]*)($| )/
+	patterns[20] = /(^| )(lounge)($| )/
+	patterns[21] = /(^| )(twitter|tweets)($| )/
+	patterns[22] = /(^| )(show|display)($| )/
+	patterns[23] = /(^| )(change|set|adjust|modify) /
+	patterns[24] = /(humor|humorous|sassiness|sassy|sass|intelligence) (parameter )?(to)?/
+	patterns[25] = /(whats )/
 
 	var replacements = new Array();
 	replacements[0] = " {be} ";
@@ -108,12 +110,14 @@ function standardize(s) {
 	replacements[15] = "{shutup}";
 	replacements[16] = "{testing}";
 	replacements[17] = "{love} ";
-	replacements[18] = " dining ";
-	replacements[19] = " shuttle ";
+	replacements[18] = " menu ";
+	replacements[19] = " tech ";
 	replacements[20] = " news ";
-	replacements[21] = " {set} ";
-	replacements[22] = "{parameter}";
-	replacements[23] = "what {be} "
+	replacements[21] = " tweet ";
+	replacements[22] = " {show} "
+	replacements[23] = " {set} ";
+	replacements[24] = "{parameter}";
+	replacements[25] = "what {be} "
 
 	for (var i in patterns) {
 		s = s.replace(patterns[i], replacements[i]);

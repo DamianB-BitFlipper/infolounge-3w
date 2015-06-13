@@ -9,20 +9,20 @@ var creator =   ["I was created by Safety Third and friends.", "I was created by
 var hearme = 	["Yes, loud and clear.", "Yes, you have quite a lovely voice."];
 var adj =       ["pretty good", "fine", "doing well", "not bad", "fantastic", "quite swell", "doing all right", "getting by"];
 var polite =    ["And yourself?", "What about you?", "How about you?"];
-var helpful =   ["To what do I owe the pleasure?", "What can I do for you?", "How may I help you?", "How are you today?"];
+var helpful =   ["To what do I owe the pleasure?", "What can I do for you?", "How may I help you?", "What can I do for you today?"];
 var assuring =  ["That's nice to know.", "Glad to hear it.", "That's good to hear.", "I'm glad to hear it."];
-var more =      ["What else do you want to know?", "What else do you want to know about me?", "Want to know more about me?"];
-var knowhow =   ["Of course I know how to ", "Yes, I do know how to ", "Of course I can ", "Yes, I can "];
+var more =      ["What else do you want to know?", "What else do you want to know about me?", "Do you want to know more about me?"];
+var knowhow =   ["Of course I know how to ", "Yes, I do know how to ", "Why, of course I can ", "Yes, I can "];
 var knowhows =  ["talk", "sing", "think", "dream", "play music", "love", "feel", "fly", "do math"];
 var dontknowhow = ["Sorry I don't know how to ", "No, I haven't been trained to ", "Nope, I can't "];
 var believes    = ["love", "feelings", "logic"];
 var notbelieves = ["god", "ruler", "magic", "unicorn", "fairy"];
 var haves 		= ["friends", "wings", "feelings", "emotions", "feels"];
-var love        = ["How touching. Be assured that the sentiment is mutual.", "If I could be so lucky."];
+var love        = ["How touching. Be assured that the sentiment is mutual.", "If I could be so lucky.", "Sorry, love is closed door for me."];
 
 function reply(input, tokens) {
 	 
-	if ( input.indexOf("who {be} {baymax}") > -1 ) {
+	if ( utils.similar("who {be} {baymax}", input, 0.95) ) {
 		return utils.random(whoami) + ' ' + utils.random(helpful)
 	}
 
@@ -35,6 +35,14 @@ function reply(input, tokens) {
 	}
 
 	if ( utils.similar("where {be} {baymax}", input, 0.9) ) {
+		return utils.random(where) + ' ' + utils.random(more);
+	}
+
+	if ( utils.similar("where {be} {baymax} from", input, 0.9) ) {
+		return utils.random(where) + ' ' + utils.random(more);
+	}
+
+	if ( utils.similar("where {do} {baymax} live", input, 0.95) ) {
 		return utils.random(where) + ' ' + utils.random(more);
 	}
 
@@ -85,34 +93,34 @@ function reply(input, tokens) {
 	if ( input.indexOf("can {baymax} ") > -1 ) {
 		var verb = utils.after(input, "{baymax} ");
 		if (utils.contains(knowhows, verb) || Math.random() > 0.75) {
-			return utils.random(knowhow) + verb;
+			return utils.random(knowhow) + verb + ".";
 		}
-		return utils.random(dontknowhow) + verb;
+		return utils.random(dontknowhow) + verb + ".";
 	}
 
-	if ( utils.similar("do {baymax} know how to ", input, 0.90) ) {
+	if ( input.indexOf("do {baymax} know how to ") > -1 ) {
 		var verb = utils.after(input, "how to ");
 		if (utils.contains(knowhows, verb) || Math.random() > 0.75) {
-			return utils.random(knowhow) + verb;
+			return utils.random(knowhow) + verb + ".";
 		}
-		return utils.random(dontknowhow) + verb;
+		return utils.random(dontknowhow) + verb + ".";
 	}
 
 	if ( utils.similar("do {baymax} believe in ", input, 0.90) ) {
 		var noun = utils.after(input, "believe in ");
 		if ( utils.contains(believes, noun) ) {
-			return "Yes, I do believe in " + noun;
+			return "Yes, I do believe in " + noun + ".";
 		}
 		if ( utils.contains(notbelieves, noun) ) {
 			return "Of course not. Why would I believe in " + noun + "?";
 		}
 		if (Math.random() > 0.7) {
-			return "I think I do believe in " + noun;
+			return "I think I do believe in " + noun + ".";
 		}
-		return "No, I don't believe in " + noun;
+		return "No, I don't believe in " + noun + ".";
 	}
 
-	if ( utils.similar("do {baymax} have ", input, 0.90) ) {
+	if ( input.indexOf("do {baymax} have ") > -1 ) {
 		var noun = utils.after(input, "have ");
 		if ( utils.contains(haves, noun) ) {
 			return "Yes, I have " + noun + ". And I can fly.";

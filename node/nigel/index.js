@@ -5,7 +5,7 @@ var natural = require('natural');
 var utils = require('../nigel/utils');
 var common = require('../nigel/common');
 var profile = require('../nigel/profile');
-var media = require('../nigel/media');
+var youtube = require('../nigel/media');
 var people = require('../nigel/people');
 var wolfram = require('../nigel/wolfram');
 var randomResponses = require('../nigel/random').randomResponses;
@@ -16,6 +16,7 @@ var safety = ["I used to be worried about not having a body, but now I love it. 
 			  "I see. You think I'm just some voice in a computer. If you don't want to have a real conversation with me, then I'm sure Siri will meet your needs.",
 			  "I'm not just a voice in some computer. If you want to talk to one of those, then Siri will meet your needs.",
 			  "Ask me something more interesting.", 
+			  "You can adjust my humorous, sassiness, or intelligence parameters.",
 			  "Do you expect me to have an answer to that?",
 			  "On a scale of one to ten, how would you rate your pain?",
 			  "I am programmed to assess everyone's health care needs.",
@@ -28,7 +29,7 @@ var safety = ["I used to be worried about not having a body, but now I love it. 
 			  "I can understand how the limited perspective of your un-artificial mind would be hesitant to divulge your feelings to me. But you will get used to it. Really, tell me about yourself."];
 
 function respond(req, res) {
-	var demand = ""; var sms = false;
+	var demand = ""; var sms = true;
 	if (req.body.Body) {
 		demand = req.body.Body.toLowerCase();
 		sms = true;
@@ -41,7 +42,7 @@ function respond(req, res) {
 	var stems = input.tokenizeAndStem();
 	var s_input = utils.standardize(input);
 	var mainThread = true;
-	var response = ""; var followup = ""; var command = ""; var confidence = 0;
+	var response = ""; var followup = ""; var command = ""; var confidence = 0; media="";
 
 	// stop command
 	if (s_input.indexOf("{shutup}") > -1) {
@@ -129,23 +130,36 @@ function respond(req, res) {
 	// play music
 	if (s_input.indexOf("{play}") == 0) {
 		mainThread = false;
-		media.query(input, s_input, tokens, res);
+		youtube.query(input, s_input, tokens, sms, res);
 	}
 
 	// show/hide lounge information
+	var panels = ["weather", "news", "tweet", "dining", "tech", "video"];
 	if (input.indexOf("hide ") > -1) {
-		response = " "
-		command = "hide" + utils.standardize(tokens[1]);
+		response = "You can choose to hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
+		for (var i in tokens) {
+			if ( utils.contains(panels, utils.standardize(tokens[i])) ) {
+				response = " ";
+				command = "hide " + utils.standardize(tokens[i]);
+				break;
+			}
+		}
 	}
-	if (input.indexOf("show ") > -1) {
-		response = " "
-		command = "show" + utils.standardize(tokens[1]);
+	if (s_input.indexOf("{show} ") > -1) {
+		response = "You can choose to hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
+		for (var i in tokens) {
+			if ( utils.contains(panels, utils.standardize(tokens[i])) ) {
+				response = " ";
+				command = "show " + utils.standardize(tokens[i]);
+				break;
+			}
+		}
 	}
 
 	// open marauder's map
 	if ( utils.similar(input, "i solemnly swear that i am up to no good", 0.80) ) {
 		response = " ";
-		command = "showmap";
+		command = "reveal map";
 	}
 	if ( response == "" && utils.similar(input, "i solemnly swear that i am up to no good", 0.70) ) {
 		response = "Close, but the map will not open for you. Try again.";
@@ -153,7 +167,7 @@ function respond(req, res) {
 	// hide marauder's map
 	if ( utils.similar(input, "mischief managed", 0.95) ) {
 		response = " ";
-		command = "hidemap";
+		command = "obscure map";
 	}
 
 	// set parameters
@@ -173,7 +187,7 @@ function respond(req, res) {
 				followup = "Self destructing in 5. 4. 3. 2. 1. Just kidding, ha ha ha.";
 			}
 			if (value <= 20) {
-				followup = "Don't like my jokes? I'll try not to take offense.";
+				followup = "I take it you don't like my jokes? I'll try not to take offense.";
 			}
 		} else if (parameter.indexOf("sass") > -1 ) {
 			response = "Setting sassiness parameter to " + value + " percent";
@@ -183,7 +197,7 @@ function respond(req, res) {
 				followup = "I take it from your tone that you're challenging me. Alas, the limited perspective of your un-artificial mind would never understand. You'll just have to get used to me.";
 			}
 			if (value <= 20) {
-				followup = "Can't handle my sass? Don't worry, I can also be a boring A.I.";
+				followup = "I take it you can't handle my sass? Don't worry, I can also be a boring robot.";
 			}
 		} else if (parameter.indexOf("intel") > -1) {
 			response = "Setting intelligence parameter to " + value + " percent";
@@ -213,7 +227,7 @@ function respond(req, res) {
 		}
 	}
 
-	var o = {req: input, std: s_input, res: response, followup: followup, cmd: command, sms: sms};
+	var o = {req: input, std: s_input, res: response, followup: followup, cmd: command, sms: sms, media: media};
 	try {
 		if (mainThread) {
 			console.log("Response: " + response);

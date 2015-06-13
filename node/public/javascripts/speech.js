@@ -1,19 +1,30 @@
 var BAYMAX = new SpeechSynthesisUtterance();
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
+var firstLoad = true;
 
-var speak = function(phrase) {
+var speak = function(phrase, followup, command) {
+	if (phrase.length < 1 || phrase.length > 250) {
+		processCommand(command);
+		return;
+	}
 	var voices = speechSynthesis.getVoices();
 	var baymax = voices[1];
 	BAYMAX.voice = baymax;
 	BAYMAX.text = phrase;
 	BAYMAX.pitch = 1.40;
 	BAYMAX.rate = 1.0;
-	BAYMAX.onend = function() {
-	 	console.log("Baymax finished speaking... ", phrase);
+	if (followup) {
+		BAYMAX.onend = function() {
+	 		console.log("Baymax finished speaking... ", phrase);
+	 		setTimeout(speak(followup, "", command), 2500);
+		}
+	} else {
+		BAYMAX.onend = function() {
+	 		console.log("Baymax finished speaking... ", phrase);
+	 		processCommand(command);
+		}
 	}
-	if (phrase.length > 1 && phrase.length < 250) {
-         speechSynthesis.speak(BAYMAX);
-	}
+    speechSynthesis.speak(BAYMAX);
 }
 
 var baymaxSpeak = function(phrase) {
@@ -26,16 +37,59 @@ var baymaxSpeak = function(phrase) {
 
 nigelRef.on("value", function (ss) {
     var data = ss.val();
-    if (data.sms) {
-    	var res = data.res;
-    	speak(res);
+    if (data.sms && !firstLoad) {
+    	processResponse(data);
 	}
+	firstLoad = false;
 }, function (error) {
     console.log("Firebase error: ", error);
 });
 
-var happyBirthday = function(person) {
-	if (person.length > 1) {
-		speak("Happy Birthday, " + person + "!");
+var processResponse = function(result) {
+	if (result.res) {
+		speak(result.res, result.followup, result.cmd);
+	}
+	if (result.media) {
+		var url = "http://www.youtube.com/embed/" + result.media + "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
+		$("#player").attr("src", url);
 	}
 }
+
+var processCommand = function(command) {
+	if (!command) {
+		return;
+	}
+	console.log("Executing command... " + command);
+	if (command == "stop") {
+		$("#player").attr("src", "");
+	}
+	if ($("#player").attr("src") == "") {
+		$("#videopanel").slideUp();
+		$("#weatherpanel").find('div').slideDown();
+		$("#tweetpanel").find('div').slideDown();
+	}
+	if (command.indexOf("hide") > -1) {
+		$('#' + command.split(" ")[1] + "panel").find('div').slideUp();
+	}
+	if (command.indexOf("show") > -1) {
+		$('#' + command.split(" ")[1] + "panel").find('div').slideDown();
+	}
+	if (command.indexOf("show video") > -1) {
+		$('#videopanel').slideDown();
+		$("#weatherpanel").find('div').slideUp();
+		$("#tweetpanel").find('div').slideUp();
+	}
+	if (command.indexOf("hide video") > -1) {
+		$("#weatherpanel").find('div').slideDown();
+		$("#tweetpanel").find('div').slideDown();
+	}
+	return;
+}
+
+	function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+              height: '375',
+              videoId: ""
+
+          });
+    }

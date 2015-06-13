@@ -5,11 +5,11 @@ var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var randomResponses = require('../nigel/random').randomResponses;
 
-var highConfidence = ["I believe  ", "I'm fairly sure ", "Why do you ask such trivial questions? ", "You underestimate me. "];
+var highConfidence = ["I believe ", "I'm fairly sure ", "Why do you ask such trivial questions? ", "You underestimate me. "];
 var dontKnow = ["Please come again?", 
 				"Ask me something more interesting.", 
 				"The answer, my friend, is blowing in the wind.", 
-				"I've been a lot of places and still I do not know",
+				"I've been a lot of places and still I do not know.",
 				"That's not the question you should be asking.",
 				"Ask again later please.",
 				"I will not answer to that tone of voice.",
@@ -46,7 +46,7 @@ function clean(s) {
 
 function query(input, s_input, tokens, sms, res) {
 	response = "";
-	var wolframURL = "http://api.wolframalpha.com/v2/query?input=" + input + "&appid=JR95G7-RR7AHKXET4&location=boston,ma";
+	var wolframURL = "http://api.wolframalpha.com/v2/query?input=" + encodeURIComponent(input) + "&appid=JR95G7-RR7AHKXET4&location=boston,ma";
 
 	   request(wolframURL, function(e, r, xml) {
 			if (e || r.statusCode != 200) {
@@ -67,7 +67,7 @@ function query(input, s_input, tokens, sms, res) {
 	            	var pod = pods[0];
 	            	for ( var i in pods ) {
 	            		var title = pods[i]["$"]["title"].toLowerCase().split(" ");
-	            		if ( utils.contains(title, "result response statement weather") ) {
+	            		if ( utils.contains(title, "result response statement weather approximation") ) {
 	            			pod = pods[i];
 	            			//console.log(pod);
 	            			break;
@@ -78,10 +78,13 @@ function query(input, s_input, tokens, sms, res) {
             	try {
             		//console.log(utils.after(pod["subpod"][0]["plaintext"][0], "="));
             		response = clean(utils.math(utils.after(pod["subpod"][0]["plaintext"][0], "=")));
+            		if ( utils.contains(title, "approximation") ) {
+            			response = "approximately " + response.substring(0, 10);
+            		}
             		//console.log(response);
             		if (response.length <= 40) {
             			if ( s_input.match(/(what {be} )/) ) {
-            				response = utils.random(highConfidence) + input.replace(/(what is |whats |what are )/, "") + " is " + response;
+            				response = utils.random(highConfidence) + utils.math(input).replace(/(what is |whats |what are )/, "") + " is " + response;
             			}
             		} 
             		else if (response.length > 150) {
@@ -93,7 +96,7 @@ function query(input, s_input, tokens, sms, res) {
             		response = utils.random(dontKnow);
             	}
 
-				o = {req: input, std: s_input, res: response, sms: sms, cmd: "", media: "" };
+				o = {req: input, std: s_input, res: response, followup: "", cmd: "", sms: sms, media: "" };
 				nigelRef.update(o);
 				res.json(o);
 

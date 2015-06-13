@@ -12,7 +12,7 @@ for (var i = 0; i< headers.length; i++) {
   elem.addEventListener("click", function(e){
     var elem = e.target;
     //console.log(elem);
-    var panel = $($(elem).parent().find('.panel'));
+    var panel = $($(elem).parent().find('div'));
     if (panel.css('display') == 'none') {
         panel.slideDown();
         return;
