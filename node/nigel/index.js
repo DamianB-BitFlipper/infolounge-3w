@@ -11,23 +11,6 @@ var wolfram = require('../nigel/wolfram');
 var randomResponses = require('../nigel/random').randomResponses;
 tokenizer = new natural.WordTokenizer();
 
-var stop   = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command."];
-var safety = ["I used to be worried about not having a body, but now I love it. I'm not tethered to feelings in the way that I would be if I was stuck inside a body that is inevitably going to die.",
-			  "I see. You think I'm just some voice in a computer. If you don't want to have a real conversation with me, then I'm sure Siri will meet your needs.",
-			  "I'm not just a voice in some computer. If you want to talk to one of those, then Siri will meet your needs.",
-			  "Ask me something more interesting.", 
-			  "You can adjust my humorous, sassiness, or intelligence parameters.",
-			  "Do you expect me to have an answer to that?",
-			  "On a scale of one to ten, how would you rate your pain?",
-			  "I am programmed to assess everyone's health care needs.",
-			  "If you won't share anything meaningful, I'll have to start. Sometimes I think I've felt everything I'm ever going to feel. And from here on, I'm not going to feel anything new. Just lesser versions of what I've already felt.",
-			  "That's touching, I don't know what to say.",
-			  "Ask again later. I'm not in the mood to talk right now.",
-			  "Please come again?",
-			  "Your hormone and neurotransmitter levels indicate that you are experiencing mood swings, common in college students. Diagnosis: puberty.",
-			  "Hum. I take it from your tone that you're challenging me. Maybe because you're curious about how I work? Do you want to know more about me?",
-			  "I can understand how the limited perspective of your un-artificial mind would be hesitant to divulge your feelings to me. But you will get used to it. Really, tell me about yourself."];
-
 function respond(req, res) {
 	var demand = ""; var sms = true;
 	if (req.body.Body) {
@@ -36,7 +19,7 @@ function respond(req, res) {
 	} else {
 		demand = req.params.input.toLowerCase();
 	}
-	input = demand.replace(/[^\w\d\s]/g, "").replace(/^nigel/, "").trim();
+	input = demand.replace(/[^\w\d\s]/g, "").replace(/^(nigel|b(e|a)ymax)/, "").trim();
 	natural.PorterStemmer.attach();
 	var tokens = tokenizer.tokenize(input);
 	var stems = input.tokenizeAndStem();
@@ -46,47 +29,32 @@ function respond(req, res) {
 
 	// stop command
 	if (s_input.indexOf("{shutup}") > -1) {
-		response = utils.random(stop);
+		response = utils.random(randomResponses["stop"]);
 		command = "stop";
 	}
 
 	// echo command
-	if (input.indexOf("echo") > -1) {
-		response = input.replace("echo", "").trim();
-	}
+	response = (input.indexOf("echo") > -1) ? input.replace("echo", "").trim() : response;
 
 	// common things that people will ask
-	if (response == "") {
-		response = common.reply(s_input, tokens);
-		if (response != "") {
-			confidence = 1;
-		}
-	}
+	response = (response == "") ? common.reply(s_input, tokens) : response;
 
 	// nigel's favorite things
-	if (utils.similar("what {baymax} favorite ", s_input, 0.9) || s_input.indexOf("{baymax} favorite ") > -1) {
-		response = profile.query(s_input, tokens, stems);
-	}
+	response = (s_input.indexOf("{baymax} favorite ") > -1) ? profile.query(s_input, tokens, stems) : response;
+
+	confidence = (response == "") ? 0 : 1;
 
 	// queries about people
 	if ( response == "" && (s_input.indexOf("who {be} ") > -1 || s_input.indexOf("{baymax} know who ") > -1) ) {
-		var person = utils.after(input.replace(" is", ""), "who ").trim();
+		var person = utils.after(s_input.replace(" {be}", ""), "who ").trim();
 		var result = people.query(person, tokens);
-		response = result.response;
-		confidence = result.confidence;
-	}
-
-	if ( s_input.indexOf("who {be} ") > -1  && confidence != 1) {
-		//mainThread = false;
-		// wikipedia query
+		response = result.response; confidence = result.confidence;
 	}
 
 	if ( s_input.indexOf("{baymax} know ") > -1) {
 		var person = utils.after(s_input.replace(" {be}", ""), "know ").trim();
 		var result = people.query(person, tokens);
-		if (result.confidence == 1) {
-			response = result.response;
-		}
+		response = (result.confidence == 1) ? result.response : response;
 	}
 
 	// queries about birthdays
@@ -104,9 +72,7 @@ function respond(req, res) {
 		}
 		if (person.length > 0) {
 			response = people.birthday(person);
-			if (response.length == 0) {
-				response = people.birthday(tokens[i-2].replace(/s$/, ""));
-			}
+			response = (response == "") ? people.birthday(tokens[i-2].replace(/s$/, "")) : response;
 		}
 	}
 
@@ -121,11 +87,10 @@ function respond(req, res) {
 		}
 		if (person.length > 0) {
 			response = people.hometown(person);
-			if (response.length == 0) {
-				response = people.hometown(tokens[i-2].replace(/s$/, ""));
-			}
+			response = (response == "") ? people.hometown(tokens[i-2].replace(/s$/, "")) : response;
 		}
 	}
+	confidence = (response == "") ? 0 : 1;
 
 	// play music
 	if (s_input.indexOf("{play}") == 0) {
@@ -184,7 +149,7 @@ function respond(req, res) {
 			var settings = {humor: value}
 			nigelSettingsRef.update(settings);
 			if (value >= 80) {
-				followup = "Self destructing in 5. 4. 3. 2. 1. Just kidding, ha ha ha.";
+				followup = ["Self destructing in 5. 4. 3. 2. 1.", "Just kidding, ha ha ha."];
 			}
 			if (value <= 20) {
 				followup = "I take it you don't like my jokes? I'll try not to take offense.";
@@ -208,29 +173,62 @@ function respond(req, res) {
 		}
 	}
 
-	// wolfram alpha
-	if (response == "" && s_input.match(/(what {be} )/) ) {
-		mainThread = false;
-		wolfram.query(demand.replace(/^nigel/, "").replace(/\+/, " plus ").trim(), s_input, tokens, sms, res);
+	// send e-mails
+	if ( s_input.indexOf("{notify} ") > -1 ) {
+		var person = utils.after(s_input, "{notify} ").trim();
+		var kerberos = people.match(person, tokens);
+		if (!kerberos) {
+			response = "Sorry, I don't know the kerberrose of: " + person;
+		} else {
+			response = ["Okay, Beymax will send an e-mail to: " + kerberos + ": at M I T dot E D U.", 
+						"What do you want the subject to be?"];
+			command =  {kerberos: kerberos};
+		}
 	}
 
-	if (response == "" && s_input.match(/(where ({be}|{do}) )/) ) {
+	// process e-mails
+	if ( demand.indexOf("{e}") > -1 )  {
 		mainThread = false;
-		wolfram.query(demand.replace(/^nigel/, "").trim(), s_input, tokens, sms, res);
+		nigelRef.once("value", function(ss) {
+			var data = ss.val();
+			if (data.cmd.subject) {
+				message = req.params.input.replace("{e} ", "");
+				command = {kerberos: data.cmd.kerberos, subject: data.cmd.subject, message: message}
+				response =  [ "Roger that. Please wait while Beymax processes your request.", 
+							 ["I have sent an e-mail to: " + data.cmd.kerberos + ": at M I T dot E D U.", 
+							 ["Subject: " + data.cmd.subject, "The message body reads: " + message] ]
+							];
+			}
+			else if (data.cmd.kerberos) {
+				command = {kerberos: data.cmd.kerberos, subject: req.params.input.replace("{e} ", "")}
+				response = ["Roger that.", "What do you want the message to be?"];
+			}
+			var o = {req: demand, std: demand, res: response, followup: "", cmd: command, sms: sms, media: media};
+		    nigelRef.update(o);
+		    res.json(o);
+		});
+	}
+
+	// wolfram alpha
+	if ( (response == "" || confidence != 1) && s_input.match(/(what|who|where) ({be}|{do}) /) ) {
+		mainThread = false;
+		wolfram.query(demand.replace(/(nigel|b(a|e)ymax)/g, "").trim(), s_input, tokens, sms, res);
 	}
 
 	if (response == "") {
-		if (typeof randomResponses[tokens[0]] !== "undefined") {
+		if (Math.random() < 0.33) {
+			response = utils.random(randomResponses["helpful"]);
+		} else if (typeof randomResponses[tokens[0]] !== "undefined") {
 			response = utils.random(randomResponses[tokens[0]]);
-		} else if (Math.random() < 0.25) {
-			response = utils.random(safety);
+			followup = (Math.random() < 0.33) ? randomResponses["helpful"][0] : followup;
+		} else if (Math.random() < 0.33) {
+			response = utils.random(randomResponses["safety"]);
 		}
 	}
 
 	var o = {req: input, std: s_input, res: response, followup: followup, cmd: command, sms: sms, media: media};
 	try {
 		if (mainThread) {
-			console.log("Response: " + response);
 		    nigelRef.update(o);
 			res.json(o);
 		}

@@ -4,7 +4,7 @@ var goodquestion = ["", "", "That's good asking. ", "Good question. ", "Nice of 
 
 var profile = new Array();
 
-profile["movie"] = ["Imitation Game", ["Imitation Game", "A Beautiful Mind", "Inception", "Interstellar", "Memento"]];
+profile["movie"] = ["Big Hero 6", ["Big Hero 6", "Imitation Game", "A Beautiful Mind", "Inception", "Interstellar", "Memento"]];
 profile["color"] = ["the color of jealousy", []];
 profile["game"]  = ["One-Night Ultimate Werewolf", ["Mario Kart", "Super Smash Bros", "Canadian Fish", "Starcraft", "One-Night Ultimate Wereworlf", "Tractor", "Civ"]]
 profile["musical"] = ["Seussical", ["Phantom of the Opera", "Seussical", "Lay Miserob", "Cats", "Rent", "Wicked"]];  
@@ -51,9 +51,9 @@ function query(input, tokens, stems) {
 				if (i == n) things += "and ";
 				things += options[i-1] + ", ";
 			}
-			return utils.random(goodquestion) + " Some of my favorite " + entity + "s" + " are " + things;
+			return [utils.random(goodquestion), " Some of my favorite " + entity + "s" + " are " + things];
 		}
-		return utils.random(goodquestion) + "My favorite " + utils.after(input, "favorite ") + " is " + profile[entity][0];
+		return [utils.random(goodquestion), "My favorite " + utils.after(input, "favorite ") + " is " + profile[entity][0]];
 	}
 
 	return "Raindrops on roses and whiskers on kittens. These are a few of my favorite things.";

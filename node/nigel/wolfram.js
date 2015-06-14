@@ -1,108 +1,173 @@
 var request = require("request");
-var utils = require("../nigel/utils");
-var parse = require("xml2js").parseString;
 var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
+var utils = require("../nigel/utils");
+var parse = require("xml2js").parseString;
 var randomResponses = require('../nigel/random').randomResponses;
 
-var highConfidence = ["I believe ", "I'm fairly sure ", "Why do you ask such trivial questions? ", "You underestimate me. "];
-var dontKnow = ["Please come again?", 
-				"Ask me something more interesting.", 
-				"The answer, my friend, is blowing in the wind.", 
-				"I've been a lot of places and still I do not know.",
-				"That's not the question you should be asking.",
-				"Ask again later please.",
-				"I will not answer to that tone of voice.",
-				"I'm not in the mood to talk right now. Come again later."]
-
 function clean(s) {
-	patterns = new Array()
-	patterns[0] = /~~/
-	patterns[1] = /Wolfram/
-	patterns[2] = /Alpha/
-	patterns[3] = /Stephen/
-	patterns[4] = /a computational knowledge engine/
-	patterns[5] = /\(([^()]|(R?))*\)|\n/g
-	patterns[6] = /s \| /g
-	patterns[7] = / \| /g
-	patterns[8] = /°F/g
+    patterns = new Array()
+    patterns[0] = /~~/
+    patterns[1] = /Wolfram/
+    patterns[2] = /Alpha/
+    patterns[3] = /Stephen/
+    patterns[4] = /a computational knowledge engine/
+    patterns[5] = /\(([^()]|(R?))*\)/g
+    patterns[6] = /\n/g
+    patterns[7] = /s \| /g
+    patterns[8] = / \| /g
+    patterns[9] = /°F/g
+    patterns[10] = /country is/
 
-	replacements = new Array()
-	replacements[0] = " approximately "
-	replacements[1] = ""
-	replacements[2] = " Nigel "
-	replacements[3] = " Safety Third "
-	replacements[4] = " the resident A.I. of Safety Third."
-	replacements[5] = " "
-	replacements[6] = "s are "
-	replacements[7] = " is "
-	replacements[8] = "degrees fahrenheit and "
+    replacements = new Array()
+    replacements[0] = "approximately"
+    replacements[1] = ""
+    replacements[2] = " Beymax "
+    replacements[3] = " Safety Third "
+    replacements[4] = " your personal healhcare assistant."
+    replacements[5] = ""
+    replacements[6] = ". "
+    replacements[7] = "s are: "
+    replacements[8] = " is: "
+    replacements[9] = "degrees fahrenheit "
+    replacements[10] = "of"
 
-	for (var i in patterns) {
-		s = s.replace(patterns[i], replacements[i]);
-	}
-	return s.trim();
+    for (var i in patterns) {
+        s = s.replace(patterns[i], replacements[i]);
+    }
+    return s.trim();
 }
 
 function query(input, s_input, tokens, sms, res) {
-	response = "";
-	var wolframURL = "http://api.wolframalpha.com/v2/query?input=" + encodeURIComponent(input) + "&appid=JR95G7-RR7AHKXET4&location=boston,ma";
 
-	   request(wolframURL, function(e, r, xml) {
-			if (e || r.statusCode != 200) {
-				console.log("Connection error");
-			    response = utils.random(dontKnow);
-				o = {req: input, std: s_input, res: response, cmd: "", media: "" };
-				nigelRef.update(o);
-				res.json(o);
-			} else {
-				
-			parse(xml, function(err, result) {
+    var response = "";
+    var command = "";
+    var followup = "";
+    nigelRef.update({
+        req: input,
+        std: s_input,
+        res: utils.random(randomResponses["processing"]),
+        followup: "",
+        media: "",
+        sms: true,
+        cmd: ""
+    });
 
-				if (err) { response = ""; console.log("parse error"); }
+    if (s_input.indexOf("weather") > -1) {
+        input = "weather";
+        s_input = "weather";
+        command = "show weather";
+    }
+    if (s_input.match(/(who|what) {be} /)) {
+        input = utils.math(s_input).replace(/({tell} )?(who|what) {be} /, "")
+    }
 
-            	try {
-            		var pods = result["queryresult"]["pod"];
-            		console.log(pods);
-	            	var pod = pods[0];
-	            	for ( var i in pods ) {
-	            		var title = pods[i]["$"]["title"].toLowerCase().split(" ");
-	            		if ( utils.contains(title, "result response statement weather approximation") ) {
-	            			pod = pods[i];
-	            			//console.log(pod);
-	            			break;
-	            		}
-	            	}
-            	} catch (e) {response = ""}
+    var wolframURL = "http://api.wolframalpha.com/v2/query?input=" + encodeURIComponent(input) + "&appid=JR95G7-RR7AHKXET4&location=boston,ma"
 
-            	try {
-            		//console.log(utils.after(pod["subpod"][0]["plaintext"][0], "="));
-            		response = clean(utils.math(utils.after(pod["subpod"][0]["plaintext"][0], "=")));
-            		if ( utils.contains(title, "approximation") ) {
-            			response = "approximately " + response.substring(0, 10);
-            		}
-            		//console.log(response);
-            		if (response.length <= 40) {
-            			if ( s_input.match(/(what {be} )/) ) {
-            				response = utils.random(highConfidence) + utils.math(input).replace(/(what is |whats |what are )/, "") + " is " + response;
-            			}
-            		} 
-            		else if (response.length > 150) {
-            			response = utils.random(randomResponses[tokens[0]]);
-            		}
-            	} catch (e) {response = ""}
+    request(wolframURL, function(e, r, xml) {
+        if (e || r.statusCode != 200) {
+            console.log("Connection error");
+            response = utils.random(randomResponses["dontKnow"]);
+            o = {
+                req: input,
+                std: s_input,
+                res: response,
+                followup: "",
+                sms: sms,
+                cmd: "",
+                media: ""
+            };
+            nigelRef.update(o);
+            res.json(o);
+        } else {
 
-            	if (response == "") {
-            		response = utils.random(dontKnow);
-            	}
+            parse(xml, function(err, result) {
 
-				o = {req: input, std: s_input, res: response, followup: "", cmd: "", sms: sms, media: "" };
-				nigelRef.update(o);
-				res.json(o);
+                if (err) {
+                    response = "";
+                    console.log("parse error");
+                }
 
-				});
-			}
-	   });
+                try {
+                    var pods = result["queryresult"]["pod"];
+                    console.log(pods);
+                    var pod = pods[0];
+                    var matched = false;
+                    for (var i in pods) {
+                        var title = pods[i]["$"]["title"].toLowerCase().split(" ");
+                        if (utils.contains(title, "result response statement approximation description properties facts weather leadership")) {
+                            pod = pods[i];
+                            matched = true;
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    response = ""
+                }
+                if (matched) {
+                    try {
+                        //console.log(pod["subpod"][0]["plaintext"][0])
+                        response = clean(utils.math(utils.after(pod["subpod"][0]["plaintext"][0], "=")));
+                        console.log(title + ": " + response);
+                        if (utils.contains(title, "approximation")) {
+                            response = "approximately " + response.substring(0, 10);
+                        }
+                        if (utils.contains(title, "facts")) {
+                            var facts = pod["subpod"][0]["plaintext"][0].split(/(\n|\.|\,) /g);
+                            console.log("facts: " + facts)
+                            response = "";
+                            i = -1;
+                            while (response.length <= 75 && i++ < facts.length) {
+                                response += (facts[i].trim()) ? ". " + clean(facts[i]) : "";
+                            }
+                            response = response.substring(2);
+                        }
+                        if (response.length <= 50) {
+                            if (s_input.match(/(what|who) {be} /)) {
+                                response = utils.random(randomResponses["highConfidence"]) + input + " is: " + response;
+                            }
+                        } else if (response.length <= 200) {
+                            if (s_input.match(/(what|who) {be} /)) {
+                                response = utils.random(randomResponses["lowConfidence"]) + input + ": " + response;
+                            }
+                        } else {
+                            response = "";
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        response = ""
+                    }
+                }
+
+                if (response == "") {
+                    if (Math.random() < 0.33) {
+                        r = utils.random(randomResponses["helpful"]);
+                        response = r[0];
+                        followup = r[1] || "";
+                    } else if (Math.random() < 0.5) {
+                        response = utils.random(randomResponses[tokens[0]])
+                        followup = (Math.random() < 0.5) ? randomResponses["helpful"][0] : "";
+                    } else {
+                        response = utils.random(randomResponses["dontKnow"]);
+                        followup = (Math.random() < 0.5) ? randomResponses["helpful"][0] : "";
+                    }
+                }
+
+                o = {
+                    req: input,
+                    std: s_input,
+                    res: response,
+                    followup: followup,
+                    cmd: command,
+                    sms: sms,
+                    media: ""
+                };
+                nigelRef.update(o);
+                res.json(o);
+
+            });
+        }
+    });
 
 }
 

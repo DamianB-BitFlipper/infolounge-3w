@@ -1,26 +1,35 @@
-var BAYMAX = new SpeechSynthesisUtterance();
+
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var firstLoad = true;
 
 var speak = function(phrase, followup, command) {
-	if (phrase.length < 1 || phrase.length > 250) {
+	var BAYMAX = new SpeechSynthesisUtterance();
+	var p; var f;
+	if (typeof phrase == "object") {
+		f = phrase[1] || "";
+		p = phrase[0] || "";
+	} else {
+		p = phrase;
+		f = followup;
+		followup = "";
+	}
+	if (p.trim().length < 1 || p.length > 250) {
 		processCommand(command);
 		return;
 	}
 	var voices = speechSynthesis.getVoices();
-	var baymax = voices[1];
-	BAYMAX.voice = baymax;
-	BAYMAX.text = phrase;
+	BAYMAX.voice = voices[1];
+	BAYMAX.text = p;
 	BAYMAX.pitch = 1.40;
 	BAYMAX.rate = 1.0;
-	if (followup) {
+	if (f || followup) {
 		BAYMAX.onend = function() {
-	 		console.log("Baymax finished speaking... ", phrase);
-	 		setTimeout(speak(followup, "", command), 2500);
+	 		console.log("Baymax finished speaking... ", p);
+	 		setTimeout(speak(f, followup, command), 2500);
 		}
 	} else {
 		BAYMAX.onend = function() {
-	 		console.log("Baymax finished speaking... ", phrase);
+	 		console.log("Baymax finished speaking... ", p);
 	 		processCommand(command);
 		}
 	}
@@ -42,7 +51,7 @@ nigelRef.on("value", function (ss) {
 	}
 	firstLoad = false;
 }, function (error) {
-    console.log("Firebase error: ", error);
+    console.log("Firebase error: " + error);
 });
 
 var processResponse = function(result) {
@@ -90,6 +99,5 @@ var processCommand = function(command) {
         player = new YT.Player('player', {
               height: '375',
               videoId: ""
-
           });
     }

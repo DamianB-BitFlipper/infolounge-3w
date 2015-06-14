@@ -1,7 +1,7 @@
 var natural = require('natural');
 
 function random(array) {
-	return array[Math.floor(Math.random()*array.length)];
+	return (typeof array === "undefined") ? "" : array[Math.floor(Math.random()*array.length)];
 }
 
 function contains(array, search) {
@@ -17,10 +17,7 @@ function contains(array, search) {
 }
 
 function after(S, s) {
-	if (S.indexOf(s) > -1) {
-		return S.substring(S.indexOf(s) + s.length);
-	}
-	return S;
+	return (S.indexOf(s) > -1) ? S.substring(S.indexOf(s) + s.length) : S;
 }
 
 function between(S, start, end) {
@@ -64,20 +61,20 @@ function stringifyMath(s) {
 function standardize(s) {
 	
 	var patterns = new Array();
-	patterns[0] = / (be|are|is|am)($| )/;
+	patterns[0] = / (be|are|is|am|was)($| )/;
 	patterns[1] = /(nigels|nigel|baymax|bay max|youre|your|you)/;
 	patterns[2] = / (suck|lose|dumb|derp|derpy|stink)/;
-	patterns[3] = /(mom|mother|ugly|fat|stupid|dumb|retarded|lame|boring|annoying|dead|a loser|tool|toolshed|fool|rape|derp|derpy|an idiot)/;
+	patterns[3] = /(mom|mother|ugly|fat|stupid|dumb|retarded|lame|boring|annoying|dead|a loser|tool|toolshed|fool|rape|derp|derpy|an idiot) /;
 	patterns[4] = / (doing|does|do)($| )/;
 	patterns[5] = / (okay|very good|good|great|fine|excellent|bad|well)/;
 	patterns[6] = /(thanks|thank you)/;
 	patterns[7] = /(^| )(im|i am) /;
 	patterns[8] = /(sure|yes|okay)($| )/;
 	patterns[9] = /(no$|nope)/;
-	patterns[10] = /(email|notify|send email to|message|send message to) /;
+	patterns[10] = /((send )?(email|message)( to)?|notify) /;
 	patterns[11] = /(hello|hi($| )|greetings|hola|bonjour|howdy|what {be} up|whats up)/
-	patterns[12] = /((^|\s)i|my)($|\s)/
-	patterns[13] = /(tell me a|tell a|tell) /
+	patterns[12] = /(^| )(i|my)($| )/
+	patterns[13] = /(tell me a|tell a|tell( me)?) /
 	patterns[14] = /(play some|play a|(^| )play|^sing) /
 	patterns[15] = /shut[a-z\s]*up|be quiet|^stop/
 	patterns[16] = /^test(ing)?/
@@ -88,14 +85,18 @@ function standardize(s) {
 	patterns[21] = /(^| )(twitter|tweets)($| )/
 	patterns[22] = /(^| )(show|display)($| )/
 	patterns[23] = /(^| )(change|set|adjust|modify) /
-	patterns[24] = /(humor|humorous|sassiness|sassy|sass|intelligence) (parameter )?(to)?/
+	patterns[24] = /(humor[a-z]*|sass[a-z]*|intelligence) (parameter )?(to)?/
 	patterns[25] = /(whats )/
+	patterns[26] = /(wheres )/
+	patterns[27] = /(hows )/
+	patterns[28] = /(whose|whos|about) /
+	patterns[29] = /(safety( )?(3rd|third)) /
 
 	var replacements = new Array();
 	replacements[0] = " {be} ";
 	replacements[1] = "{baymax}";
 	replacements[2] = " {insult v}";
-	replacements[3] = "{insult adj}";
+	replacements[3] = "{insult adj} ";
 	replacements[4] = " {do} ";
 	replacements[5] = " {adj}";
 	replacements[6] = "{thank}";
@@ -117,7 +118,11 @@ function standardize(s) {
 	replacements[22] = " {show} "
 	replacements[23] = " {set} ";
 	replacements[24] = "{parameter}";
-	replacements[25] = "what {be} "
+	replacements[25] = "what {be} ";
+	replacements[26] = "where {be} ";
+	replacements[27] = "how {be} ";
+	replacements[28] = "who {be} ";
+	replacements[29] = "{safetythird} ";
 
 	for (var i in patterns) {
 		s = s.replace(patterns[i], replacements[i]);
