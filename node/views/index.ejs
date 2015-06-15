@@ -33,7 +33,9 @@
         <script src="/javascripts/alerts.js"></script>
         <script src="/javascripts/institute_alerts.js"></script>
         <script src="/javascripts/img.js"></script>
+        <script src="/javascripts/utils.js"></script>
         <script src="/javascripts/interface.js"></script>
+        <script src="/javascripts/commands.js"></script>
         <script src="/javascripts/speech.js"></script>
         <script src="/javascripts/finals.js"></script>
 
@@ -225,10 +227,19 @@
                     </div>
 
                   <div class="row">
-                    <div class="large-12 columns" id="videopanel">
+                    <div class="large-12 columns" id="videopanel" style="display:none">
                       <h3 class='video-header '>&nbsp;<span class = "icon-m ion-videocamera"></span>&nbsp;Video</h3>
                       <div class='panel video ' style="display:none">
                             <div id="player"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="large-12 columns" id="marauderpanel" style="display:none">
+                      <h3 class='video-header '>&nbsp;<span class = "icon-m ion-ios-color-wand"></span>&nbsp;Marauder's Map</h3>
+                      <div class='panel marauder' >
+                            <iframe src="http://runpengliu.com/mit-marauder/" id="maraudermap" scrolling="no" height="350" width="700"></iframe>
                       </div>
                     </div>
                   </div>

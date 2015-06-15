@@ -8,7 +8,7 @@ function contains(array, search) {
 	var search = search.split(" ");
 	for (var i in array) {
 		for (var j in search) {
-			if ( search[j].indexOf(array[i]) == 0 ) {
+			if ( similar(search[j], array[i], 0.90) ) {
 				return true;
 			}
 		}
@@ -61,10 +61,10 @@ function stringifyMath(s) {
 function standardize(s) {
 	
 	var patterns = new Array();
-	patterns[0] = / (be|are|is|am|was)($| )/;
-	patterns[1] = /(nigels|nigel|baymax|bay max|youre|your|you)/;
+	patterns[0] = /(^| )(be|are|is|am|was)($| )/;
+	patterns[1] = /(nigel(s)?|b(a|e)y( )?max|yourself|your|youre|you)($| )/;
 	patterns[2] = / (suck|lose|dumb|derp|derpy|stink)/;
-	patterns[3] = /(mom|mother|ugly|fat|stupid|dumb|retarded|lame|boring|annoying|dead|a loser|tool|toolshed|fool|rape|derp|derpy|an idiot) /;
+	patterns[3] = /(mom|mother|ugly|fat|stupid|dumb|retarded|lame|boring|annoying|dead|a loser|tool|toolshed|fool|rape|derp|derpy|an idiot|fuck)( |$)/;
 	patterns[4] = / (doing|does|do)($| )/;
 	patterns[5] = / (okay|very good|good|great|fine|excellent|bad|well)/;
 	patterns[6] = /(thanks|thank you)/;
@@ -80,7 +80,7 @@ function standardize(s) {
 	patterns[16] = /^test(ing)?/
 	patterns[17] = /(love|want|like|desire|long for) /
 	patterns[18] = /(^| )(dinner|brunch|breakfast|supper|lunch|menu|dining)($| )/
-	patterns[19] = /(^| )(public|bus[a-z]*|shuttle[a-z]*|tech|campus|transport[a-z]*)($| )/
+	patterns[19] = /(^| )(public|bus(es)?|shuttle[a-z]*|tech|campus|transport[a-z]*)($| )/
 	patterns[20] = /(^| )(lounge)($| )/
 	patterns[21] = /(^| )(twitter|tweets)($| )/
 	patterns[22] = /(^| )(show|display)($| )/
@@ -91,10 +91,12 @@ function standardize(s) {
 	patterns[27] = /(hows )/
 	patterns[28] = /(whose|whos|about) /
 	patterns[29] = /(safety( )?(3rd|third)) /
+	patterns[30] = / (born|(date of )?birth( )?(day|date)?)($| )/
+	patterns[31] = / (from$|home( )?(town)?)/
 
 	var replacements = new Array();
 	replacements[0] = " {be} ";
-	replacements[1] = "{baymax}";
+	replacements[1] = "{baymax} ";
 	replacements[2] = " {insult v}";
 	replacements[3] = "{insult adj} ";
 	replacements[4] = " {do} ";
@@ -123,6 +125,8 @@ function standardize(s) {
 	replacements[27] = "how {be} ";
 	replacements[28] = "who {be} ";
 	replacements[29] = "{safetythird} ";
+	replacements[30] = " {birthday} "
+	replacements[31] = " {from}"
 
 	for (var i in patterns) {
 		s = s.replace(patterns[i], replacements[i]);

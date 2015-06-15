@@ -46,7 +46,7 @@ function query(input, s_input, tokens, sms, res) {
     nigelRef.update({
         req: input,
         std: s_input,
-        res: utils.random(randomResponses["processing"]),
+        res: utils.random(randomResponses.processing),
         followup: "",
         media: "",
         sms: true,
@@ -67,7 +67,7 @@ function query(input, s_input, tokens, sms, res) {
     request(wolframURL, function(e, r, xml) {
         if (e || r.statusCode != 200) {
             console.log("Connection error");
-            response = utils.random(randomResponses["dontKnow"]);
+            response = utils.random(randomResponses.dontKnow);
             o = {
                 req: input,
                 std: s_input,
@@ -89,13 +89,13 @@ function query(input, s_input, tokens, sms, res) {
                 }
 
                 try {
-                    var pods = result["queryresult"]["pod"];
+                    var pods = result.queryresult.pod;
                     console.log(pods);
                     var pod = pods[0];
                     var matched = false;
                     for (var i in pods) {
                         var title = pods[i]["$"]["title"].toLowerCase().split(" ");
-                        if (utils.contains(title, "result response statement approximation description properties facts weather leadership")) {
+                        if (utils.contains(title, "result response statement derivative integral approximation description properties facts weather leadership")) {
                             pod = pods[i];
                             matched = true;
                             break;
@@ -107,13 +107,13 @@ function query(input, s_input, tokens, sms, res) {
                 if (matched) {
                     try {
                         //console.log(pod["subpod"][0]["plaintext"][0])
-                        response = clean(utils.math(utils.after(pod["subpod"][0]["plaintext"][0], "=")));
+                        response = clean(utils.math(utils.after(pod.subpod[0].plaintext[0], "=")));
                         console.log(title + ": " + response);
                         if (utils.contains(title, "approximation")) {
                             response = "approximately " + response.substring(0, 10);
                         }
                         if (utils.contains(title, "facts")) {
-                            var facts = pod["subpod"][0]["plaintext"][0].split(/(\n|\.|\,) /g);
+                            var facts = pod.subpod[0].plaintext[0].split(/(\n|\.|\,) /g);
                             console.log("facts: " + facts)
                             response = "";
                             i = -1;
@@ -124,11 +124,11 @@ function query(input, s_input, tokens, sms, res) {
                         }
                         if (response.length <= 50) {
                             if (s_input.match(/(what|who) {be} /)) {
-                                response = utils.random(randomResponses["highConfidence"]) + input + " is: " + response;
+                                response = utils.random(randomResponses.highConfidence) + input + " is: " + response;
                             }
                         } else if (response.length <= 200) {
                             if (s_input.match(/(what|who) {be} /)) {
-                                response = utils.random(randomResponses["lowConfidence"]) + input + ": " + response;
+                                response = utils.random(randomResponses.lowConfidence) + input + ": " + response;
                             }
                         } else {
                             response = "";
@@ -139,17 +139,17 @@ function query(input, s_input, tokens, sms, res) {
                     }
                 }
 
-                if (response == "") {
+                if (!response) {
                     if (Math.random() < 0.33) {
-                        r = utils.random(randomResponses["helpful"]);
+                        r = utils.random(randomResponses.helpful);
                         response = r[0];
                         followup = r[1] || "";
                     } else if (Math.random() < 0.5) {
                         response = utils.random(randomResponses[tokens[0]])
-                        followup = (Math.random() < 0.5) ? randomResponses["helpful"][0] : "";
+                        followup = (Math.random() < 0.5) ? utils.random(randomResponses.unsatisfied) : "";
                     } else {
-                        response = utils.random(randomResponses["dontKnow"]);
-                        followup = (Math.random() < 0.5) ? randomResponses["helpful"][0] : "";
+                        response = utils.random(randomResponses.dontKnow);
+                        followup = (Math.random() < 0.5) ? utils.random(randomResponses.unsatisfied) : "";
                     }
                 }
 

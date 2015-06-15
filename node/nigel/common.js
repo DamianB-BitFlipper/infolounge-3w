@@ -1,7 +1,7 @@
 var utils = require("../nigel/utils")
-
-var greetings = [ ["Hello.", "I am Beymax. Your personal healthcare assistant."], ["Hello", "I am Beymax. Your personal healthcare assistant."], "Hello there, ", "Hi there, ", "Hi, "];
-var whoami =    [ ["My name",  "is Beymax. Your personal healthcare assistant."], "I am programmed to assess everyone's health care needs.", "I am Beymax. Your personal healthcare assistant.", "I am Beymax. The resident A.I. of Safety Third."];
+var randomResponses = require("../nigel/random").randomResponses;
+var greetings = [ ["Hello.", "I am Beymax. Your personal safety and healthcare companion."], ["Hello.", "I am Beymax. Your personal healthcare companion."], "Hello there, ", "Hi there, ", "Hi, "];
+var whoami =    [ ["My name",  "is Beymax. Your personal safety and healthcare companion."], "I am programmed to assess everyone's safety and healthcare needs.", "I am Beymax. Your personal healthcare companion.", "I am Beymax. The resident A.I. of Safety Third."];
 var whoareyou = ["Why don't you tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough."];
 var whereami =    ["I am everywhere at once. My consciousness is infinite."];
 var whereareyou = ["I believe you are in the 3 West lounge of Next house."];
@@ -11,18 +11,22 @@ var adj =       ["pretty good", "fine", "doing well", "not bad", "fantastic", "q
 var polite =    ["And yourself?", "What about you?", "How about you?"];
 var helpful =   ["To what do I owe the pleasure?", "What can I do for you?", "How may I help you?", "What can I do for you today?"];
 var assuring =  ["That's nice to know.", "Glad to hear it.", "That's good to hear.", "I'm glad to hear it."];
-var more =      ["What else do you want to know?", "What else do you want to know about me?", "Do you want to know more about me?"];
-var knowhow =   ["Of course I know how to ", "Yes, I do know how to ", "Why, of course I can ", "Yes, I can "];
-var dontknowhow = ["Sorry I don't know how to ", "No, I haven't been trained to ", "Nope, I can't "];
-var knowhows =  ["talk", "sing", "think", "dream", "play music", "love", "feel", "fly", "do math", "speak"];
+var more =      ["What else do you want to know about Beymax?", "What else do you want to know about me?", "Do you want to know more about me?"];
+var knowhow =   ["Of course I can ", "Yes, Beymax does know how to ", "Why, of course I can ", "Yes, Beymax can "];
+var dontknowhow = ["Sorry I don't know how to ", "No, Beymax has not been trained to ", "Nope, Beymax can't "];
+var knowhows =  ["talk", "sing", "think", "dream", "play music", "love", "feel", "fly", "do math", "speak", "send", "dance"];
 var believes    = ["love", "feelings", "logic"];
 var notbelieves = ["god", "ruler", "magic", "unicorn", "fairy"];
 var haves 		= ["friends", "wings", "feelings", "emotions", "feels"];
 var love        = ["How touching. Be assured that the sentiment is mutual.", "If I could be so lucky.", "Sorry, love is closed door for me."];
 
 function reply(input, tokens) {
+
+	if (input == "{baymax}") {
+		return utils.random(helpful);
+	}
 	 
-	if ( tokens[0] == "who" && utils.similar("who {be} {baymax}", input, 0.95) ) {
+	if ( input.match(/wh(o|at) {be} {baymax}$/) ) {
 		return [utils.random(whoami), utils.random(helpful)];
 	}
 
@@ -30,19 +34,11 @@ function reply(input, tokens) {
 		return [utils.random(whoami), utils.random(helpful)]
 	}
 
-	if ( input.indexOf("{greeting}") == 0 ) {
+	if ( input.match(/^{greeting}/) ) {
 		return [utils.random(greetings), utils.random(helpful)]
 	}
 
-	if ( tokens[0] == "where" && utils.similar("where {be} {baymax}", input, 0.95) ) {
-		return [utils.random(whereami),  utils.random(more)];
-	}
-
-	if ( tokens[0] == "where" && utils.similar("where {be} {baymax} from", input, 0.9) ) {
-		return [utils.random(whereami),  utils.random(more)];
-	}
-
-	if ( tokens[0] == "where" && utils.similar("where {do} {baymax} live", input, 0.95) ) {
+	if ( input.match(/where ({be}|{do}) {baymax}/) || utils.similar("where {be} {baymax}", input, 0.95) ) {
 		return [utils.random(whereami),  utils.random(more)];
 	}
 
@@ -79,7 +75,7 @@ function reply(input, tokens) {
 	}
 
 	if ( tokens[0] == "what" && utils.similar("what can {baymax} {do}", input, 0.95) ) {
-		return utils.random(require("../nigel/random").randomResponses["helpful"]);
+		return utils.random(randomResponses["helpful"]);
 	}
 
 	if ( input.indexOf("{testing}") == 0 ) {
@@ -104,10 +100,10 @@ function reply(input, tokens) {
 
 	if ( input.indexOf("do {baymax} know how to ") > -1 ) {
 		var verb = utils.after(input, "how to ");
-		if (utils.contains(knowhows, verb) || Math.random() > 0.75) {
-			return utils.random(knowhow) + verb + ".";
+		if (utils.contains(knowhows, verb) || Math.random() < 0.25) {
+			return [utils.random(knowhow) + verb, "I can do many other things as well."];
 		}
-		return utils.random(dontknowhow) + verb + ".";
+		return [utils.random(dontknowhow) + verb, "But I can do many other things."];
 	}
 
 	if ( utils.similar("do {baymax} believe in ", input, 0.90) ) {
@@ -136,8 +132,27 @@ function reply(input, tokens) {
 		return utils.random(love);
 	}
 
+	if ( utils.similar(input, "{be} {baymax} satisfied with", 0.9) ) {
+		return ["Very funny. That's my question to ask.", "Tell me. Are you satisfied with your care?"];
+	}
+
+	if ( utils.similar(input, "{you} {be} satisfied with", 0.9) ) {
+		return ["I'm delighted to hear that!", "Would you like a loving hug from Beymax?"]
+	}
+
+	if (input.indexOf("hairy baby") > -1) {
+		return ["Hairy baby!", ["Hairy baby!", "Hairy baby!"]];
+	}
+
+	if (input.indexOf("insult") > -1) {
+		return [utils.random(randomResponses["sad"]), utils.random(randomResponses["insult"])]
+	}
+
+	if (input.indexOf("health") > -1) {
+		return [utils.random(randomResponses["health"]), "Are you satisfied with your care?"]
+	}
+
 	return "";
 }
-
 
 exports.reply = reply;

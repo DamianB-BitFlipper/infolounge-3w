@@ -7,9 +7,9 @@ Youtube.authenticate({
 var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 
-var affirm = ["Very well. ", "Sure thing. ", "Of course. ", "My pleasure. ", "All right. ", "Your wish is my command. "];
-var playing = ["I'll play: ", "I will play: ", "Bey-max will play: ", "Bey-max will play: "];
-var enjoy = ["", "Enjoy.", "I hope you enjoy.", "Let me know if you want a different selection."];
+var affirm = ["Very well: ", "Sure thing: ", "Of course: ", "My pleasure: ", "All right: ", "Your wish is my command: "];
+var playing = ["I will play: ", "Bey-max will play: ", "Bey-max will play: "];
+var enjoy = ["", "Enjoy the music.", "I hope you enjoy.", "Let me know if you want a different selection."];
 var another = ["Let me know if you want another song.", "Let me know if you want a different selection."];
 var rand = ["something else", "another", "different", "^music$", "song$"];
 var titles = ["Beethoven's Fifth Symphony",
@@ -38,11 +38,9 @@ function query(input, s_input, tokens, sms, res) {
 
     q = request + " lyrics";
     if (random) {
-        response = [utils.random(affirm), "I'll play: " + request]
-        followup = utils.random(another);
+        response = [utils.random(affirm) + "I'll play: " + request, utils.random(another)];
     } else {
-        response = [utils.random(affirm), utils.random(playing) + request];
-        followup = utils.random(enjoy);
+        response = [utils.random(affirm) + utils.random(playing) + request, utils.random(enjoy)];
     }
 
     Youtube.search.list({

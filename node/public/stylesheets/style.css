@@ -25,6 +25,9 @@ body {
 	overflow: hidden;
 */
 }
+iframe {
+    overflow: hidden;
+}
 /*
 @-moz-keyframes rotate{
 from
@@ -93,6 +96,7 @@ b {
     background-color: rgba(0, 0, 0, 0.3);
     margin-bottom: 15px;
     padding: 15px;
+    overflow: hidden;
     /**border-bottom-right-radius: 2vh;**/
 }
 #MITalertspanel {

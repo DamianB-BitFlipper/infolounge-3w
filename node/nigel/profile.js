@@ -51,9 +51,9 @@ function query(input, tokens, stems) {
 				if (i == n) things += "and ";
 				things += options[i-1] + ", ";
 			}
-			return [utils.random(goodquestion), " Some of my favorite " + entity + "s" + " are " + things];
+			return [utils.random(goodquestion), "Some of my favorite " + entity + "s" + " are: " + things];
 		}
-		return [utils.random(goodquestion), "My favorite " + utils.after(input, "favorite ") + " is " + profile[entity][0]];
+		return [utils.random(goodquestion), "My favorite " + utils.after(input, "favorite ") + " is: " + profile[entity][0]];
 	}
 
 	return "Raindrops on roses and whiskers on kittens. These are a few of my favorite things.";

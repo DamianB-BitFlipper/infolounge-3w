@@ -1,48 +1,44 @@
-
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var firstLoad = true;
+var startBeep = new Audio('sounds/startBeep.mp3');
+var endBeep = new Audio('sounds/endBeep.mp3');
+endBeep.volume = 0.75; startBeep.volume = 0.75;
+var beeps = [startBeep, endBeep];
+var longPause = 2000;
 
 var speak = function(phrase, followup, command) {
 	var BAYMAX = new SpeechSynthesisUtterance();
-	var p; var f;
+	var first; var next; var pauseDuration = 0; var beep = false;
 	if (typeof phrase == "object") {
-		f = phrase[1] || "";
-		p = phrase[0] || "";
+		first = phrase[0] || "";
+		next = phrase[1] || "";
 	} else {
-		p = phrase;
-		f = followup;
-		followup = "";
+		first = phrase;
+		next = followup; followup = "";
+		beep = true; pauseDuration = longPause;
 	}
-	if (p.trim().length < 1 || p.length > 250) {
+	if (!first || first.length > 250) {
 		processCommand(command);
 		return;
 	}
-	var voices = speechSynthesis.getVoices();
-	BAYMAX.voice = voices[1];
-	BAYMAX.text = p;
-	BAYMAX.pitch = 1.40;
-	BAYMAX.rate = 1.0;
-	if (f || followup) {
+	BAYMAX.voice = speechSynthesis.getVoices()[1];;
+	BAYMAX.text = first;
+	BAYMAX.volume = 10;
+	BAYMAX.pitch = (typeof first == "string" && first.indexOf("Hairy baby") > -1) ? 1.80 : 1.40;
+	BAYMAX.rate =  (typeof first == "string" && first.indexOf("Hairy baby") > -1) ? 1.20 : 0.95;
+	if (next || followup) {
 		BAYMAX.onend = function() {
-	 		console.log("Baymax finished speaking... ", p);
-	 		setTimeout(speak(f, followup, command), 2500);
+	 		setTimeout(function() {speak(next, followup, command)}, pauseDuration);
+	 		if (beep) {random(beeps).play();}
 		}
 	} else {
 		BAYMAX.onend = function() {
-	 		console.log("Baymax finished speaking... ", p);
+	 		random(beeps).play();
 	 		processCommand(command);
 		}
 	}
     speechSynthesis.speak(BAYMAX);
 }
-
-var baymaxSpeak = function(phrase) {
-	phrase = phrase.replace(' ', '+');
-	speech_url = 'http://tts-api.com/tts.mp3?q='+phrase;
-	audio_elem = '<audio src="' + speech_url + '" autoplay></audio>'
-	$('#audio').html(audio_elem);
-	console.log("Baymax speaking... ", phrase);
-};
 
 nigelRef.on("value", function (ss) {
     var data = ss.val();
@@ -62,37 +58,6 @@ var processResponse = function(result) {
 		var url = "http://www.youtube.com/embed/" + result.media + "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
 		$("#player").attr("src", url);
 	}
-}
-
-var processCommand = function(command) {
-	if (!command) {
-		return;
-	}
-	console.log("Executing command... " + command);
-	if (command == "stop") {
-		$("#player").attr("src", "");
-	}
-	if ($("#player").attr("src") == "") {
-		$("#videopanel").slideUp();
-		$("#weatherpanel").find('div').slideDown();
-		$("#tweetpanel").find('div').slideDown();
-	}
-	if (command.indexOf("hide") > -1) {
-		$('#' + command.split(" ")[1] + "panel").find('div').slideUp();
-	}
-	if (command.indexOf("show") > -1) {
-		$('#' + command.split(" ")[1] + "panel").find('div').slideDown();
-	}
-	if (command.indexOf("show video") > -1) {
-		$('#videopanel').slideDown();
-		$("#weatherpanel").find('div').slideUp();
-		$("#tweetpanel").find('div').slideUp();
-	}
-	if (command.indexOf("hide video") > -1) {
-		$("#weatherpanel").find('div').slideDown();
-		$("#tweetpanel").find('div').slideDown();
-	}
-	return;
 }
 
 	function onYouTubeIframeAPIReady() {
