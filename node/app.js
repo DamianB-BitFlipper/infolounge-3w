@@ -3,18 +3,25 @@
  * Module dependencies.
  */
 
-var express = require('express')
+var fs = require('fs')
+  , express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
+  , https = require('https')
   , path = require('path')
   , info = require('./routes/info')
   , nigel = require('./nigel/index')
 
+var options = {
+	key: fs.readFileSync('secrets/key.pem'),
+	cert: fs.readFileSync('secrets/cert.pem')
+}
+
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 1337);
+  app.set('port', 521);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.favicon());
@@ -42,6 +49,10 @@ app.get('/heard/:input', nigel.respond);
 app.post('/demand', nigel.respond);
 app.get('/:num', routes.index);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+http.createServer(app).listen(1010, function(){
+  console.log("Express HTTPS server listening on port 1010");
+});
+
+https.createServer(options, app).listen(app.get('port'), function(){
+  console.log("Express HTTPS server listening on port " + app.get('port'));
 });
