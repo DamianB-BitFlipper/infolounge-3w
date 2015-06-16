@@ -71,12 +71,12 @@ function standardize(s) {
     patterns[7] = /(^| )(im|i am) /;
     patterns[8] = /(sure|yes|okay)($| )/;
     patterns[9] = /(no$|nope)/;
-    patterns[10] = /((send )?(email|message)( to)?|notify) /;
+    patterns[10] = /((send )?(a(n)? )?(email|message)( to)?|notify) /;
     patterns[11] = /(hello|hi($| )|greetings|hola|bonjour|howdy|what {be} up|whats up)/
     patterns[12] = /(^| )(i|my)($| )/
     patterns[13] = /(tell me a|tell a|tell( me)?) /
     patterns[14] = /((^| )play( some| a)?|^sing) /
-    patterns[15] = /shut[a-z\s]*up|be quiet|^stop/
+    patterns[15] = /shut[a-z\s]*up|be quiet|^(stop|stock)/
     patterns[16] = /^test(ing)?/
     patterns[17] = /(love|want|like|desire|long for) /
     patterns[18] = /(^| )(dinner|brunch|breakfast|supper|lunch|menu|dining)($| )/
@@ -84,7 +84,7 @@ function standardize(s) {
     patterns[20] = /(^| )(lounge)($| )/
     patterns[21] = /(^| )(twitter|tweets)($| )/
     patterns[22] = /(^| )(show|display)($| )/
-    patterns[23] = /(^| )(change|set|adjust|modify) /
+    patterns[23] = /(^| )(change|se(t|x)|adjust|modify) /
     patterns[24] = /(humor[a-z]*|sass[a-z]*|intelligence) (parameter )?(to)?/
     patterns[25] = /(whats )/
     patterns[26] = /(wheres )/

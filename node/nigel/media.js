@@ -36,42 +36,69 @@ function query(input, s_input, tokens, sms, res) {
         }
     }
 
-    q = request + " lyrics";
-    if (random) {
-        response = [utils.random(affirm) + "I'll play: " + request, utils.random(another)];
-    } else {
-        response = [utils.random(affirm) + utils.random(playing) + request, utils.random(enjoy)];
-    }
-
-    Youtube.search.list({
-        part: "id,snippet",
-        q: q,
-        maxResults: 3,
-        type: "video",
-        videoSyndicated: "true"
-    }, function(error, results) {
-        if (error) {
-            console.log(error);
-            var videoID = "";
+    if ( request.match(/birthday/) ) {
+        person = request.replace(/(happy )?birthday (to|for)?/, "").trim();
+        request = "";
+        var people = require("../nigel/people");
+        var result = people.query(person);
+        if (result.confidence && result.name) {
+            response = ["Beymax wishes " + result.name + " a very happy birthday!", 
+                        "Would " + result.name + " like a hug from Beymax?"];
         } else {
-            for (var i in results.items) {
-                var item = results.items[i];
-                console.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
-            }
-            var videoID = results.items[0].id.videoId;
+            response = ["Sorry, Beymax doesn't know " + person + " well enough to sing Happy Birthday for them.", 
+                        "Would you still like a hug from Beymax?"];
         }
         var o = {
-            req: input,
-            std: s_input,
-            res: response,
-            followup: followup,
-            cmd: "",
-            sms: true,
-            media: videoID
+                req: input,
+                std: s_input,
+                res: response,
+                followup: followup,
+                cmd: "",
+                sms: true,
+                media: ""
         };
         nigelRef.update(o);
         res.json(o);
-    });
+    }
+
+    if (request) {
+        q = request + " lyrics";
+        if (random) {
+            response = [utils.random(affirm) + "I'll play: " + request, utils.random(another)];
+        } else {
+            response = [utils.random(affirm) + utils.random(playing) + request, utils.random(enjoy)];
+        }
+
+        Youtube.search.list({
+            part: "id,snippet",
+            q: q,
+            maxResults: 3,
+            type: "video",
+            videoSyndicated: "true"
+        }, function(error, results) {
+            if (error) {
+                console.log(error);
+                var videoID = "";
+            } else {
+                for (var i in results.items) {
+                    var item = results.items[i];
+                    console.log('[%s] Title: %s', item.id.videoId, item.snippet.title);
+                }
+                var videoID = results.items[0].id.videoId;
+            }
+            var o = {
+                req: input,
+                std: s_input,
+                res: response,
+                followup: followup,
+                cmd: "",
+                sms: true,
+                media: videoID
+            };
+            nigelRef.update(o);
+            res.json(o);
+        });
+    }
 }
 
 exports.query = query;

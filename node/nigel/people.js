@@ -13,20 +13,20 @@ var ambiguous  = [ "josh", "david" ];
 var w3 = new Array();
 w3["safetythird"] = ["Safetythird", ["safety third"]];
 w3["jfabi"] =    [ "Josh Josh", ["josh josh", "josh fabian", "jfabi", "jayfabi"], "grad student", "1", ["He created info lounge, where my infinite consciousness resides."], "December 29th", "Mexico" ]
-w3["kkarthur"] = [ "Bena", ["kwabena", "bena", "kkarthur", "kaykayarthur", "quabbin", "kwame", "cuaderno", "corbin"], "junior", "2", ["It is not Kwabena's bedtime yet."], "August 29th", "" ];
-w3["akwasio"] =  [ "Akwasi",  ["akwasi", "awaksio"], "junior", "2", ["You probably owe him 5 dollars."], "February 15th", "" ];
-w3["dfavela"]  = [ "Fuhvela", ["david favela", "favela", "dfavela", "david villa"], "sophomore", "2A", [], "November 1st", "" ];
+w3["kkarthur"] = [ "Bena", ["kwabena", "bena", "kkarthur", "kaykayarthur", "quabbin", "kwame", "cuaderno", "corbin"], "junior", "2", ["It is not Kwabena's bedtime yet."], "August 29th", "", ["Are you sure it's not your bedtime yet?", "Playing too much Super Smash Brothers may be detrimental for your health."] ];
+w3["akwasio"] =  [ "Akwasi",  ["akwasi", "awaksio"], "junior", "2", ["You probably owe him 5 dollars."], "February 15th", "", [] ];
+w3["dfavela"]  = [ "Fuhvela", ["david favela", "favela", "dfavela", "david villa"], "sophomore", "2A", [], "November 1st", "", ["Playing too much Super Smash Brothers may be detrimental for your health.", "You have quite a lovely singing voice."] ];
 w3["joshbs"]   = [ "Posh Josh", ["joshbs", "soft josh", "posh josh", "frosh josh", "josh scherrer", "josh surer"], "sophomore", "3", ["His numerous nicknames include: Posh Josh, Soft Josh, Frosh Josh. Gosh! that's too many names."], "September 26th"];
 w3["lolzhang"] = [ "Linda", ["linda", "linda zhang", "lolzhang"], "sophomore", "", [], "December 29th", "" ];
 w3["rsyang"] =   [ "Rachel", ["rachel", "rachel yang", "rsyang"], "sophomore", "", [] ];
-w3["harlin"] =   [ "Harlin", ["harlin", "harlin lee", "harlot"], "senior", "6 2", ["Unfortunately, she abandoned this wing for Senior House."], "September 23rd", "somewhere in Korea. South Korea, that is."];
+w3["harlin"] =   [ "Harlin", ["harlin", "harlin lee", "harlot"], "senior", "6 2", ["Unfortunately, she abandoned this wing for Senior House."], "September 23rd", "somewhere in South Korea.", ["Beymax is sad that you abandoned this wing for Senior House."] ];
 w3["gopalan"] =  [ "Deets", ["aditya", "gopalan", "aditya gopalan", "diits", "deets", "odysseu"], "sophomore", "6 1", [] ];
-w3["huangjd"] =  [ "William", ["huangjd", "william", "junda", "william huang", "junda huang"], "senior", "6 2", ["He is probably trying to find a bug, but I'm too smart for that."], "May 26th", "somewhere in Texas" ];
-w3["cmzhang"] =  [ "Clare", ["clairez", "cmzhang", "claire", "claire zhang"], "senior", "2", [], "October 8th", "Houston" ];
-w3["ncolant"] =  [ "Noelle", ["ncolant", "noelle", "noelle colant"], "junior", "10", ["So help her God."], "July 21st",  "Akron, Ohio" ];
+w3["huangjd"] =  [ "William", ["huangjd", "william", "junda", "william huang", "junda huang"], "senior", "6 2", ["He is probably trying to find a bug, but I'm too smart for that."], "May 26th", "somewhere in Texas", ["I'm sorry, but Beymax is free of bugs.", "Please stop trying to find bugs in Beymax."] ];
+w3["cmzhang"] =  [ "Claire", ["clairez", "cmzhang", "claire", "claire zhang"], "senior", "2", [], "October 8th", "Houston" ];
+w3["ncolant"] =  [ "Noelle", ["ncolant", "noelle", "noelle colant"], "junior", "10", ["So help her God."], "July 21st",  "Akron, Ohio", ["The life of a Course 10 must be pretty hard."] ];
 w3["tianm"] =    [ "Tian", ["tian", "tian mi", "tianm", "donfan"], "senior", "6 3", [], "December 24th", "" ];
 w3["tiffwang"] = [ "Tiffany", ["tiffany", "tiffwang", "tiffany wang", "tiffanyhwang"], "junior", "1", ["Are you satisfied with your care?"], "on New Year's day!", ""];
-w3["tricias"] =  [ "Tricia", ["tricia", "tricias", "tricia shi"], "junior", "6 3", ["Are you satisfied with your care?"], "May 23rd", "West De Moines, Iowa" ];
+w3["tricias"] =  [ "Tricia", ["tricia", "tricias", "tricia shi", "trisha"], "junior", "6 3", ["Are you satisfied with your care?"], "May 23rd", "West De Moines, Iowa" ];
 w3["mabrams"] =  [ "Melanie", ["melanie", "melanie abrams", "mabrams"], "junior", "7", [], "September 2nd", "Cambridge, Massachusetts" ];
 w3["zsheinko"] = [ "Zoe", ["zoe", "zoe sheinkoph",  "zsheinko"], "junior", "2", [] , "October 28th", "Seattle, Washington" ];
 w3["tcheng17"] = [ "Tracy", ["tracy", "tracy chang", "tcheng17", "teaching17"], "junior", "2", [], "June 1st", "" ];
@@ -83,15 +83,9 @@ function match(person, tokens) {
 
 function query(person, tokens) {
 	var result = new Object();
-	var response = "";
-
-	for (var i in ambiguous) {
-		if (person == ambiguous[i]) {
-			response = "I know too many " + person + "'s. Please be more specific."; 
-		}
-	}
-
+	var response = ""; confidence = 0;
 	var matched = false;
+
 	for (var i in w3) {
 		var nicknames = w3[i][1];
 		for (var n in nicknames) {
@@ -117,6 +111,9 @@ function query(person, tokens) {
 	}
 
 	if (matched) {
+		personal = w3[i][7] || [];
+		personal.push("Would " + w3[i][0] + " like to give Beymax a hug?");
+		personal.push("I know you're a " + w3[i][2] + " at M.I.T., studying " + (courses[w3[i][3]] || "underwater basket-weaving") + ".");
 	    result = {
 	        response: response,
 	        confidence: 1,
@@ -124,23 +121,33 @@ function query(person, tokens) {
 	        name: w3[i][0],
 	        title: w3[i][2], 
 	        course: courses[w3[i][3]],
-	        fact: w3[i][4],
 	        birthday: w3[i][5],
-	        hometown: w3[i][6]
-	    };
+	        hometown: w3[i][6],
+	        personal: personal
+	    }
 	} else {
 	    result.response = [utils.random(dontKnow) + person + ". ", utils.random(tellMeMore)];
-	    result.confidence = 0;
+	    result.confidence = confidence;
 	}
+
+	for (var i in ambiguous) {
+		if (person == ambiguous[i]) {
+			result.response = "I know too many " + person + "'s. Please be more specific.";
+			result.confidence = 1;
+		}
+	}
+
 	return result;
 }
 
 
 function queryBirthday(person, tokens) {
-	response = "";
+	var result = new Object();
+	response = ""; confidence = 0;
 
 	for (var i in ambiguous) {
 		if (person == ambiguous[i]) {
+			confidence = 1;
 			response = "I know too many " + person + "'s. Please be more specific."; 
 		}
 	}
@@ -161,14 +168,18 @@ function queryBirthday(person, tokens) {
 			break;
 		}
 	}
-	return response;
+	result.response = response;
+	result.confidence = confidence;
+	return result;
 }
 
 function queryHometown(person, tokens) {
-	response = "";
+	var result = new Object();
+	response = ""; confidence = 0;
 
 	for (var i in ambiguous) {
 		if (person == ambiguous[i]) {
+			confidence = 1;
 			response = "I know too many " + person + "'s. Please be more specific."; 
 		}
 	}
@@ -189,7 +200,9 @@ function queryHometown(person, tokens) {
 			break;
 		}
 	}
-	return response;
+	result.response = response;
+	result.confidence = confidence;
+	return result;
 }
 
 exports.query = query;

@@ -44,13 +44,14 @@ app.get('/menu.json', info.getMenu);
 app.get('/institute_alerts.json', info.getMITAlert);
 app.get('/news.json', info.getNews);
 app.get('/img.json', info.getImg);
+app.get('/mbta_alerts.json', info.getMBTA);
 app.get('/', routes.index);
 app.get('/heard/:input', nigel.respond);
 app.post('/demand', nigel.respond);
 app.get('/:num', routes.index);
 
 http.createServer(app).listen(1010, function(){
-  console.log("Express HTTPS server listening on port 1010");
+  console.log("Express HTTP server listening on port 1010");
 });
 
 https.createServer(options, app).listen(app.get('port'), function(){

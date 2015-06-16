@@ -26,7 +26,6 @@ var speak = function(phrase, followup, command) {
         pauseDuration = longPause;
     }
     if (!first || first.length > 250) {
-        processCommand(command);
         return;
     }
     BAYMAX.voice = speechSynthesis.getVoices()[1];;
@@ -49,10 +48,9 @@ var speak = function(phrase, followup, command) {
         }
     } else {
         BAYMAX.onend = function() {
-            random(beeps).play();
+            rand(beeps).play();
             isSpeaking = false;
-            try {recognition.start()} catch(e) {}
-            processCommand(command);
+            if (location.href.match(/^https/)) {try {recognition.start()} catch(e) {}}
         }
     }
     speechSynthesis.speak(BAYMAX);
@@ -60,7 +58,7 @@ var speak = function(phrase, followup, command) {
 
 nigelRef.on("value", function(ss) {
     var data = ss.val();
-    if (firstLoad) {setUpRecognition()}
+    if (firstLoad && location.href.match(/^https/)) {setUpRecognition()}
     if (data.sms && !firstLoad) {
         previousResponse = data;
         processResponse(data);
@@ -71,12 +69,15 @@ nigelRef.on("value", function(ss) {
 });
 
 var processResponse = function(result) {
-    if (result.res) {
-        speak(result.res, result.followup, result.cmd);
+    if (result.res && location.href.match(/baymax/)) {
+        speak(result.res, result.followup);
     }
     if (result.media) {
-        var url = "http://www.youtube.com/embed/" + result.media + "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
+        var url = ( location.href.match(/^https/) ? 'https': 'http' ) + "://www.youtube.com/embed/" + result.media + "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
         $("#player").attr("src", url);
+    }
+    if (result.cmd) {
+        try{ processCommand(result.cmd) } catch(e) {}
     }
 }
 

@@ -16,7 +16,6 @@ tokenizer = new natural.WordTokenizer();
 var emptyResponse = {req: "", std: "", res: "", followup: "", cmd: "", sms: true, media: "", last: ""}
 
 function respond(req, res) {
-	console.log(req);
 	var demand = (req.body.input || req.body.Body || req.params.input || "").toLowerCase().replace(/^(nigel|b(e|a)ymax)(\,| )/, "").trim();
 	var previous = req.body.previous || emptyResponse; 
 	var previousCommand = previous.cmd.text || previous.cmd;
@@ -62,9 +61,10 @@ function respond(req, res) {
 	if ( s_input.match(/{you} (name )?{be} /) ) {
 		var person = utils.after(s_input, "{be} ").trim();
 		var result = people.query(person, tokens);
-		if (result.confidence == 1) {
-			response = [random.greet(result.name), "Would you like to tell Beymax about yourself?"];
-			followup = ["I know you're a " + result.title + " at M.I.T., studying " + result.course + ".", utils.random(randomResponses.health)]
+		if (result.confidence && result.name) {
+			response = [random.greet(result.name), utils.random(randomResponses.knowMore)];
+			followup = [utils.random(result.personal), 
+					    utils.random(randomResponses.health)]
 		}
 	}
 
@@ -78,8 +78,8 @@ function respond(req, res) {
 			}
 		}
 		if (person) {
-			response = people.birthday(person);
-			response = response ? response : people.birthday(s_tokens[i-2].replace(/s$/, ""));
+			response = people.birthday(person).response;
+			response = response ? response : people.birthday(s_tokens[i-2].replace(/s$/, "")).response;
 		}
 		confidence = response ? 1 : 0;
 	}
@@ -94,8 +94,8 @@ function respond(req, res) {
 			}
 		}
 		if (person) {
-			response = people.hometown(person);
-			response = (response) ? response : people.hometown(s_tokens[i-2].replace(/s$/, ""));
+			response = people.hometown(person).response;
+			response = (response) ? response : people.hometown(s_tokens[i-2].replace(/s$/, "")).response;
 		}
 		confidence = response ? 1 : 0;
 	}

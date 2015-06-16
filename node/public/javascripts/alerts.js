@@ -1,6 +1,3 @@
-var alertsREDsouth = "http://realtime.mbta.com/developer/api/v2/alertsbyroute?api_key=rx_hA9SfFEOuTpxT4fGKrw&route=red&include_access_alerts=false&include_service_alerts=true&format=json"
-    // alert messages for Southbound Red Line
-
 function handleAlerts(data) {
     var alerts0 = data.alerts;
     elemt = '';
@@ -8,7 +5,8 @@ function handleAlerts(data) {
     if (jQuery.isEmptyObject(alerts0)) {
         $('#alertspanel').slideUp('slow');
         return;
-    }
+    } 
+    console.log(alerts0);
     //console.log(alerts0[0].effect_periods[0].effect_start);
     //console.log("how long "+alerts0.length);
 
@@ -105,7 +103,7 @@ function handleAlerts(data) {
 function getAlerts() {
     elemt = '';
     try {
-        $.getJSON(alertsREDsouth, handleAlerts);
+        $.getJSON('mbta_alerts.json', handleAlerts);
     } catch (e) {
         console.log(e);
     }

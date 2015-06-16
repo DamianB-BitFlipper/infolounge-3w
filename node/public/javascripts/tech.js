@@ -5,17 +5,16 @@ var Markers = new Array();
 var Paths = new Array();
 var t = 0;
 var MAP;
-var updateMapRate = 200; // ms
+var updateMapRate = 1000; // ms
+var protocol = location.href.match(/^https/) ? 'https': 'http';
 
-var predictionsTEK = "http://proximobus.appspot.com/agencies/mit/stops/51/predictions.json";
-
-var predictionsSFBOS = "http://proximobus.appspot.com/agencies/mit/stops/62/predictions.json";
+var predictionsTEK =  protocol + "://proximobus.appspot.com/agencies/mit/stops/51/predictions.json";
+  // TECH shuttle, at tang/westgate
+var predictionsSFBOS = protocol + "://proximobus.appspot.com/agencies/mit/stops/62/predictions.json";
 	// saferide boston, at audrey/vassar sts
-
-var predictionsCT2N = "http://proximobus.appspot.com/agencies/mbta/stops/21772/predictions.json";
+var predictionsCT2N = protocol + "://proximobus.appspot.com/agencies/mbta/stops/21772/predictions.json";
 	// crosstown 2, to sullivan sq via kendall sq, at amesbury/vassar sts
-
-var predictionsCT2S = "http://proximobus.appspot.com/agencies/mbta/stops/22173/predictions.json";
+var predictionsCT2S = protocol + "://proximobus.appspot.com/agencies/mbta/stops/22173/predictions.json";
 	// crosstown 2, to ruggles st/northereastern university via fenway, at amesbury st/memorial dr
 
 var elem = '';
@@ -210,7 +209,7 @@ function handlePredictions2(data) {
         	}
 	}
 
-  console.log(route1);
+  //console.log(route1);
 
       var route = '';
       if (typeof predictions[0]!== "undefined") {
@@ -246,7 +245,7 @@ function handlePredictions2(data) {
             route = predictions[0].route_id;
         }
       }
-      console.log(route);
+      //console.log(route);
 
 	//console.log(route);
   if (route != 'tech shuttle' && route != '') {

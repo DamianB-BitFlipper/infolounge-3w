@@ -15,7 +15,7 @@ setUpRecognition = function() {
 			if (location.href.match(/(localhost|runpengliu)/)) {
 				processSpeech(transcript.trim());
 			} else {
-				speak(random.helpful[Math.floor(Math.random()*random.helpful.length)])
+				sendRequest(transcript.trim())
 			}
 		}
 	}
@@ -24,13 +24,15 @@ setUpRecognition = function() {
 	}
 	recognition.onend = function(event) {
 		setTimeout(function() {
-			if (!isSpeaking) {
-				event.target.start();
+			if (!isSpeaking && location.href.match(/^https/)) {
+				try {event.target.start()} catch(e) {}
 			}
-		}, 2000);
+		}, 1000);
 	}
 	recognition.onerror = function(event) {
-		event.target.start();
+		if (location.href.match(/^https/)) {
+			try {event.target.start()} catch(e) {}
+		}
 	}
 	recognition.start();
 }
@@ -44,10 +46,10 @@ processSpeech = function(input) {
 		dataType : "json",
 		data: request,
 		success: function(response) {
-			console.log("Response from Baymax server: " + JSON.stringify(response));
+			console.log("Response from server: " + JSON.stringify(response, null, '\t'));
 		},
 		error: function(info) {
-			console.log("Error in processing request: " + JSON.stringify(input))
+			console.log("Error in processing request: " + JSON.stringify(input, null, '\t'))
 		}
 	});
 }
