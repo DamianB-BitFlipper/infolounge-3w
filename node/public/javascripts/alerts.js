@@ -103,7 +103,7 @@ function handleAlerts(data) {
 function getAlerts() {
     elemt = '';
     try {
-        $.getJSON('mbta_alerts.json', handleAlerts);
+        $.getJSON('/mbta_alerts.json', handleAlerts);
     } catch (e) {
         console.log(e);
     }
