@@ -116,13 +116,22 @@ function query(person, tokens) {
 		}
 	}
 
-	if (response) {
-		result["response"] = response;
-		result["confidence"] = 1;
+	if (matched) {
+	    result = {
+	        response: response,
+	        confidence: 1,
+	        kerberos: i,
+	        name: w3[i][0],
+	        title: w3[i][2], 
+	        course: courses[w3[i][3]],
+	        fact: w3[i][4],
+	        birthday: w3[i][5],
+	        hometown: w3[i][6]
+	    };
 	} else {
-		result["response"] = [utils.random(dontKnow) + person + ". ", utils.random(tellMeMore)];
-		result["confidence"] = 0;
-	}	
+	    result.response = [utils.random(dontKnow) + person + ". ", utils.random(tellMeMore)];
+	    result.confidence = 0;
+	}
 	return result;
 }
 
@@ -187,5 +196,4 @@ exports.query = query;
 exports.match = match;
 exports.birthday = queryBirthday;
 exports.hometown = queryHometown;
-exports.courses = courses;
 exports.w3 = w3;

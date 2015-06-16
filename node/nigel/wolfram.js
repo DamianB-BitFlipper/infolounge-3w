@@ -6,7 +6,7 @@ var parse = require("xml2js").parseString;
 var randomResponses = require('../nigel/random').randomResponses;
 
 function clean(s) {
-    patterns = new Array()
+    patterns = new Array();
     patterns[0] = /~~/
     patterns[1] = /Wolfram/
     patterns[2] = /Alpha/
@@ -83,30 +83,30 @@ function query(input, s_input, tokens, sms, res) {
 
             parse(xml, function(err, result) {
 
-                if (err) {
-                    response = "";
-                    console.log("parse error");
-                }
+                if (err) { response = ""; console.log("XML parse error"); }
 
-                try {
-                    var pods = result.queryresult.pod;
-                    console.log(pods);
-                    var pod = pods[0];
-                    var matched = false;
-                    for (var i in pods) {
-                        var title = pods[i]["$"]["title"].toLowerCase().split(" ");
-                        if (utils.contains(title, "result response statement derivative integral approximation description properties facts weather leadership")) {
-                            pod = pods[i];
-                            matched = true;
-                            break;
+                else if (result.queryresult.$.success)
+                    try {
+                        var pods = result.queryresult.pod;
+                        console.log(pods);
+                        var pod = pods[0];
+                        var matched = false;
+                        for (var i in pods) {
+                            var title = pods[i].$.title.toLowerCase().split(" ");
+                            if (utils.contains(title, "result response statement derivative integral approximation description properties facts weather leadership")) {
+                                pod = pods[i];
+                                matched = true;
+                                break;
+                            }
                         }
+                    } catch (e) {
+                       response = "";
                     }
-                } catch (e) {
-                    response = ""
+                else {
+                    console.log(result);
                 }
                 if (matched) {
                     try {
-                        //console.log(pod["subpod"][0]["plaintext"][0])
                         response = clean(utils.math(utils.after(pod.subpod[0].plaintext[0], "=")));
                         console.log(title + ": " + response);
                         if (utils.contains(title, "approximation")) {
@@ -135,7 +135,7 @@ function query(input, s_input, tokens, sms, res) {
                         }
                     } catch (e) {
                         console.log(e);
-                        response = ""
+                        response = "";
                     }
                 }
 
@@ -164,7 +164,6 @@ function query(input, s_input, tokens, sms, res) {
                 };
                 nigelRef.update(o);
                 res.json(o);
-
             });
         }
     });

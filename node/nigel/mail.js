@@ -31,8 +31,8 @@ function send(req, res, sms, params) {
             		   ];
         }
         var o = {
-            req: req.params.input,
-            std: req.params.input,
+            req: req.body.input  || req.params.input,
+            std: req.body.input  || req.params.input,
             res: response,
             followup: "",
             cmd: params,

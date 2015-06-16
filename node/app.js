@@ -10,6 +10,7 @@ var express = require('express')
   , path = require('path')
   , info = require('./routes/info')
   , nigel = require('./nigel/index')
+  , translate = require('./nigel/translate');
 
 var app = express();
 
@@ -40,7 +41,7 @@ app.get('/img.json', info.getImg);
 app.get('/', routes.index);
 app.get('/heard/:input', nigel.respond);
 app.post('/demand', nigel.respond);
-
+app.get('/translate/:from/:to/:phrase', translate.translate);
 app.get('/:num', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){

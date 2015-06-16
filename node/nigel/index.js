@@ -10,25 +10,25 @@ var people = require('../nigel/people');
 var wolfram = require('../nigel/wolfram');
 var pronounce = require('../nigel/pronounce').key;
 var mail = require('../nigel/mail');
-var randomResponses = require('../nigel/random').randomResponses;
+var random = require('../nigel/random');
+var randomResponses = random.randomResponses;
 tokenizer = new natural.WordTokenizer();
+var emptyResponse = {req: "", std: "", res: "", followup: "", cmd: "", sms: true, media: "", last: ""}
 
 function respond(req, res) {
-	var demand = ""; var sms = true;
-	if (req.body.Body) {
-		demand = req.body.Body.toLowerCase();
-		sms = true;
-	} else {
-		demand = req.params.input.toLowerCase();
-	}
-	input = demand.replace(/[^\w\d\s\+\-\*]/g, "").replace(/^(nigel|b(e|a)ymax) /, "").trim();
+	console.log(req);
+	var demand = (req.body.input || req.body.Body || req.params.input || "").toLowerCase().replace(/^(nigel|b(e|a)ymax)(\,| )/, "").trim();
+	var previous = req.body.previous || emptyResponse; 
+	var previousCommand = previous.cmd.text || previous.cmd;
+	var previousResponse = previous.last || mostRecentReply(previous)
+	var input = demand.replace(/[^\w\d\s\+\-\*]/g, "");
 	natural.PorterStemmer.attach();
 	var tokens = tokenizer.tokenize(input);
 	var stems = input.tokenizeAndStem();
 	var s_input = utils.standardize(input);
 	var mainThread = true;
-	var response = ""; var followup = ""; var command = ""; var confidence = 0; media="";
-
+	var sms = true; var response = ""; var followup = ""; var command = ""; media= ""; var confidence = 0; 
+	console.log({demand: demand, input: input, s_input: s_input, tokens: tokens})
 	// stop command
 	if ( s_input.match(/{shutup}/) ) {
 		response = utils.random(randomResponses.stop);
@@ -44,6 +44,8 @@ function respond(req, res) {
 	// nigel's favorite things
 	response = ( s_input.match(/{baymax} favorite /) ) ? profile.query(s_input, tokens, stems) : response;
 
+	confidence = response ? 1 : 0;
+
 	// queries about people
 	if ( !response && s_input.match(/(who {be})|({baymax} know who) /) ) {
 		var person = utils.after(s_input.replace(" {be}", ""), "who ").trim();
@@ -55,6 +57,15 @@ function respond(req, res) {
 		var person = utils.after(s_input.replace(" {be}", ""), "know ").trim();
 		var result = people.query(person, tokens);
 		response = result.confidence == 1 ? result.response : response;
+	}
+
+	if ( s_input.match(/{you} (name )?{be} /) ) {
+		var person = utils.after(s_input, "{be} ").trim();
+		var result = people.query(person, tokens);
+		if (result.confidence == 1) {
+			response = [random.greet(result.name), "Would you like to tell Beymax about yourself?"];
+			followup = ["I know you're a " + result.title + " at M.I.T., studying " + result.course + ".", utils.random(randomResponses.health)]
+		}
 	}
 
 	// queries about birthdays
@@ -90,7 +101,7 @@ function respond(req, res) {
 	}
 
 	// play music
-	if (s_input.indexOf("{play}") == 0) {
+	if ( s_input.match(/{play} /) ) {
 		mainThread = false;
 		youtube.query(input, s_input, tokens, sms, res);
 	}
@@ -191,33 +202,33 @@ function respond(req, res) {
 	}
 
 	// process e-mails
-	if ( demand.indexOf("{e}") > -1 )  {
+	if ( demand.match(/{e}/) || previousCommand.match(/composing/) )  {
 		mainThread = false;
 		nigelRef.once("value", function(ss) {
 			var data = ss.val(); var subject; var message;
 			if (data.cmd.subject) {
-				message = req.params.input.replace("{e} ", "");
+				message = req.body.input || req.params.input.replace("{e} ", "");
 				command = {text: "composing mail", kerberos: data.cmd.kerberos, subject: data.cmd.subject, message: message}
 				response = "Roger that... Please wait while Beymax processes your request.", 
 				mail.send(req, res, sms, command);
 			}
 			else if (data.cmd.kerberos) {
-				subject = req.params.input.replace("{e} ", "")
+				subject = req.body.input || req.params.input.replace("{e} ", "")
 				command = {text: "composing mail", kerberos: data.cmd.kerberos, subject: subject}
 				response = ["Roger that.", "What do you want the message to be?"];
 			}
 			var o = {req: demand, std: demand, res: response, followup: "", cmd: command, sms: sms, media: media};
 		    nigelRef.update(o);
-			if (typeof message == "undefined") {
+			if (!message) {
 		    	res.json(o);
 			}
 		});
 	}
 
 	// wolfram alpha
-	if ( !response && s_input.match(/(what|who|where) ({be}|{do}) /) ) {
+	if ( (!response || confidence != 1) && s_input.match(/(what|who|where) ({be}|{do}) /) ) {
 		mainThread = false;
-		wolfram.query(demand.replace(/(nigel|b(a|e)ymax)/g, "").trim(), s_input, tokens, sms, res);
+		wolfram.query(demand, s_input, tokens, sms, res);
 	}
 
 	if (!response) {
@@ -231,7 +242,8 @@ function respond(req, res) {
 		}
 	}
 
-	var o = {req: input, std: s_input, res: response || "", followup: followup, cmd: command, sms: sms, media: media};
+	var o = {req: input, std: s_input, res: response || "", followup: followup, cmd: command, sms: sms || true, media: media};
+	o.last = mostRecentReply(o)
 	try {
 		if (mainThread) {
 		    nigelRef.update(o);
@@ -239,5 +251,13 @@ function respond(req, res) {
 		}
 	} catch (e) {console.log(e)}
 }
+
+function mostRecentReply(result) {
+	var r = result.followup || result.res; 
+	while (typeof r == "object") {
+		r = r[r.length-1]
+	}
+	return r;
+} 
 
 exports.respond = respond;
