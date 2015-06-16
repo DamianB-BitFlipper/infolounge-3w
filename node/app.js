@@ -10,7 +10,6 @@ var express = require('express')
   , path = require('path')
   , info = require('./routes/info')
   , nigel = require('./nigel/index')
-  , translate = require('./nigel/translate');
 
 var app = express();
 
