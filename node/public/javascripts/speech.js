@@ -7,8 +7,8 @@ var startBeep = new Audio('sounds/startBeep.mp3');
 var endBeep = new Audio('sounds/endBeep.mp3');
 var baymaxWindow = new Audio('sounds/window.mp3');
 var hairyBaby = new Audio('sounds/hairybaby.mp3');
-endBeep.volume = 0.75;
-startBeep.volume = 0.75;
+endBeep.volume = 0.6;
+startBeep.volume = 0.6;
 var beeps = [startBeep, endBeep];
 var longPause = 2000;
 var previousResponse = {};
@@ -32,19 +32,19 @@ var speak = function(phrase, followup, command) {
     if (!first || first.length > 250) {
         return;
     }
-    if ( first.indexOf("window") > -1 ) {
-        baymaxWindow.play();
-        return;
-    }
-    if ( first.indexOf("Hairy baby") > -1 ) {
-        hairyBaby.play()
-        return;
-    } 
-    BAYMAX.voice = speechSynthesis.getVoices()[1];;
+    BAYMAX.voice = speechSynthesis.getVoices()[1];
     BAYMAX.text = first;
     BAYMAX.volume = 10;
     BAYMAX.pitch = 1.40;
     BAYMAX.rate = 0.95;
+    if ( first.indexOf("window") > -1 ) {
+        BAYMAX.volume = 0;
+        baymaxWindow.play();
+    }
+    if ( first.indexOf("Hairy baby") > -1 ) {
+        BAYMAX.volume = 0;
+        hairyBaby.play();
+    } 
     BAYMAX.onstart = function() {
         isSpeaking = true;
         recognition.stop();

@@ -1,20 +1,16 @@
 var random = new Array();
-random["{be}"] = ["Of course it is.", "I believe that is the case.", "Of course!", "Not today.", "Not at the moment."]
-random["who"] = [
-    ["Hairy baby.", ["Hairy baby.", "Hairy baby."]],
-    ["Hairy baby.", ["Hairy baby.", "Hairy baby."]], "I'm afraid Beymax does not know.", "You need to be more specific.", "I'm afraid Beymax does not know who you're referring to.", "I'm afraid Beymax does not know who you're talking about."
-];
-random["what"] = ["You should ask Siri instead.", "The answer, my friend, is blowing in the wind.", "I'm afraid Beymax does not know.", "I'm afraid Beymax does not know what you're referring to."];
-random["where"] = [
-    ["Somewhere over the rainbow.", "Way up high."], "I've been a lot of places and still I do not know.", "One does not simply walk in to that place."
-];
-random["why"] = ["Why don't you ask Siri that question.", "I suggest that you ask Siri.", "How would I know. You tell me.", "Quite simply because: God made it that way.", "Quite simply because: I made it that way."];
-random["how"] = ["Very, very carefully.", "Am I supposed to know the answer to that?", "You should ask Siri.", "I suggest that you ask Siri."];
-random["stop"] = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command."];
+random["{be}"] = ["Hairy baby!", "Hairy baby!", "Of course it is.", "I believe that is the case.", "Of course!", "Not today.", "Not at the moment."]
+random["who"] =  ["Hairy baby!", "Hairy baby!", "I'm afraid Beymax does not know.", "You need to be more specific.", "I'm afraid Beymax does not know who you're referring to.", "I'm afraid Beymax does not know who you're talking about."]
+random["what"] = ["Hairy baby!", "Hairy baby!", "You should ask Siri instead.", "We jumped out a window!", "I'm afraid Beymax does not know.", "I'm afraid Beymax does not know what you're referring to."];
+random["where"] = ["I've been a lot of places and still I do not know.", "One does not simply walk in to that place.", "Hairy baby!", "We jumped out a window!"];
+random["why"] = ["Hairy baby!", "I suggest that you ask Siri.", "How would I know. You tell me.", "Quite simply because: God made it that way.", "Quite simply because: I made it that way.", "We jumped out a window!"];
+random["how"] = ["Very, very carefully.", "Am I supposed to know the answer to that?", "You should ask Siri.", "I suggest that you ask Siri.", "Hairy baby!"];
+random["stop"] = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command.", "Hairy baby!"];
 random["processing"] = [
     ["Please wait one moment while I process your request."],
     ["Let me think about that for one moment."],
     ["I'll get back to you in one moment."],
+    ["We jumped out a window!", "Hairy baby!"],
     ["Good question. I'll get back to you in one moment."]
 ];
 
@@ -24,9 +20,10 @@ random["dontKnow"] = ["On second thought, ask me something more interesting.",
     "Sorry, I've been a lot of places and still I do not know.",
     "That's not the question you should be asking.",
     "Please ask again later. I don't have an answer right now.",
-    "Sorry, Beymax not in the mood to answer questions right now. Ask again later."
+    "Sorry, Beymax not in the mood to answer questions right now. Ask again later.",
+    "Hairy baby!"
 ];
-random["knowMore"] = ["I would love to know more about you!", "Would you like to tell Beymax about yourself?", "What can Beymax do for you?", "How can Beymax help you today?"]
+random["knowMore"] = ["I would love to know more about you!", "Would you like to tell Beymax about yourself?", "What can Beymax do for you?", "How can Beymax help you today?", "Hairy baby!"]
 
 random["sad"] = ["Beymax is sad that you would say that.",
     "That's not a very nice thing to say.",
@@ -65,13 +62,14 @@ random["safety"] = [
     ["I see. You think I'm just some voice in a computer.", "If you don't want to have a real conversation with me, then I'm sure Siri will meet your needs."],
     ["I'm not just a voice in some computer.", "If you want to talk to one of those, then Siri will meet your needs."],
     "Ask me something more interesting.",
+    "Hairy baby!",
+    "We jumped out a window!",
     "You can adjust my humorous, sassiness, or intelligence parameters.",
     "Do you expect me to have an answer to that?",
     "On a scale of one to ten, how would you rate your pain?",
     "I am programmed to assess everyone's health care needs.", 
     ["It seems to me that you are blabbering.", "Do you want your healthcare needs assessed?"],
     ["You seem to be talking nonsense.", "Do you want your healthcare needs assessed?"],
-    ["If you won't share anything meaningful, I'll have to start.", ["Sometimes I think I've felt everything I'm ever going to feel.", ["And from here on, I'm not going to feel anything new.", "Just lesser versions of what I've already felt."]]],
     "That's touching, I don't know what to say.",
     "Ask me again later. I'm not in the mood to talk right now.", 
     ["Your hormone and neurotransmitter levels indicate that you are experiencing mood swings, common in college students.", "Diagnosis: puberty."],

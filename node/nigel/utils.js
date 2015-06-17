@@ -58,6 +58,25 @@ function stringifyMath(s) {
 
 }
 
+function standardizeLocation(s) {
+    var patterns = new Array();
+    patterns[0] = /red line/;
+    patterns[1] = /(the )?symphony( hall)?/
+    patterns[2] = /(the )?movies/
+    patterns[3] = /(^| )mit($| )/
+
+    var replacements = new Array();
+    replacements[0] = "Red Line, Kendall station";
+    replacements[1] = "Symphony Hall";
+    replacements[2] = "Regal Cinemas";
+    replacements[3] = "M.I.T.";
+
+    for (var i in patterns) {
+        s = s.replace(patterns[i], replacements[i]);
+    }
+    return s.trim();
+}
+
 function standardize(s) {
 
     var patterns = new Array();
@@ -72,7 +91,7 @@ function standardize(s) {
     patterns[8] = /(sure|yes|okay)($| )/;
     patterns[9] = /(no$|nope)/;
     patterns[10] = /((send )?(a(n)? )?(email|message)( to)?|notify) /;
-    patterns[11] = /(hello|hi($| )|greetings|hola|bonjour|howdy|what {be} up|whats up)/
+    patterns[11] = /(^| )(hello|hi|greetings|hola|bonjour|howdy|what {be} up|whats up)($| )/
     patterns[12] = /(^| )(i|my)($| )/
     patterns[13] = /(tell me a|tell a|tell( me)?) /
     patterns[14] = /((^| )play( some| a)?|^sing) /
@@ -87,13 +106,13 @@ function standardize(s) {
     patterns[23] = /(^| )(change|se(t|x)|adjust|modify) /
     patterns[24] = /(humor[a-z]*|sass[a-z]*|intelligence) (parameter )?(to)?/
     patterns[25] = /(whats )/
-    patterns[26] = /(wheres )/
+    patterns[26] = /(wheres|locate) /
     patterns[27] = /(hows )/
     patterns[28] = /(whose|whos|about) /
-    patterns[29] = /(safety( )?(3rd|third)) /
+    patterns[29] = /((next )?(3|three) west|((6|safety( )?)(3rd|third)))($| )/
     patterns[30] = / (born|(date of )?birth( )?(day|date)?)($| )/
     patterns[31] = / (from$|home( )?(town)?)/
-    patterns[32] = /(^| )(directions|how ({do}|to) ({you}|we|{baymax} )?(get|go)) (to )?/
+    patterns[32] = /(^| )(directions|how ({do}|to) ({you} |we |{baymax} )?(get|go) )(to )?/
 
     var replacements = new Array();
     replacements[0] = " {be} ";
@@ -107,7 +126,7 @@ function standardize(s) {
     replacements[8] = "{affirmative}";
     replacements[9] = "{negative}";
     replacements[10] = "{notify} ";
-    replacements[11] = "{greeting}";
+    replacements[11] = " {greeting} ";
     replacements[12] = " {you} ";
     replacements[13] = "{tell} ";
     replacements[14] = " {play} ";
@@ -136,10 +155,11 @@ function standardize(s) {
     return s.trim();
 }
 
+exports.random = random;
 exports.similar = similar;
 exports.after = after;
 exports.between = between;
 exports.contains = contains;
 exports.standardize = standardize;
-exports.random = random;
+exports.standardizeLocation = standardizeLocation;
 exports.math = stringifyMath;

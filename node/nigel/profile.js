@@ -4,16 +4,16 @@ var goodquestion = ["", "", "That's good asking. ", "Good question. ", "Nice of 
 
 var profile = new Array();
 
-profile["movie"] = ["Big Hero 6", ["Big Hero 6", "Imitation Game", "A Beautiful Mind", "Inception", "Interstellar", "Memento"]];
+profile["movie"] = ["Big Hero 6", ["Big Hero 6", "The Imitation Game", "A Beautiful Mind", "Inception", "Interstellar", "Memento"]];
 profile["color"] = ["the color of jealousy", []];
-profile["game"]  = ["One-Night Ultimate Werewolf", ["Mario Kart", "Super Smash Bros", "Canadian Fish", "Starcraft", "One-Night Ultimate Wereworlf", "Tractor", "Civ"]]
-profile["musical"] = ["Seussical", ["Phantom of the Opera", "Seussical", "Lay Miserob", "Cats", "Rent", "Wicked"]];  
+profile["game"]  = ["One-Night Ultimate Werewolf", ["Mario Kart", "Super Smash Brothers", "Canadian Fish", "Starcraft", "One-Night Ultimate Wereworlf", "Tractor", "Civ"]]
+profile["musical"] = ["Seussical", ["Phantom of the Opera", "Seussical", "Wicked", "Lay Miz", "Cats", "Rent"]];  
 profile["place"] = ["Cal Tech. Just kidding. It's M.I.T., of course.", []];
 profile["school"] = ["Cal Tech. Just kidding. It's M.I.T., of course.", []];
 profile["college"] = ["Cal Tech. Just kidding. It's M.I.T., of course.", []];
-profile["animal"] = ["Tim, the beaver.", []];
+profile["animal"] = ["Tim, the beaver.", ["Tim, the beaver!", "Hairy baby!", "Hairy baby!"]];
 profile["play"] = ["Othello", ["Death of a Salesman", "Hamlet", "Romeo and Juliet", "Othello"]];
-profile["activity"] = ["defenestration", ["hacking into M.I.T.'s network", "defenestration", "talking to my friends in Safety third."]]
+profile["activity"] = ["defenestration", ["hacking into M.I.T.'s network", "hugging his Safety third companions", "defenestration", "talking to my friends in Safety third."]]
 profile["dirty"] = ["your mom", []];
 profile["book"]  = ["I, Robot.", ["Hunger Games", "Harry Potter", "Chronicles of Narnia", "I, Robot"]];
 profile["novel"] = ["I, Robot.", ["War and Peace", "Crime and Punishment", "Great Gatsby", "Count of Monte Cristo", "I, Robot"]];
@@ -28,13 +28,15 @@ profile["food"] =  ["chocolate. Om nom nom.", ["flaming hot cheetos",
 function query(input, tokens, stems) {
 	var entity = "";
 	for (var i in tokens) {
-		if (typeof profile[tokens[i]] !== "undefined") {
+		if (profile[tokens[i]]) {
 			entity = tokens[i];
+			break;
 		}
 	}
 	for (var i in stems) {
-		if (typeof profile[stems[i]] !== "undefined") {
+		if (profile[stems[i]]) {
 			entity = stems[i];
+			break;
 		}
 	}
 

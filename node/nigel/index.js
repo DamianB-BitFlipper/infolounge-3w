@@ -1,6 +1,7 @@
 var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var nigelSettingsRef = new Firebase("https://rliu42.firebaseio.com/nigelSettings");
+var apis = require('../secrets/api').keys;
 var natural = require('natural');
 var utils = require('../nigel/utils');
 var common = require('../nigel/common');
@@ -71,6 +72,18 @@ function respond(req, res) {
 		}
 	}
 
+	// locate people
+    if ( !response && /where {be} /.test(s_input) ) {
+        var person = utils.after(s_input, "where {be} ");
+        var result = people.query(person, tokens);
+        if (result.name) {
+            response = "My radar was unable to detect " + result.name + " in the 3 West corridors.";
+            followup = ["I will have to pull up the M.I.T. Marauder's map to low-cate " + result.name,
+            			"However, that requires a secret pass phrase. "];
+            confidence = 1;
+        }
+    }
+
 	// queries about birthdays
 	if ( /{birthday}/.test(s_input) ) {
 		var i; var s_trigrams = NGrams.trigrams(s_input, '[start]');
@@ -118,12 +131,22 @@ function respond(req, res) {
 	}
 
 	// map directions
-	if ( /{directions}/.test(s_input) ) {
+	if ( !response && /{directions}/.test(s_input) ) {
 		var destination = utils.after(s_input, "{directions} ");
-		response = ["Okay, Beymax will pull up directions from Next House to " + destination + " on info lounge.", 
-		            "Let me know if you want to go some place else"];
-		media = { type: "map", 
-			      link: "https://www.google.com/maps/embed/v1/directions?origin=Next+House,+Memorial+Drive,+Cambridge,+MA,+United+States&destination=" + destination.replace(" ", "+") + ",+near+Cambridge,+MA&key=AIzaSyDrATZhqJcmBUE700msJtCWFOe96FIVsx8"
+		var origin = "Next House";
+		if ( destination.indexOf("from") > -1 ) {
+			origin = utils.between(destination, "from ", "to").trim() || utils.after(destination, "from ");
+			destination = utils.between(s_input, "{directions} ", "from").trim() || utils.after(destination, "to ");
+		}
+		destination = utils.standardizeLocation(destination);
+		response = ["Okay, Beymax will pull up directions from " + origin + " to " + destination + " on info lounge.", 
+		            "Let me know if you want to go somewhere else."];
+		origin += ", near Cambridge, MA"; destination += ", near Cambridge, MA";
+		media = { 
+				  type: "map", 
+			      link: "https://www.google.com/maps/embed/v1/directions?" +
+			      	    "origin=" + origin.replace(/\s/g, "+") +
+			      	    "&destination=" + destination.replace(/\s/g, "+") + "&key=" + apis.google
 			    }
 		command = "show map";
 	}

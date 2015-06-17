@@ -2,6 +2,7 @@ var request = require("request");
 var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var utils = require("../nigel/utils");
+var people = require("../nigel/people");
 var parse = require("xml2js").parseString;
 var randomResponses = require('../nigel/random').randomResponses;
 
@@ -39,10 +40,11 @@ function clean(s) {
 }
 
 function query(input, s_input, tokens, sms, res) {
-
     var response = "";
     var command = "";
     var followup = "";
+    var media = "";
+
     nigelRef.update({
         req: input,
         std: s_input,
@@ -139,6 +141,17 @@ function query(input, s_input, tokens, sms, res) {
                     }
                 }
 
+                // map directions
+                if ( /where {be} /.test(s_input) && !response) {
+                    var destination = utils.after(s_input, "where {be} ");
+                    response = ["Okay, Beymax will pull up directions from Next House to " + destination + " on info lounge.", 
+                                "Let me know if you want to go somewhere else."];
+                    media = { type: "map", 
+                              link: "https://www.google.com/maps/embed/v1/directions?origin=Next+House,+Memorial+Drive,+Cambridge,+MA,+United+States&destination=" + destination.replace(/\s/g, "+") + ",+near+Cambridge,+MA&key=AIzaSyDrATZhqJcmBUE700msJtCWFOe96FIVsx8"
+                            }
+                    command = "show map";
+                }
+
                 if (!response) {
                     if (Math.random() < 0.33) {
                         r = utils.random(randomResponses.helpful);
@@ -160,9 +173,10 @@ function query(input, s_input, tokens, sms, res) {
                     followup: followup,
                     cmd: command,
                     sms: sms,
-                    media: ""
+                    media: media
                 };
                 nigelRef.update(o);
+
                 res.json(o);
             });
         }

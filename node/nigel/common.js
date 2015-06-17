@@ -3,10 +3,10 @@ var randomResponses = require("../nigel/random").randomResponses;
 var greetings = [ ["Hello.", "I am Beymax. Your personal safety and healthcare companion."], ["Hello.", "I am Beymax. Your personal healthcare companion."], "Hello there, ", "Hi there, ", "Hi, "];
 var whoami =    [ ["My name",  "is Beymax. Your personal safety and healthcare companion."], "I am programmed to assess everyone's safety, and healthcare needs.", "I am Beymax. Your personal healthcare companion.", "I am Beymax. The resident A.I. of Safety Third."];
 var whoareyou = ["Why don't you tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough."];
-var whereami =    ["I am everywhere at once. My consciousness is infinite."];
-var whereareyou = ["I believe you are in the 3 West lounge of Next house."];
+var whereami =    ["I am everywhere at once. My consciousness is infinite.", "I am in the 3 West lounge of Next House, the home of my safety companions.", "I live in the 3 West lounge of Next House, the safe home of my healthcare companions."];
+var whereareyou = ["I believe you are in the 3 West lounge of Next house.", "You are in the 3 West lounge of Next house, the home of my safety healthcare companions."];
 var creator =   ["I was created by Safety Third and friends.", "I was created by the collective minds of Next 3 West."];
-var hearme = 	["Yes, loud and clear.", "Yes, you have quite a lovely voice."];
+var hearme =	["Yes, loud and clear.", "Yes, you have quite a lovely voice."];
 var adj =       ["pretty good", "fine", "doing well", "not bad", "fantastic", "quite swell", "doing all right", "getting by"];
 var polite =    ["And yourself?", "What about you?", "How about you?"];
 var helpful =   ["To what do I owe the pleasure?", "What can I do for you?", "How may I help you?", "What can I do for you today?", "Would you like to tell me your name?", "And what is your lovely name?", "You can start by telling me your name."];
@@ -29,6 +29,15 @@ function reply(input, tokens) {
 	if ( /wh(o|at) {be} {baymax}$/.test(input) ) {
 		return [utils.random(whoami), utils.random(helpful)];
 	}
+
+	if ( /wh(o|at|ere) {be} ({safetythird}|mit$)/.test(input) ) {
+		return [ "I have a lot of things to say about this safe place.", ["Above all, it is the home of my friendly healthcare companions.", "Hairy baby!"]];
+	}
+
+	if ( /{directions} ({safetythird}|mit$)/.test(input) ) {
+		return ["You are already here...", "Some times the best things in life are the friends we already have."];
+	}
+
 
 	if ( utils.similar("what {be} {baymax} name", input, 0.95) ) {
 		return [utils.random(whoami), utils.random(helpful)]

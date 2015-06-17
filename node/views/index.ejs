@@ -43,11 +43,11 @@
         <script type='text/javascript'>
             lastUpdated = -1;
             var isItLateYet = function() {
-                var today = new Date().getHours();
-                if (today >= 2 && today <= 7) {
+                var now = new Date();
+                if (now.getHours() >= 2 && now.getHours() <= 7) {
                     $('.shutthefuckup').show();
-                    if (new Date().getHours == 2 && new Date().getMinutes() == 0 && newDate().getSeconds() < 3) {
-                        baymaxSpeak("It is now 2 AM. No loud noises please.");
+                    if (now.getHours() == 2 && now.getMinutes() == 0 && now.getSeconds() <= 3) {
+                        baymaxSpeak("It is now 2 A.M. No loud noises please.");
                     }
                 } else {
                     $('.shutthefuckup').hide();
@@ -194,6 +194,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                     <div class="large-12 columns" id='tweetpanel'>
                         <h3 class='header-m twitter-header collapsed'>&nbsp;<span class="icon-m ion-social-twitter"></span>&nbsp;Twitter #bash3w</h3>
@@ -240,7 +241,7 @@
                     <div class="large-12 columns" id="marauderpanel" style="display:none">
                       <h3 class='video-header '>&nbsp;<span class = "icon-m ion-ios-color-wand"></span>&nbsp;Marauder's Map</h3>
                       <div class='panel marauder' >
-                            <iframe scrolling="no" height="350" width="700" frameborder="0" style="border:0" src="http://runpengliu.com/mit-marauder/" id="maraudermap"></iframe>
+                            <iframe scrolling="no" height="350" width="700" frameborder="0" style="border:0" src="https://runpengliu.com/mit-marauder/" id="maraudermap"></iframe>
                       </div>
                     </div>
                   </div>
