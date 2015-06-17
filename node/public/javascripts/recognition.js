@@ -12,7 +12,7 @@ setUpRecognition = function() {
 		if (transcript) {
 			startBeep.play();
 			console.log("Sending to server: " + transcript);
-			if (location.href.match(/(localhost|runpengliu)/)) {
+			if ( /(localhost|runpengliu)/.test(location.href) ) {
 				processSpeech(transcript.trim());
 			} else {
 				sendRequest(transcript.trim())
@@ -24,13 +24,13 @@ setUpRecognition = function() {
 	}
 	recognition.onend = function(event) {
 		setTimeout(function() {
-			if (!isSpeaking && location.href.match(/^https/)) {
+			if (https && !isSpeaking) {
 				try {event.target.start()} catch(e) {}
 			}
 		}, 1000);
 	}
 	recognition.onerror = function(event) {
-		if (location.href.match(/^https/)) {
+		if (https) {
 			try {event.target.start()} catch(e) {}
 		}
 	}

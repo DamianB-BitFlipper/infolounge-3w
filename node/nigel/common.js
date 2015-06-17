@@ -26,7 +26,7 @@ function reply(input, tokens) {
 		return utils.random(helpful);
 	}
 	 
-	if ( input.match(/wh(o|at) {be} {baymax}$/) ) {
+	if ( /wh(o|at) {be} {baymax}$/.test(input) ) {
 		return [utils.random(whoami), utils.random(helpful)];
 	}
 
@@ -34,11 +34,11 @@ function reply(input, tokens) {
 		return [utils.random(whoami), utils.random(helpful)]
 	}
 
-	if ( input.match(/^{greeting}/) ) {
+	if ( /^{greeting}/.test(input) ) {
 		return [utils.random(greetings), utils.random(helpful)]
 	}
 
-	if ( input.match(/where ({be}|{do}) {baymax}/) || utils.similar("where {be} {baymax}", input, 0.95) ) {
+	if ( /where ({be}|{do}) {baymax}/.test(input) || utils.similar("where {be} {baymax}", input, 0.95) ) {
 		return [utils.random(whereami),  utils.random(more)];
 	}
 
@@ -75,10 +75,10 @@ function reply(input, tokens) {
 	}
 
 	if ( tokens[0] == "what" && utils.similar("what can {baymax} {do}", input, 0.95) ) {
-		return utils.random(randomResponses["helpful"]);
+		return utils.random(randomResponses.helpful);
 	}
 
-	if ( input.indexOf("{testing}") == 0 ) {
+	if ( /^{testing}/.test(input) ) {
 		return utils.random(helpful);
 	}
 
@@ -140,24 +140,24 @@ function reply(input, tokens) {
 		return ["I'm delighted to hear that!", "Would you like a loving hug from Beymax?"]
 	}
 
-	if (input.match(/hairy baby/)) {
+	if ( /hairy baby/.test(input) ) {
 		return ["Hairy baby!", ["Hairy baby!", "Hairy baby!"]];
 	}
 
-	if (input.match(/window/)) {
+	if ( /window/.test(input) ) {
 		return "Weee jumped out a window!";
 	}
 
-	if (input.match(/ hug(s)?($| )/)) {
+	if ( / hug(s)?($| )/.test(input) ) {
 		return ["Beymax loves hugs!", "Would you like to give Beymax a hug?"];
 	}
 
 	if (input.indexOf("insult") > -1) {
-		return [utils.random(randomResponses["sad"]), utils.random(randomResponses["insult"])]
+		return [utils.random(randomResponses.sad), utils.random(randomResponses.insult)]
 	}
 
 	if (input.indexOf("health") > -1) {
-		return [utils.random(randomResponses["health"]), "Are you satisfied with your care?"]
+		return [utils.random(randomResponses.health), "Are you satisfied with your care?"]
 	}
 
 	return "";

@@ -1,8 +1,12 @@
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var firstLoad = true;
 var isSpeaking = false;
+var baymax = /baymax/.test(location.href);
+var https = /^https/.test(location.href);
 var startBeep = new Audio('sounds/startBeep.mp3');
 var endBeep = new Audio('sounds/endBeep.mp3');
+var baymaxWindow = new Audio('sounds/window.mp3');
+var hairyBaby = new Audio('sounds/hairybaby.mp3');
 endBeep.volume = 0.75;
 startBeep.volume = 0.75;
 var beeps = [startBeep, endBeep];
@@ -28,11 +32,19 @@ var speak = function(phrase, followup, command) {
     if (!first || first.length > 250) {
         return;
     }
+    if ( first.indexOf("window") > -1 ) {
+        baymaxWindow.play();
+        return;
+    }
+    if ( first.indexOf("Hairy baby") > -1 ) {
+        hairyBaby.play()
+        return;
+    } 
     BAYMAX.voice = speechSynthesis.getVoices()[1];;
     BAYMAX.text = first;
     BAYMAX.volume = 10;
-    BAYMAX.pitch = (typeof first == "string" && first.indexOf("Hairy baby") > -1) ? 1.80 : 1.40;
-    BAYMAX.rate = (typeof first == "string" && first.indexOf("Hairy baby") > -1) ? 1.20 : 0.95;
+    BAYMAX.pitch = 1.40;
+    BAYMAX.rate = 0.95;
     BAYMAX.onstart = function() {
         isSpeaking = true;
         recognition.stop();
@@ -48,7 +60,9 @@ var speak = function(phrase, followup, command) {
         }
     } else {
         BAYMAX.onend = function() {
-            rand(beeps).play();
+            if (baymax) {
+             rand(beeps).play();
+            }
             isSpeaking = false;
             if (location.href.match(/^https/)) {try {recognition.start()} catch(e) {}}
         }
@@ -58,7 +72,7 @@ var speak = function(phrase, followup, command) {
 
 nigelRef.on("value", function(ss) {
     var data = ss.val();
-    if (firstLoad && location.href.match(/^https/)) {setUpRecognition()}
+    if (firstLoad && https) { try{ setUpRecognition() } catch(e) {} }
     if (data.sms && !firstLoad) {
         previousResponse = data;
         processResponse(data);
@@ -69,12 +83,18 @@ nigelRef.on("value", function(ss) {
 });
 
 var processResponse = function(result) {
-    if (result.res && location.href.match(/baymax/)) {
+    if (result.res && baymax) {
         speak(result.res, result.followup);
     }
     if (result.media) {
-        var url = ( location.href.match(/^https/) ? 'https': 'http' ) + "://www.youtube.com/embed/" + result.media + "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
-        $("#player").attr("src", url);
+        if (result.media.type == "video") {
+            var url = ( https ? 'https': 'http' ) + "://www.youtube.com/embed/" + result.media.link + "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
+            $("#player").attr("src", url);
+        }
+        if (result.media.type == "map") {
+            var url = result.media.link.replace(/^http(s)?/, ( https ? 'https': 'http' ));
+            $("#googlemap").attr("src", result.media.link);
+        }
     }
     if (result.cmd) {
         try{ processCommand(result.cmd) } catch(e) {}

@@ -123,18 +123,12 @@ $.getJSON(techstops_url, function(data){
 }
 
 function tick() {
-  //console.log(Markers.length);
   for (var j=0; j < Markers.length; j++){
       var marker = Markers[j];
       marker.setLatLng(L.latLng(
         Paths[j].coordinates[t][1],
         Paths[j].coordinates[t][0]));
   }
-  //console.log(Markers[0])
-	if (t==Paths[0].coordinates.length-1){
-		//$(".title-moving").hide();
-		//$(".title-stopped").fadeIn(1000);
-	}
 	t = Math.min(t+1, Paths[0].coordinates.length-1);
 	//console.log(t);
   setTimeout(tick, updateMapRate);
@@ -146,22 +140,18 @@ function renderMap() {
      MAP = L.mapbox.map('techmap', 'safetythird.lbg7km06')
     .setView([42.35866, -71.09370], 15);
      // setTimeout(function(){setInterval(function(){$($('img')[Math.floor(Math.random()*100)]).click()}, 3000)}, 10000);
-  } catch(e){}
+  } catch(e) {console.log(e)}
 }
 
 function handlePredictions2(data) {
 	var predictions = data.items;
-
-//  if (jQuery.isEmptyObject(predictions)){
-  //  return;
-//  }
 
 	time_elem0 = '';
 	time_elem1 = '';
 
 	if (dateFormat(new Date, "HH:MM") > "19:10" || dateFormat(new Date, "HH:MM") < "06:00") {
 		$('.tech-map').attr("src", "").fadeOut();
-		$("#techmap").fadeOut();
+		$("#techmap").hide();
 	}
 
 	if (!jQuery.isEmptyObject(predictions)){
@@ -212,7 +202,7 @@ function handlePredictions2(data) {
   //console.log(route1);
 
       var route = '';
-      if (typeof predictions[0]!== "undefined") {
+      if (predictions[0]) {
         if (predictions[0].route_id == 'tech') {
             route = 'tech shuttle';
 						if (time_elem0 == "Arrv ") {

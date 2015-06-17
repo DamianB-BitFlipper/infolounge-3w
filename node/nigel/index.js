@@ -13,6 +13,7 @@ var mail = require('../nigel/mail');
 var random = require('../nigel/random');
 var randomResponses = random.randomResponses;
 tokenizer = new natural.WordTokenizer();
+var NGrams = natural.NGrams;
 var emptyResponse = {req: "", std: "", res: "", followup: "", cmd: "", sms: true, media: "", last: ""}
 
 function respond(req, res) {
@@ -27,7 +28,9 @@ function respond(req, res) {
 	var s_input = utils.standardize(input);
 	var mainThread = true;
 	var sms = true; var response = ""; var followup = ""; var command = ""; media= ""; var confidence = 0; 
-	console.log({demand: demand, input: input, s_input: s_input, tokens: tokens})
+
+	//console.log({demand: demand, input: input, s_input: s_input, tokens: tokens})
+
 	// stop command
 	if ( s_input.match(/{shutup}/) ) {
 		response = utils.random(randomResponses.stop);
@@ -41,24 +44,24 @@ function respond(req, res) {
 	response = response ? response : common.reply(s_input, tokens);
 
 	// nigel's favorite things
-	response = ( s_input.match(/{baymax} favorite /) ) ? profile.query(s_input, tokens, stems) : response;
+	response = ( /{baymax} favorite /.test(s_input) ) ? profile.query(s_input, tokens, stems) : response;
 
 	confidence = response ? 1 : 0;
 
 	// queries about people
-	if ( !response && s_input.match(/(who {be})|({baymax} know who) /) ) {
+	if ( !response && /(who {be})|({baymax} know who) /.test(s_input) ) {
 		var person = utils.after(s_input.replace(" {be}", ""), "who ").trim();
 		var result = people.query(person, tokens);
 		response = result.response; confidence = result.confidence;
 	}
 
-	if ( s_input.match(/{baymax} know /) ) {
+	if ( /{baymax} know /.test(s_input) ) {
 		var person = utils.after(s_input.replace(" {be}", ""), "know ").trim();
 		var result = people.query(person, tokens);
 		response = result.confidence == 1 ? result.response : response;
 	}
 
-	if ( s_input.match(/{you} (name )?{be} /) ) {
+	if ( /{you} (name )?{be} /.test(s_input) ) {
 		var person = utils.after(s_input, "{be} ").trim();
 		var result = people.query(person, tokens);
 		if (result.confidence && result.name) {
@@ -69,45 +72,64 @@ function respond(req, res) {
 	}
 
 	// queries about birthdays
-	if ( s_input.match(/{birthday}/) ) {
-		var person = ""; var i;
-		var s_tokens = tokenizer.tokenize(s_input);
-		for (var i in s_tokens) {
-			if (s_tokens[i] == "birthday") {
-				person = s_tokens[i-1].replace(/s$/, ""); break;
+	if ( /{birthday}/.test(s_input) ) {
+		var i; var s_trigrams = NGrams.trigrams(s_input, '[start]');
+		for (var i in s_trigrams) {
+			if (s_trigrams[i][2] == "birthday") {
+				p1 = s_trigrams[i][0]
+				p2 = s_trigrams[i][1].replace(/s$/, ""); 
+				p3 = p1 + p2;
+				break;
 			}
 		}
-		if (person) {
-			response = people.birthday(person).response;
-			response = response ? response : people.birthday(s_tokens[i-2].replace(/s$/, "")).response;
+
+		if (p1 || p2) {
+			response = people.birthday(p3).response;
+			response = response ? response : people.birthday(p1).response;
+			response = response ? response : people.birthday(p2).response;
 		}
 		confidence = response ? 1 : 0;
 	}
 
 	// queries about hometowns
-	if ( !response && s_input.match(/{from}/) ) {
-		var person = ""; var i;
-		var s_tokens = tokenizer.tokenize(s_input);
-		for (var i in s_tokens) {
-			if (s_tokens[i] == "from") {
-				person = s_tokens[i-1].replace(/s$/, ""); break;
+	if ( !response && /{from}/.test(s_input) ) {
+		var i; var s_trigrams = NGrams.trigrams(s_input, '[start]');
+		for (var i in s_trigrams) {
+			if (s_trigrams[i][2] == "from") {
+				p1 = s_trigrams[i][0]
+				p2 = s_trigrams[i][1].replace(/s$/, ""); 
+				p3 = p1 + p2;
+				break;
 			}
 		}
-		if (person) {
-			response = people.hometown(person).response;
-			response = (response) ? response : people.hometown(s_tokens[i-2].replace(/s$/, "")).response;
+
+		if (p1 || p2) {
+			response = people.hometown(p3).response;
+			response = response ? response : people.hometown(p1).response;
+			response = response ? response : people.hometown(p2).response;
 		}
 		confidence = response ? 1 : 0;
 	}
 
 	// play music
-	if ( s_input.match(/{play} /) ) {
+	if ( /{play} /.test(s_input) ) {
 		mainThread = false;
 		youtube.query(input, s_input, tokens, sms, res);
 	}
 
+	// map directions
+	if ( /{directions}/.test(s_input) ) {
+		var destination = utils.after(s_input, "{directions} ");
+		response = ["Okay, Beymax will pull up directions from Next House to " + destination + " on info lounge.", 
+		            "Let me know if you want to go some place else"];
+		media = { type: "map", 
+			      link: "https://www.google.com/maps/embed/v1/directions?origin=Next+House,+Memorial+Drive,+Cambridge,+MA,+United+States&destination=" + destination.replace(" ", "+") + ",+near+Cambridge,+MA&key=AIzaSyDrATZhqJcmBUE700msJtCWFOe96FIVsx8"
+			    }
+		command = "show map";
+	}
+
 	// show/hide lounge information
-	var panels = ["weather", "news", "tweet", "dining", "tech", "video"];
+	var panels = ["weather", "news", "tweet", "dining", "tech", "video", "map"];
 	if (input.indexOf("hide ") > -1) {
 		response = "You can choose to hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
 		for (var i in tokens) {
@@ -117,7 +139,7 @@ function respond(req, res) {
 			}
 		}
 	}
-	if (s_input.indexOf("{show} ") > -1) {
+	if (!response && s_input.indexOf("{show} ") > -1) {
 		response = "You can choose to hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
 		for (var i in tokens) {
 			if ( utils.contains(panels, utils.standardize(tokens[i])) ) {
@@ -128,7 +150,7 @@ function respond(req, res) {
 	}
 
 	// open marauder's map
-	if ( input.match(/(i )?solemnly swear (that )?i( a)?m up to no good/) ) {
+	if ( /(i )?solemnly swear (that )?i( a)?m up to no good/.test(input) ) {
 		response = "Be sure to say 'mischief managed' to hide the marauder's map when you are finished.";
 		command = "show marauder";
 	}
@@ -136,7 +158,7 @@ function respond(req, res) {
 		response = "Close, but the map will not open for you. Try again.";
 	}
 	// hide marauder's map
-	if ( input.match(/mischief managed/) || utils.similar(input, "mischief managed", 0.95) ) {
+	if ( /mischief managed/.test(input) || utils.similar(input, "mischief managed", 0.95) ) {
 		response = "Hiding marauder's map.";
 		command = "hide marauder";
 	}
@@ -186,11 +208,21 @@ function respond(req, res) {
 	}
 
 	// send e-mails
-	if ( s_input.indexOf("{notify} ") > -1 ) {
-		var person = utils.after(s_input, "{notify} ").replace(/(@|at)?( )?mit\.edu/g, "").trim();
-		var kerberos = people.match(person, tokens);
+	if ( /{notify} /.test(s_input) ) {
+		s_input = s_input.replace(/(@|at)?( )?mit\.edu/g, "").trim();
+		var i; var s_trigrams = NGrams.trigrams(s_input, '[start]', '[end]');
+		for (var i in s_trigrams) {
+			if (s_trigrams[i][0] == "notify") {
+				p1 = s_trigrams[i][1];
+				p2 = s_trigrams[i][2];
+				p3 = p1 + p2;
+			}
+		}
+		var kerberos = people.match(p3, tokens);
+		kerberos = kerberos ? kerberos : people.match(p2, tokens);
+		kerberos = kerberos ? kerberos : people.match(p1, tokens);
 		if (!kerberos) {
-			response = "Sorry, I don't know the kerberrose of: " + person;
+			response = "Sorry, I don't know the kerberrose of: " + utils.after(s_input, "{notify} ");
 		} else if (kerberos.indexOf("{error}") > -1) {
 			response = kerberos;
 		} else {
@@ -202,7 +234,7 @@ function respond(req, res) {
 	}
 
 	// process e-mails
-	if ( demand.match(/{e}/) || previousCommand.match(/composing/) )  {
+	if ( /{e}/.test(demand) || /composing/.test(previousCommand) )  {
 		mainThread = false;
 		nigelRef.once("value", function(ss) {
 			var data = ss.val(); var subject; var message;
@@ -226,7 +258,7 @@ function respond(req, res) {
 	}
 
 	// wolfram alpha
-	if ( (!response || confidence != 1) && s_input.match(/(what|who|where) ({be}|{do}) /) ) {
+	if ( (!response || !confidence) && /(what|who|where) ({be}|{do}) /.test(s_input) ) {
 		mainThread = false;
 		wolfram.query(demand, s_input, tokens, sms, res);
 	}

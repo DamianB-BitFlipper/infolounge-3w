@@ -11,7 +11,7 @@ var affirm = ["Very well: ", "Sure thing: ", "Of course: ", "My pleasure: ", "Al
 var playing = ["I will play: ", "Bey-max will play: ", "Bey-max will play: "];
 var enjoy = ["", "Enjoy the music.", "I hope you enjoy.", "Let me know if you want a different selection."];
 var another = ["Let me know if you want another song.", "Let me know if you want a different selection."];
-var rand = ["something else", "another", "different", "^music$", "song$"];
+var rand = [/something else/, /another/, /different/, /^music$/, /song$/];
 var titles = ["Beethoven's Fifth Symphony",
     "selections from Sound of Music",
     "Human by Christina Perri",
@@ -30,23 +30,23 @@ function query(input, s_input, tokens, sms, res) {
     var random = false;
     var request = utils.after(input.replace(/(play some|play a|play|^sing) /, "{play} "), "{play} ").trim();
     for (var i in rand) {
-        if (request.match(rand[i])) {
+        if (rand[i].test(request)) {
             request = utils.random(titles);
             random = true;
         }
     }
 
-    if ( request.match(/birthday/) ) {
+    if ( /birthday/.test(request) ) {
         person = request.replace(/(happy )?birthday (to|for)?/, "").trim();
         request = "";
         var people = require("../nigel/people");
         var result = people.query(person);
         if (result.confidence && result.name) {
             response = ["Beymax wishes " + result.name + " a very happy birthday!", 
-                        "Would " + result.name + " like a hug from Beymax?"];
+                        "Would " + result.name + " like a hug from Beymax..?"];
         } else {
-            response = ["Sorry, Beymax doesn't know " + person + " well enough to sing Happy Birthday for them.", 
-                        "Would you still like a hug from Beymax?"];
+            response = ["Sorry, Beymax doesn't know " + person + " well enough to sing Happy Birthday for him or her.", 
+                        "Would you still like a hug from Beymax..?"];
         }
         var o = {
                 req: input,
@@ -93,7 +93,7 @@ function query(input, s_input, tokens, sms, res) {
                 followup: followup,
                 cmd: "",
                 sms: true,
-                media: videoID
+                media: {type: "video", link: videoID}
             };
             nigelRef.update(o);
             res.json(o);

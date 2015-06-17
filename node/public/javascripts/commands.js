@@ -14,26 +14,23 @@ var processCommand = function(command) {
         $("#weatherpanel").find('div').slideDown();
         $("#tweetpanel").find('div').slideDown();
     }
-    if (command.match(/compose mail/)) {
-        composingMail = true;
-    }
-    if (command.match(/^hide/)) {
+    if (/^hide/.test(command)) {
         $('#' + command.split(" ")[1] + "panel").find('div').slideUp();
     }
-    if (command.match(/^show/)) {
+    if (/^show/.test(command)) {
         $('#' + command.split(" ")[1] + "panel").find('div').slideDown();
     }
-    if (command.match(/^show (video|map)/)) {
+    if (/^show (video|map)/.test(command)) {
         $('#' + command.split(" ")[1] + "panel").slideDown();
         $("#weatherpanel").find('div').slideUp();
         $("#tweetpanel").find('div').slideUp();
     }
-    if (command.match(/^hide (video|map)/)) {
+    if (/^hide (video|map)/.test(command)) {
         $('#' + command.split(" ")[1] + "panel").slideUp();
         $("#tweetpanel").find('div').slideDown();
         $("#weatherpanel").find('div').slideDown();
     }
-    if (command.match(/^show marauder/)) {
+    if (/^show marauder/.test(command)) {
         $("#maraudermap").hide();
         $("#weatherpanel").find('div').slideUp();
         $("#tweetpanel").find('div').slideUp();
@@ -41,7 +38,7 @@ var processCommand = function(command) {
             setTimeout($("#maraudermap").fadeIn(1500))
         })
     }
-    if (command.match(/^hide marauder/)) {
+    if (/^hide marauder/.test(command)) {
         $("#maraudermap").fadeOut(1000, function() {
             $("#marauderpanel").slideUp(500, function() {
                 $("#weatherpanel").find('div').slideDown();

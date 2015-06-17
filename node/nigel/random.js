@@ -4,12 +4,12 @@ random["who"] = [
     ["Hairy baby.", ["Hairy baby.", "Hairy baby."]],
     ["Hairy baby.", ["Hairy baby.", "Hairy baby."]], "I'm afraid Beymax does not know.", "You need to be more specific.", "I'm afraid Beymax does not know who you're referring to.", "I'm afraid Beymax does not know who you're talking about."
 ];
-random["what"] = ["You should ask Siri instead.", "The answer, my friend, is blowing in the wind.", "Why should Beymax tell you.", "Why don't you tell me, if you're such a wise philosopher."];
+random["what"] = ["You should ask Siri instead.", "The answer, my friend, is blowing in the wind.", "I'm afraid Beymax does not know.", "I'm afraid Beymax does not know what you're referring to."];
 random["where"] = [
     ["Somewhere over the rainbow.", "Way up high."], "I've been a lot of places and still I do not know.", "One does not simply walk in to that place."
 ];
 random["why"] = ["Why don't you ask Siri that question.", "I suggest that you ask Siri.", "How would I know. You tell me.", "Quite simply because: God made it that way.", "Quite simply because: I made it that way."];
-random["how"] = ["Very, very carefully.", "One does not simply.", "Am I supposed to know the answer to that?", "You should ask Siri."];
+random["how"] = ["Very, very carefully.", "Am I supposed to know the answer to that?", "You should ask Siri.", "I suggest that you ask Siri."];
 random["stop"] = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command."];
 random["processing"] = [
     ["Please wait one moment while I process your request."],
@@ -57,7 +57,7 @@ random["helpful"] = ["You can adjust my humorous, sassiness, or intelligence par
 random["unsatisfied"] = [
     ["Was that not the answer you were looking for?", "You can adjust my humorous, sassiness, or intelligence parameters."],
     "If that was not the answer you were looking for, please adjust my humorous, sassiness, or intelligence parameters.",
-    "If you are not satisfied with my response, please adjust Beymax's humorous, sassiness, or intelligence parameters."
+    "If you are not satisfied with my response, please adjust Baymax's humorous, sassiness, or intelligence parameters."
 ]
 
 random["safety"] = [
@@ -99,8 +99,6 @@ function greet(name) {
 
     return greetings[Math.floor(Math.random()*greetings.length)];
 }
-
-
 
 exports.randomResponses = random;
 exports.greet = greet;

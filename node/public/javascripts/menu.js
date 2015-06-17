@@ -30,8 +30,7 @@ function getMenu() {
             if (menuCache[query]) {
                 document.getElementById("menu").innerHTML += menuCache[query];
             } else {
-                /* Note: DO NOT COPY THIS LINE AND USE IT IN OTHER CODE. IT USES MY PERSONAL GOOGLE API KEY. ~kyc */
-                //$.getScript("https://www.googleapis.com/customsearch/v1?key=AIzaSyBppxBXCGoVew1fU1DjV_Ii8r6kUgred2s&cx=013902053734636094783:5ckniww7ndi&q=" + encodeURIComponent(query) + "&callback=menuHandler&searchType=image");
+                $.getScript("https://www.googleapis.com/customsearch/v1?key=AIzaSyDrATZhqJcmBUE700msJtCWFOe96FIVsx8&cx=013902053734636094783:5ckniww7ndi&q=" + encodeURIComponent(query) + "&callback=menuHandler&searchType=image");
             }
         }
         // $('.menu-img').fadeIn();
