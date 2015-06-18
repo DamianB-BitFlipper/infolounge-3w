@@ -1,7 +1,7 @@
 var utils = require("../nigel/utils")
 var randomResponses = require("../nigel/random").randomResponses;
-var greetings = [ ["Hello.", "I am Beymax. Your personal safety and healthcare companion."], ["Hello.", "I am Beymax. Your personal healthcare companion."], "Hello there, ", "Hi there, ", "Hi, "];
-var whoami =    [ ["My name",  "is Beymax. Your personal safety and healthcare companion."], "I am programmed to assess everyone's safety, and healthcare needs.", "I am Beymax. Your personal healthcare companion.", "I am Beymax. The resident A.I. of Safety Third."];
+var greetings = [ ["Hello.", "I am Baymax. Your personal safety and healthcare companion."], ["Hello.", "I am Baymax. Your personal healthcare companion."], "Hello there, ", "Hi there, ", "Hi, "];
+var whoami =    [ ["My name",  "is Baymax. Your personal safety and healthcare companion."], "I am programmed to assess everyone's safety, and healthcare needs.", "I am Baymax. Your personal healthcare companion.", "I am Baymax. The resident A.I. of Safety Third."];
 var whoareyou = ["Why don't you tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough."];
 var whereami =    ["I am everywhere at once. My consciousness is infinite.", "I am in the 3 West lounge of Next House, the home of my safety companions.", "I live in the 3 West lounge of Next House, the safe home of my healthcare companions."];
 var whereareyou = ["I believe you are in the 3 West lounge of Next house.", "You are in the 3 West lounge of Next house, the home of my safety healthcare companions."];
@@ -11,9 +11,9 @@ var adj =       ["pretty good", "fine", "doing well", "not bad", "fantastic", "q
 var polite =    ["And yourself?", "What about you?", "How about you?"];
 var helpful =   ["To what do I owe the pleasure?", "What can I do for you?", "How may I help you?", "What can I do for you today?", "Would you like to tell me your name?", "And what is your lovely name?", "You can start by telling me your name."];
 var assuring =  ["That's nice to know.", "Glad to hear it.", "That's good to hear.", "I'm glad to hear it."];
-var more =      ["What else do you want to know about Beymax?", "What else do you want to know about me?", "Do you want to know more about me?"];
-var knowhow =   ["Of course I can ", "Yes, Beymax does know how to ", "Why, of course I can ", "Yes, Beymax can "];
-var dontknowhow = ["Sorry I don't know how to ", "No, Beymax has not been trained to ", "Nope, Beymax can't "];
+var more =      ["What else do you want to know about Baymax?", "What else do you want to know about me?", "Do you want to know more about me?"];
+var knowhow =   ["Of course I can ", "Yes, Baymax does know how to ", "Why, of course I can ", "Yes, Baymax can "];
+var dontknowhow = ["Sorry I don't know how to ", "No, Baymax has not been trained to ", "Nope, Baymax can't "];
 var knowhows =  ["talk", "sing", "think", "dream", "play music", "love", "feel", "fly", "do math", "speak", "send", "dance"];
 var believes    = ["love", "feelings", "logic"];
 var notbelieves = ["god", "ruler", "magic", "unicorn", "fairy"];
@@ -142,11 +142,11 @@ function reply(input, tokens) {
 	}
 
 	if ( utils.similar(input, "{be} {baymax} satisfied with", 0.9) ) {
-		return ["Very funny. That's my question to ask.", "Tell me. Are you satisfied with your care?"];
+		return ["Very funny. That's my question to ask.", "Tell me... Are you satisfied with your care?"];
 	}
 
 	if ( utils.similar(input, "{you} {be} satisfied with", 0.9) ) {
-		return ["I'm delighted to hear that!", "Would you like a loving hug from Beymax?"]
+		return ["I'm delighted to hear that!", "Would you like a loving hug from Baymax?"]
 	}
 
 	if ( /hairy baby/.test(input) ) {
@@ -158,14 +158,14 @@ function reply(input, tokens) {
 	}
 
 	if ( / hug(s)?($| )/.test(input) ) {
-		return ["Beymax loves hugs!", "Would you like to give Beymax a hug?"];
+		return ["Baymax loves hugs!", "Would you like to give Baymax a hug?"];
 	}
 
 	if (input.indexOf("insult") > -1) {
 		return [utils.random(randomResponses.sad), utils.random(randomResponses.insult)]
 	}
 
-	if (input.indexOf("health") > -1) {
+	if ( /(^| )(help|health)($| )/ ) {
 		return [utils.random(randomResponses.health), "Are you satisfied with your care?"]
 	}
 

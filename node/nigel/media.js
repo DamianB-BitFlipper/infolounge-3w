@@ -8,8 +8,8 @@ var Firebase = require('firebase');
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 
 var affirm = ["Very well: ", "Sure thing: ", "Of course: ", "My pleasure: ", "All right: ", "Your wish is my command: "];
-var playing = ["I will play: ", "Bey-max will play: ", "Bey-max will play: "];
-var enjoy = ["", "Enjoy the music.", "I hope you enjoy.", "Let me know if you want a different selection."];
+var playing = ["I will play: ", "Baymax will play: ", "Baymax will play: "];
+var enjoy = ["", "Enjoy the music.", "I hope you enjoy.", "I hope you enjoy the music.", "Let me know if you want a different selection."];
 var another = ["Let me know if you want another song.", "Let me know if you want a different selection."];
 var rand = [/something else/, /another/, /different/, /^music$/, /song$/];
 var titles = ["Beethoven's Fifth Symphony",
@@ -25,9 +25,7 @@ var titles = ["Beethoven's Fifth Symphony",
 ];
 
 function query(input, s_input, tokens, sms, res) {
-    var response = "";
-    var followup = "";
-    var random = false;
+    var response = ""; var followup = ""; var random = false;
     var request = utils.after(input.replace(/(play some|play a|play|^sing) /, "{play} "), "{play} ").trim();
     for (var i in rand) {
         if (rand[i].test(request)) {
@@ -42,11 +40,11 @@ function query(input, s_input, tokens, sms, res) {
         var people = require("../nigel/people");
         var result = people.query(person);
         if (result.confidence && result.name) {
-            response = ["Beymax wishes " + result.name + " a very happy birthday!", 
-                        "Would " + result.name + " like a hug from Beymax..?"];
+            response = ["Baymax wishes " + result.name + " a very happy birthday!", 
+                        "Would " + result.name + " like a hug from Baymax..?"];
         } else {
-            response = ["Sorry, Beymax doesn't know " + person + " well enough to sing Happy Birthday for him or her.", 
-                        "Would you still like a hug from Beymax..?"];
+            response = ["Sorry, Baymax doesn't know " + person + " well enough to sing Happy Birthday for him or her.", 
+                        "Would you still like a hug from Baymax..?"];
         }
         var o = {
                 req: input,

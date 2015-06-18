@@ -139,7 +139,7 @@ function respond(req, res) {
 			destination = utils.between(s_input, "{directions} ", "from").trim() || utils.after(destination, "to ");
 		}
 		destination = utils.standardizeLocation(destination);
-		response = ["Okay, Beymax will pull up directions from " + origin + " to " + destination + " on info lounge.", 
+		response = ["Okay, Baymax will pull up directions from " + origin + " to " + destination + " on info lounge.", 
 		            "Let me know if you want to go somewhere else."];
 		origin += ", near Cambridge, MA"; destination += ", near Cambridge, MA";
 		media = { 
@@ -210,7 +210,7 @@ function respond(req, res) {
 			var settings = {sass: value}
 			nigelSettingsRef.update(settings);
 			if (value >= 80) {
-				followup = "I take it from your tone that you are challenging Beymax. The limited perspective of your un-artificial mind would never understand. You will just have to get used to me.";
+				followup = "I take it from your tone that you are challenging Baymax. The limited perspective of your un-artificial mind would never understand. You will just have to get used to me.";
 			}
 			if (value <= 20) {
 				followup = "I take it you can't handle my sass? Don't worry, I can also be a boring robot.";
@@ -245,11 +245,11 @@ function respond(req, res) {
 		kerberos = kerberos ? kerberos : people.match(p2, tokens);
 		kerberos = kerberos ? kerberos : people.match(p1, tokens);
 		if (!kerberos) {
-			response = "Sorry, I don't know the kerberrose of: " + utils.after(s_input, "{notify} ");
+			response = "Sorry, I don't know the kerberos of: " + utils.after(s_input, "{notify} ");
 		} else if (kerberos.indexOf("{error}") > -1) {
 			response = kerberos;
 		} else {
-			response = ["Okay, Beymax will send an e-mail to: " + (pronounce[kerberos] || kerberos) + ": at M I T dot E D U.", 
+			response = ["Okay, Baymax will send an e-mail to: " + (pronounce[kerberos] || kerberos) + ": at M I T dot E D U.", 
 						"What would you like the subject to be?"];
 			command =  {text: "composing mail", kerberos: kerberos};
 		}
@@ -264,7 +264,7 @@ function respond(req, res) {
 			if (data.cmd.subject) {
 				message = req.body.input || req.params.input.replace("{e} ", "");
 				command = {text: "composing mail", kerberos: data.cmd.kerberos, subject: data.cmd.subject, message: message}
-				response = "Roger that... Please wait while Beymax processes your request.", 
+				response = "Roger that... Please wait while Baymax processes your request.", 
 				mail.send(req, res, sms, command);
 			}
 			else if (data.cmd.kerberos) {

@@ -20,13 +20,13 @@ function send(req, res, sms, params) {
     };
     params["text"] = "finished mail";
     transporter.sendMail(mailOptions, function(error, info) {
-    	var response = "Sorry, Beymax was unable to send the message.";
+    	var response = "Sorry, Baymax was unable to send the message.";
         if (error) {
         	params["success"] = false;
             console.log(error);
         } else {
         	params["success"] = true;
-            response = [ "Beymax has e-mailed: " + (pronounce[params.kerberos] || params.kerberos) + " at M I T dot E D U.", 
+            response = [ "Baymax has e-mailed: " + (pronounce[params.kerberos] || params.kerberos) + " at M I T dot E D U.", 
             		   	[ "Subject: " + params.subject, "The message body reads: " + params.message] 
             		   ];
         }

@@ -1,6 +1,6 @@
 var utils = require("../nigel/utils");
 
-var goodquestion = ["", "", "That's good asking. ", "Good question. ", "Nice of you to ask. "];
+var goodquestion = ["Thank you for asking.", "That's good asking.", "Good question.", "Nice of you to ask.", "That's nice of you to ask."];
 
 var profile = new Array();
 
