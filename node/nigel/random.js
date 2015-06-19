@@ -6,6 +6,8 @@ random["where"] = ["I've been a lot of places and still I do not know.", "One do
 random["why"] = ["Hairy baby!", "I suggest that you ask Siri.", "How would I know. You tell me.", "Quite simply because: God made it that way.", "Quite simply because: I made it that way.", "We jumped out a window!"];
 random["how"] = ["Very, very carefully.", "Am I supposed to know the answer to that?", "You should ask Siri.", "I suggest that you ask Siri.", "Hairy baby!"];
 random["stop"] = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command.", "Hairy baby!"];
+random["shutdown"] = ["Baymax is shutting down. Good bye.", "Your wish is my command. Baymax is shutting down.", "Baymax will shut down now."]
+random["startup"] = ["Baymax is starting up.", ["Baymax is starting up", "Hairy baby!"],  ["Baymax is starting up", "We jumped out a window!"] ]
 random["processing"] = [
     ["Please wait one moment while I process your request."],
     ["Let me think about that for one moment."],

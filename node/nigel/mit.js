@@ -1,7 +1,7 @@
 var w3 = new Array();
 w3["safetythird"] = [ "Safety Third", ["safety third", "safety", "3 west", "three west", "next three west", "63rd"]];
 w3["jfabi"] =    [ "Josh Josh", ["josh josh", "josh fabian", "jayfabi", "jfabi"], "grad student", "1", ["He created info lounge, where my infinite consciousness resides."], "December 29th", "Mexico" ]
-w3["kkarthur"] = [ "Bena", ["bena", "kwabena", "kkarthur", "kaykayarthur", "quabbin", "kwame", "corbin"], "junior", "2", ["It is not Kwabena's bedtime yet."], "August 29th", "", ["Are you sure it's not your bedtime yet?", "Playing too much Super Smash Brothers may be detrimental for your health."] ];
+w3["kkarthur"] = [ "The Bena", ["bena", "kwabena", "kkarthur", "kaykayarthur", "quabbin", "kwame", "corbin"], "junior", "2", ["It is not Kwabena's bedtime yet."], "August 29th", "", ["Are you sure it's not your bedtime yet?", "Playing too much Super Smash Brothers may be detrimental for your health."] ];
 w3["akwasio"] =  [ "Akwasi",  ["akwasi", "akwasio"], "junior", "2", ["You probably owe him 5 dollars."], "February 15th", "", [] ];
 w3["dfavela"]  = [ "Favela", ["favela", "david favela", "david villa", "dfavela"], "sophomore", "2A", [], "November 1st", "", ["Playing too much Super Smash Brothers may be detrimental for your health.", "You have quite a lovely singing voice."] ];
 w3["joshbs"]   = [ "Posh Josh", ["soft josh", "posh josh", "frosh josh", "josh scherrer", "josh surer", "joshbs"], "sophomore", "3", ["His numerous nicknames include: Posh Josh, Soft Josh, Frosh Josh. Gosh! that's too many names."], "September 26th"];
@@ -46,6 +46,13 @@ w3["lwang32"] =  [ "Li", ["li", "li wang", "lwang32", "elwayne32", "elway32"], "
 w3["llruan"] =   [ "Lisa", ["lisa", "lisa ruan", "lisa ruin", "llruan"], "sophomore", "18", [], "", "Lake Huron, Michigan" ];
 w3["eman17"] =   [ "E-man", ["eman", "emmanuel", "eman17", "emmanuel fasil"], "junior", "6 3", [], "", ""];
 w3["stalyc"] =   [ "Staley", ["staly", "stalyc", "daley", "staly chin"], "graduate", "2", [], "August 10th", "Bay Area"];
+w3["lotusez3"] = [ "Elton", ["elton", "elton joe", "elton zhou", "lotusez3"], "junior", "7", [], "", ""];
+w3["juesato"] =  [ "Jonathan", ["jonathan", "john", "jonathan usato", "jay usato", "juesato"], "junior", "18C", [], "", "Bay Area" ]
+w3["jimmy42"] =  [ "Jimmy", ["jimmy", "jimmy wu", "jimmy42"], "sophomore", "6 3", [], "", ""]; 
+w3["jtxiao"] =   [ "Justin", ["justin", "justin xiao", "justin chou", "jtxiao"], "junior", "8", [], "", ""];
+w3["lahuang4"] = [ "Lauren", [ "lauren", "lauren huang", "lauren wong", "lahuang4" ], "junior", "6 2", "", ""];
+w3["ccolombo"] = [ "Chris Colombo", [ "columbo", "dean colombo", "chris colombo", "chris", "ccolombo"], "Dean of Student Life", "", [], "", "" ];
+w3["reif"] =     [ "Rafael Rife", [ "president", "president rife", "president right", "raphael wright", "reif" ], "President", "", ["I am smarter and more powerful than he will ever be."], "", ""];
 
 var courses = new Array();
 courses[""] = "";

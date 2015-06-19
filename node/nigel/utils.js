@@ -113,6 +113,8 @@ function standardize(s) {
     patterns[30] = / (born|(date of )?birth( )?(day|date)?)($| )/
     patterns[31] = / (from$|home( )?(town)?)/
     patterns[32] = /(^| )(directions|how ({do}|to) ({you} |we |{baymax} )?(get|go) )(to )?/
+    patterns[33] = /shut( )?down/
+    patterns[34] = /start( )?up/ 
 
     var replacements = new Array();
     replacements[0] = " {be} ";
@@ -145,9 +147,11 @@ function standardize(s) {
     replacements[27] = "how {be} ";
     replacements[28] = "who {be} ";
     replacements[29] = "{safetythird} ";
-    replacements[30] = " {birthday} "
-    replacements[31] = " {from}"
-    replacements[32] = " {directions} "
+    replacements[30] = " {birthday} ";
+    replacements[31] = " {from}";
+    replacements[32] = " {directions} ";
+    replacements[33] = " {shutdown} ";
+    replacements[34] = " {startup} ";
 
     for (var i in patterns) {
         s = s.replace(patterns[i], replacements[i]);

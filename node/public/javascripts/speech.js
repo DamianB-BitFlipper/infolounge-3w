@@ -1,6 +1,7 @@
 var nigelRef = new Firebase("https://rliu42.firebaseio.com/nigel");
 var firstLoad = true;
 var isSpeaking = false;
+var isSleeping = false;
 var baymax = /baymax/.test(location.href);
 var https = /^https/.test(location.href);
 var startBeep = new Audio('sounds/startBeep.mp3');
@@ -32,11 +33,11 @@ var speak = function(phrase, followup, command) {
     if (!first || first.length > 250) {
         return;
     }
-    BAYMAX.voice = speechSynthesis.getVoices()[1];
+    BAYMAX.voice = speechSynthesis.getVoices()[0];
     BAYMAX.text = first;
     BAYMAX.volume = 10;
-    BAYMAX.pitch = 1.40;
-    BAYMAX.rate = 0.95;
+    BAYMAX.pitch = 0.58;
+    BAYMAX.rate = 0.98;
     if ( first.indexOf("window") > -1 ) {
         BAYMAX.volume = 0;
         baymaxWindow.play();
@@ -44,6 +45,12 @@ var speak = function(phrase, followup, command) {
     if ( first.indexOf("Hairy baby") > -1 ) {
         BAYMAX.volume = 0;
         hairyBaby.play();
+    } 
+    if ( /start[a-z]*( )?up/.test(first) ) {
+        console.log("Play startup sound effect.");
+    } 
+    if ( /shut[a-z]*( )?down/.test(first) ) {
+        isSleeping = true;
     } 
     BAYMAX.onstart = function() {
         isSpeaking = true;
@@ -62,6 +69,9 @@ var speak = function(phrase, followup, command) {
         BAYMAX.onend = function() {
             if (baymax) {
              rand(beeps).play();
+            }
+            if (isSleeping) {
+                console.log("Play shutdown sound effect.");
             }
             isSpeaking = false;
             if (location.href.match(/^https/)) {try {recognition.start()} catch(e) {}}
@@ -83,7 +93,7 @@ nigelRef.on("value", function(ss) {
 });
 
 var processResponse = function(result) {
-    if (result.res && baymax) {
+    if (result.res && https && !isSleeping) {
         speak(result.res, result.followup);
     }
     if (result.media) {

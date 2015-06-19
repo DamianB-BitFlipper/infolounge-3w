@@ -8,10 +8,10 @@ key["lolzhang"] = "Lol Zhang"
 key["rsyang"] =   "R.S. Yang"
 key["harlin"] =   "Harlin"
 key["gopalan"] =  "Gopalahn"
-key["huangjd"] =  "Huong J.D."
+key["huangjd"] =  "Hu-ong J.D."
 key["cmzhang"] =  "C.M. Zhang"
 key["ncolant"] =  "En cohlahnt"
-key["tianm"] =    "Tian em"
+key["tianm"] =    "Tien. M."
 key["tiffwang"] = "Tiff Wang"
 key["tricias"] =  "Tricias"
 key["mabrams"] =  "Em Abrahms"
@@ -34,6 +34,8 @@ key["ajjaeger"] = "A.J. Yaygger"
 key["jgoupil"] =  "J.Goupil"
 key["jfabi"] =    "JayFahbi"
 key["normandy"] = "Normandy"
+key["fishr"] =    "Fish R"
+key["stalyc"] =   "Staley C"
 key["bmatt"] =    "B Matt"
 key["vhung"] =    "V Hung"
 key["lcarter"] =  "L Carter"
@@ -44,7 +46,13 @@ key["parke"]   =  "Park. E."
 key["lwang32"] =  "L Wong 32"
 key["llruan"] =   "L.L. Ruin"
 key["eman17"] =   "E-Man 17"
-key["stalyc"] =   "Staley C"
+key["lotusez3"] = "Lotus. E.Z. 3"
+key["juesato"] = "J U Esato"
+key["jimmy42"] = "Jimmy 42"
+key["jtxiao"] =  "J T Shiao"
+key["lahuang4"] = "L A Hu-ong 4";
+key["ccolombo"] = "C Colombo"
+key["reif"] = "Rife";
 
 
 function pronunciationTest() {
@@ -57,10 +65,9 @@ function pronunciationTest() {
             s = [ "Testing kerberos for " + w3[kerberi[k]][0], key[kerberi[k]] ];
             queue.push(s);
         }
-        setInterval(speakNext, 6000);
+        setInterval(speakNext, 7000);
 }
         function speakNext() {
-        	while (isSpeaking) {}
             speak(queue[index]);
             index++;
         }

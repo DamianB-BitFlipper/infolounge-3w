@@ -161,14 +161,13 @@ function reply(input, tokens) {
 		return ["Baymax loves hugs!", "Would you like to give Baymax a hug?"];
 	}
 
-	if (input.indexOf("insult") > -1) {
+	if ( /insult/.test(input) ) {
 		return [utils.random(randomResponses.sad), utils.random(randomResponses.insult)]
 	}
 
-	if ( /(^| )(help|health)($| )/ ) {
+	if ( /(^| )(help|health)($| )/.test(input) ) {
 		return [utils.random(randomResponses.health), "Are you satisfied with your care?"]
 	}
-
 	return "";
 }
 

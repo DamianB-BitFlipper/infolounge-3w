@@ -32,10 +32,15 @@ function respond(req, res) {
 
 	//console.log({demand: demand, input: input, s_input: s_input, tokens: tokens})
 
+	// shutdown command
+	response = /{shutdown}/.test(s_input) ? utils.random(randomResponses.shutdown) : response;
+
+	// startup command 
+	response = /{startup}/.test(s_input) ? utils.random(randomResponses.startup) : response;
+
 	// stop command
-	if ( s_input.match(/{shutup}/) ) {
-		response = utils.random(randomResponses.stop);
-		command = "stop";
+	if ( /{shutup}/.test(s_input) ) {
+		response = utils.random(randomResponses.stop); command = "stop";
 	}
 
 	// echo command
@@ -43,6 +48,7 @@ function respond(req, res) {
 
 	// common things that people will ask
 	response = response ? response : common.reply(s_input, tokens);
+	console.log("common phrases match: " + (response || "none") );
 
 	// nigel's favorite things
 	response = ( /{baymax} favorite /.test(s_input) ) ? profile.query(s_input, tokens, stems) : response;
@@ -146,7 +152,8 @@ function respond(req, res) {
 				  type: "map", 
 			      link: "https://www.google.com/maps/embed/v1/directions?" +
 			      	    "origin=" + origin.replace(/\s/g, "+") +
-			      	    "&destination=" + destination.replace(/\s/g, "+") + "&key=" + apis.google
+			      	    "&destination=" + destination.replace(/\s/g, "+") + 
+			      	    "&key=" + apis.google
 			    }
 		command = "show map";
 	}

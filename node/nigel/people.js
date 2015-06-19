@@ -2,7 +2,7 @@ var utils = require('../nigel/utils');
 var request = require('request');
 var natural = require('natural');
 var courses = require('../nigel/mit').courses;
-var w3 = require('../nigel/mit').w3
+var w3 = require('../nigel/mit').w3;
 metaphone = natural.Metaphone; 
 soundEx = natural.SoundEx;
 
@@ -11,7 +11,6 @@ var dontKnow = ["Nope, I don't know ", "Sorry, I don't know ", "I don't know muc
 var tellMeMore = ["Perhaps you can tell me more about this person.", "Please tell me about this person.", "Why don't you tell me more about this person."];
 
 var ambiguous  = [ "josh", "david" ];
-
 
 function match(person, tokens) {
 	for (var i in ambiguous) {
