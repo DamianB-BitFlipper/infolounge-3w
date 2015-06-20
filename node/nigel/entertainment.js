@@ -1,5 +1,4 @@
 var utils = require('../nigel/utils');
-
 var j = "If you don't like my jokes, you can adjust my intelligence or humorous parameters.";
 
 function query(input, s_input, tokens, stems) {
@@ -22,6 +21,32 @@ function query(input, s_input, tokens, stems) {
 	}
 	return {response: response, followup: followup};
 }
+
+function recommend(input, s_input, tokens, stems) {
+	var randomResponses = require('../nigel/random').randomResponses;
+	var response = "";
+	for (i in stems) {
+		var e = stems[i];
+		if (recommendations[e]) {
+			response = utils.random(randomResponses.recommend).replace("{entity}", e + "s");
+			if (/game/.test(e)) {
+				response += "a quick game of: "
+			}
+			entries = utils.shuffle(recommendations[e]).slice(0, Math.floor(Math.random()*3) + 1);
+			response += entries.join(", ").replace(/\,\s([\w\-\s]+)$/, ", or $1") + ".";
+			if (/class/.test(e)) {
+				response = Math.random() < 0.3 ? ["That depends on what course you are.", "Would you like to tell Baymax about yourself?"] : response;
+			}
+			break;
+		}
+	}
+	return response;
+}
+
+recommendations = new Array();
+recommendations.game = [ "One-Night Ultimate Werewolf", "Super Smash Brothers", "Mario Kart", "Canadian Fish", "Resistance", "Spy fall", "Seven Wonders"];
+recommendations.class = [ "2 double oh 9", "6 oh fun", "take 18 oh 2 three times", "anything that is not course 10", "anything that is not taught by Albert Meyer"];
+recommendations.movi = [ "Big Hero 6", "Imitation Game", "Interstellar", "Lego Movie", "Forrest Gump", "Boyhood", "Gravity"]
 
 entertainment = new Array();
 entertainment.joke = [ 
@@ -52,3 +77,4 @@ entertainment.poem = entertainment.haiku;
 entertainment.poetri = entertainment.haiku;
 
 exports.query = query;
+exports.recommend = recommend;

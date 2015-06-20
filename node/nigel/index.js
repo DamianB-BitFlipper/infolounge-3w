@@ -16,6 +16,7 @@ var mail = require('../nigel/mail');
 var random = require('../nigel/random');
 var randomResponses = random.randomResponses;
 tokenizer = new natural.WordTokenizer();
+nounInflector = new natural.NounInflector();
 var NGrams = natural.NGrams;
 var emptyResponse = {req: "", std: "", res: "", followup: "", cmd: "", sms: true, media: "", last: ""}
 
@@ -147,16 +148,26 @@ function respond(req, res) {
 		youtube.query(input, s_input, tokens, sms, res);
 	}
 
+	// recommendations
+	if (/{recommend} /.test(s_input)) {
+		var response = entertainment.recommend(input, s_input, tokens, stems);
+		if (response) {
+			confidence = 1;
+			followup = (Math.random() < 0.30) ? utils.random(randomResponses.recommendAnother) : followup
+		}
+	}
+
 	// MIT courses
 	if ( /(who|what|when) (({be}|{do})( the)?) ([\d\s\.]{2,8})( meet| final)?$/.test(utils.digitize(s_input)) ) {
-		var parsedSubject = MIT.parseSubject(utils.digitize(s_input).replace(/(who|what|when) (({be}|{do})( the)?) ([\d\s\.]+)( meet| final)?$/, "$5"));
+		var parsedSubject = MIT.parseSubject(utils.digitize(s_input).replace(/.*(who|what|when) (({be}|{do})( the)?) ([\d\s\.]+)( meet| final)?$/, "$5"));
 		if (parsedSubject.classNo) { 
 			response = "MIT subject query: " + parsedSubject.courseNo + "." + parsedSubject.classNo;
+			console.log(response);
 			confidence = 1;
 			mainThread = false;
 			MIT.querySubject(parsedSubject, function(error, result) {
 				if (error) {
-					response = "Sorry, I don't know that M.I.T. subject number.";
+					response = "Sorry, Baymax does not know that M.I.T. subject number.";
 				} else {
 					response = result.string;
 				}
@@ -193,7 +204,7 @@ function respond(req, res) {
 	// show/hide lounge information
 	var panels = ["weather", "news", "tweet", "dining", "tech", "video", "map"];
 	if (input.indexOf("hide ") > -1) {
-		response = "You can choose to hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
+		response = "Baymax can hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
 		for (var i in tokens) {
 			if ( utils.contains(panels, utils.standardize(tokens[i])) ) {
 				command = "hide " + utils.standardize(tokens[i]);
@@ -202,7 +213,7 @@ function respond(req, res) {
 		}
 	}
 	if (!response && s_input.indexOf("{show} ") > -1) {
-		response = "You can choose to hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
+		response = "Baymax can hide or display the weather, lounge news, twitter, Next House dining, or campus transportation info.";
 		for (var i in tokens) {
 			if ( utils.contains(panels, utils.standardize(tokens[i])) ) {
 				command = "show " + utils.standardize(tokens[i]);

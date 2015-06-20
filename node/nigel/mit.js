@@ -94,12 +94,14 @@ function stringifySubject (s) {
 	pr = new Array();
 	pr[0] = [ /000(\d)/, "triple oh $1" ];
 	pr[1] = [ /00([1-9]+)/, "double oh $1" ];
-	pr[2] = [ /0([1-9]+)/, "oh $1" ];
-	pr[3] = [ /([1-9])([1-9])([0-9])/, "$1 $2$3"]
-	pr[4] = [ /\.00$/ , " hundred"];
-	pr[5] = [ /\./ , " "];
-	pr[6] = [ / II$/ , " 2"];
-	pr[7] = [ / I$/ , " 1"];
+	pr[2] = [ /0([1-9])([1-9])/, "oh $1 $2" ];
+	pr[3] = [ /0([1-9])/, " oh $1" ];
+	pr[4] = [ /([1-9])([1-9])([1-9])/, "$1 $2 $3"]
+	pr[5] = [ /([1-9])([1-9])([0-9])/, "$1 $2$3"]
+	pr[6] = [ /\.00$/ , " hundred"];
+	pr[7] = [ /\./ , ", "];
+	pr[8] = [ / II$/ , " 2"];
+	pr[9] = [ / I$/ , " 1"];
 
 	for (var i in pr) {
 		s = s.replace(pr[i][0], pr[i][1]);
@@ -110,7 +112,7 @@ function stringifySubject (s) {
 // Assumes input string, s, is digitized.
 function parseSubject (s) {
 	courseNo = ""; classNo = "";
-	s = s.replace(/\s/, ".").replace(/[:\s]/g, "").replace(/[\.]+/, ".");
+	s = s.replace(/[:\s]/g, "").replace(/[\.]+/, ".");
 	if ( /\d{1,3}(\.)(S)?\d{2,4}/.test(s) ) {
 		courseNo = s.split(".")[0];
 		classNo = s.split(".")[1];
@@ -179,7 +181,7 @@ function extractSubjectInfo(html, s) {
 	content = utils.between(html, "<h3>" + result.fullSubject, "<!--end-->").replace(/\<br\>/g, "\n").replace(/\<(.*?)\>/g, "");
 	var data = content.split('\n');
 	//console.log(data);
-	result.subjectName = data[0].replace("J ", "").trim();
+	result.subjectName = data[0].replace(/[A-Z\d]\s/, "").trim();
 	for (i = 0; i < data.length; i++) {
 		if ( data[i].indexOf("Lecture: ") > -1 ) {
 			var lectureTime = utils.between(data[i], ": ", " (");

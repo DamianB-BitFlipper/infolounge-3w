@@ -19,6 +19,25 @@ function random(array) {
     return (typeof array === "undefined") ? "" : array[Math.floor(Math.random() * array.length)];
 }
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function contains(array, search) {
     var search = search.split(" ");
     for (var i in array) {
@@ -47,14 +66,14 @@ function similar(s1, s2, threshold) {
 function stringifyMath(s) {
 
     var pr = new Array();
-    pr[0] = [ /(\+)/g , " plus " ];
-    pr[1] = [ /(\-)/g , " minus " ];
-    pr[2] = [ /(\*)/g , " times " ];
-    pr[3] = [ /(\\|\/)/g , " over " ];
-    pr[4] = [ /(\^3)/g , "cubed " ];
-    pr[5] = [ /(\^2)/g , " squared " ];
-    pr[6] = [ /(\^)/g , " to the " ];
-    pr[7] = [ /(sqrt\()/g , " square root of " ];
+    pr.push([ /(\+)/g , " plus " ]);
+    pr.push([ /(\-)/g , " minus " ]);
+    pr.push([ /(\*)/g , " times " ]);
+    pr.push([ /(\\|\/)/g , " over " ]);
+    pr.push([ /(\^3)/g , "cubed " ]);
+    pr.push([ /(\^2)/g , " squared " ]);
+    pr.push([ /(\^)/g , " to the " ]);
+    pr.push([ /(sqrt\()/g , " square root of " ]);
 
     for (var i in pr) {
         s = s.replace(pr[i][0], pr[i][1]);
@@ -66,14 +85,14 @@ function stringifyMath(s) {
 function digitize(s) {
     text = [
             /zero/g, 
-            /one/g,
+            /one|won/g,
             /two/g, 
             /three/g, 
-            /four/g, 
+            /fo(u)?r/g, 
             /five/g, 
-            /six/g, 
+            /s(i|e)x/g, 
             /seven/g, 
-            /eight/g, 
+            /eight|ate/g, 
             /nine|nothing/g,  
             /ten/g
            ];
@@ -85,11 +104,11 @@ function digitize(s) {
 
 function standardizeLocation(s) {
     var pr = new Array();
-    pr[0] = [ /red line/ , "Red Line at Kendall Station" ];
-    pr[1] = [ /(the )?symphony( hall)?/ , "Symphony Hall" ];
-    pr[2] = [ /(the )?movies/ , "Regal Cinemas at Fenway" ];
-    pr[3] = [ /(^| )mit($| )/ , "M.I.T." ];
-    pr[4] = [ /(^| )next( house)?($| )/ , "Next House" ]
+    pr.push([ /red line/ , "Red Line at Kendall Station" ]);
+    pr.push([ /(the )?symphony( hall)?/ , "Symphony Hall" ]);
+    pr.push([ /(the )?movies/ , "Regal Cinemas at Fenway" ]);
+    pr.push([ /(^| )mit($| )/ , "M.I.T." ]);
+    pr.push([ /(^| )next( house)?($| )/ , "Next House" ]);
 
     for (var i in pr) {
         s = s.replace(pr[i][0], pr[i][1]);
@@ -98,51 +117,58 @@ function standardizeLocation(s) {
 }
 
 function standardize(s) {
-    // pr[0] = /regex pattern/
-    // pr[1] = {string replacement}
+    // pr.push(/regex pattern/
+    // pr.push({string replacement}
 
     var pr = new Array();
-    pr[0]  = [ /(^| )(be|are|is|am|was)($| )/ , " {be} " ];
-    pr[1]  = [ /(nigel(s)?|b(a|e)y( )?max(s)?|yourself|your|youre|you)($| )/ , "{baymax} " ];
-    pr[2]  = [ /(^| )(doing|does|do)($| )/ , " {do} " ];
-    pr[3]  = [ /(^| )(hello|hi|greetings|hola|bonjour|howdy|what {be} up|whats up)($| )/, " {greeting} " ];
-    pr[4]  = [ /(^| )(okay|very good|good|great|fine|excellent|bad|well)($| )/, " {adj} " ];
-    pr[5]  = [ /(thanks|thank you)/ , "{thank}" ];
-    pr[6]  = [ /(^| )(i|my|we)($| )/ , " {you} " ];
-    pr[7]  = [ /(^| )(im|i am) / , "{you} {be}" ];
-    pr[8]  = [ /(sure|yes|okay)($| )/, "{affirmative} " ];
-    pr[9]  = [ /(no$|nope)($| )/ , "{negative} "];
-    pr[10] = [ /((send )?(a(n)? )?(e(\-)?mail|message|spam)( to)?|notify) /, " {notify} " ];
-    pr[11] = [ /(^| )(tell|read)( (we|me|us))?( some| a)? / , " {tell} " ]; 
-    pr[12] = [ /(^| )(play|sing)( (we|me|us))?( some| a)? / , " {play} " ];
-    pr[13] = [ /shut[a-z\s]*up|be quiet|^(stop|stock)/ , " {stop}" ];
-    pr[14] = [ /(^| )(change|se(t|x)|adjust|modify) / , " {set} " ];
-    pr[15] = [ /(^| )(show|display)($| )/ , " {show} " ];
-    pr[16] = [ /(whats )/ , "what {be} " ];
-    pr[17] = [ /(where(s| the hell {be})|locate|find|{tell} where) / , "where {be} " ];
-    pr[18] = [ /(hows )/, "how {be} " ];
-    pr[19] = [ /(whose|whos|about) / , "who {be} " ]; 
-    pr[20] = [ /^test(ing)?/, "{testing}" ];
-    pr[21] = [ /(love|want|like|desire|long for) /, "{love} " ];
+    pr.push([ /(^| )(be|are|is|am|was)($| )/ , " {be} " ]);
+    pr.push([ /(nigel(s)?|b(a|e)y( )?max(s)?|yourself|your|youre|you)($| )/ , "{baymax} " ]);
+    pr.push([ /(^| )(doing|does|do)($| )/ , " {do} " ]);
+    pr.push([ /(^| )(hello|hi|greetings|hola|bonjour|howdy|what {be} up|whats up)($| )/, " {greeting} " ]);
+    pr.push([ /(^| )(okay|very good|good|great|fine|excellent|bad|well)($| )/, " {adj} " ]);
+    pr.push([ /(thanks|thank you)/ , "{thank}" ]);
+    pr.push([ /(^| )(i|my|we)($| )/ , " {you} " ]);
+    pr.push([ /(^| )(im|i am) / , "{you} {be} " ]);
+    pr.push([ /(sure|yes|okay)($| )/, "{affirmative} " ]);
+    pr.push([ /(no$|nope)($| )/ , "{negative} "]);
 
-    pr[22] = [ /(^| )(dinner|brunch|breakfast|supper|lunch|menu|dining)($| )/, " menu " ];
-    pr[23] = [ /(^| )(public|bus(es)?|shuttle[a-z]*|tech|campus|transport[a-z]*)($| )/, " tech " ];
-    pr[24] = [ /(^| )(lounge)($| )/, " news " ];
-    pr[25] = [ /(^| )(twitter|tweets)($| )/, " tweet " ];
-    pr[26] = [ /(^| )(video|lyric(s)?)($| )/, " video " ];
+    pr.push([ /((send )?(a(n)? )?(e(\-)?mail|message|spam)( to)?|notify) /, " {notify} " ]);
+    pr.push([ /(^| )(tell|read|give)( (we|me|us))?( some| a)? / , " {tell} " ]); 
+    pr.push([ /(^| )(play|sing)( (we|me|us))?( some| a)? / , " {play} " ]);
+    pr.push([ /(^| )rat(e|(ing)?(s))?( for)? / , " {rate} "]);
+    pr.push([ /shut[a-z\s]*up|be quiet|^(stop|stock)/ , " {stop}" ]);
+    pr.push([ /(^| )(change|se(t|x)|adjust|modify) / , " {set} " ]);
+    pr.push([ /(^| )(show|display)($| )/ , " {show} " ]);
+    pr.push([ /(^| )(suggest(ion)?|recommend(ation)?)( (we|me|us))?( some| a)?( for)? / , " {recommend} " ]);
+    pr.push([ /([\w]+) ({do} {baymax} )?(suggest(ion)?|recommend(ation)?)/ , "{recommend} $1" ]);
+    pr.push([ /.* ([\w]+) ({you} should |should {you} )/ , "{recommend} $1 " ]);
 
-    pr[27] = [ /(humor[a-z]*|sass[a-z]*|intelligence) (parameter )?(to)?/ , "{parameter}" ];
-    pr[28] = [ /((next )?(3|three) west|((6|safety( )?)(3rd|third)))($| )/ , "{safetythird} " ];
-    pr[29] = [ / (born|(date of )?birth( )?(day|date)?)($| )/, "{birthday} " ];
-    pr[30] = [ / (from$|home( )?(town)?)/, " {from} " ];
-    pr[31] = [ /(^| )(directions|how ({do}|to) ({you} |we |{baymax} )?(get|go) )(to )?/, " {directions}" ];
-    pr[32] = [ /shut( )?down/, "{shutdown}" ];
-    pr[33] = [ /start( )?up/ , "{startup}" ];
-    pr[34] = [ /(suck|lose(r)?|dumb|derp|stink|mom|mother|ugly|fat|stupid|retarded|lame|boring|annoying|dead|tool[a-z]*|fool|rape|idiot|fuck)( |$)/, "{insult} "];
+    pr.push([ /(whats )/ , "what {be} " ]);
+    pr.push([ /(where(s| the hell {be})|locate|find|{tell} where) / , "where {be} " ]);
+    pr.push([ /(hows )/, "how {be} " ]);
+    pr.push([ /(whose|whos|about|dig up dirt( on)?) / , "who {be} " ]); 
+    pr.push([ /^test(ing)?/, "{testing}" ]);
+    pr.push([ /(love|want|like|desire|long for) /, "{love} " ]);
 
-    pr[35] = [ /mm (0)?/, ".00" ];
-    pr[36] = [ / double (o|0)(h)? / , ".00"];
-    pr[37] = [ / triple (o|0)(h)? / , ".000"];
+    pr.push([ /(^| )(dinner|brunch|breakfast|supper|lunch|menu|dining)($| )/, " menu " ]);
+    pr.push([ /(^| )(public|bus(es)?|shuttle[a-z]*|tech|campus|transport[a-z]*)($| )/, " tech " ]);
+    pr.push([ /(^| )(lounge)($| )/, " news " ]);
+    pr.push([ /(^| )(twitter|tweets)($| )/, " tweet " ]);
+    pr.push([ /(^| )(video|lyric(s)?)($| )/, " video " ]);
+
+    pr.push([ /(humor[a-z]*|sass[a-z]*|intelligence) (parameter )?(to)?/ , "{parameter}" ]);
+    pr.push([ /((next )?(3|three) west|((6|safety( )?)(3rd|third)))($| )/ , "{safetythird} " ]);
+    pr.push([ / (born|(date of )?birth( )?(day|date)?)($| )/, "{birthday} " ]);
+    pr.push([ / (from$|home( )?(town)?)/, " {from} " ]);
+    pr.push([ /(^| )(what )?movie(s)?( {be} )?((currently )?play(ing)? |out )?(today|(right )?now)?/, " {movies current}" ]);
+    pr.push([ /(^| )(directions|how ({do}|to) ({you} |we |{baymax} )?(get|go) )(to )?/, " {directions}" ]);
+    pr.push([ /shut( )?down/, "{shutdown}" ]);
+    pr.push([ /start( )?up/ , "{startup}" ]);
+    pr.push([ /(suck|lose(r)?|dumb|derp|stink|mom|mother|ugly|fat|stupid|retarded|lame|boring|annoying|dead|tool[a-z]*|fool|rape|idiot|fuck)( |$)/, "{insult} "]);
+
+    pr.push([ /mm (0)?/, ".00" ]);
+    pr.push([ / double (o|0)(h)? / , ".00"]);
+    pr.push([ / triple (o|0)(h)? / , ".000"]);
 
     for (var i in pr) {
         s = s.replace(pr[i][0], pr[i][1]);
@@ -151,6 +177,7 @@ function standardize(s) {
 }
 
 exports.random = random;
+exports.shuffle = shuffle;
 exports.similar = similar;
 exports.after = after;
 exports.between = between;

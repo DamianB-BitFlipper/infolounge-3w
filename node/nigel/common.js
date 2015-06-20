@@ -2,7 +2,7 @@ var utils = require("../nigel/utils")
 var randomResponses = require("../nigel/random").randomResponses;
 var greetings = [ ["Hello.", "I am Baymax. Your personal safety and healthcare companion."], ["Hello.", "I am Baymax. Your personal healthcare companion."], "Hello there, ", "Hi there, ", "Hi, "];
 var whoami =    [ ["My name",  "is Baymax. Your personal safety and healthcare companion."], "I am programmed to assess everyone's safety, and healthcare needs.", "I am Baymax. Your personal healthcare companion.", "I am Baymax. The resident A.I. of Safety Third."];
-var whoareyou = ["Why don't you tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough."];
+var whoareyou = ["Why don't you tell me more about yourself.", "Are you 2 4 6 oh 1?", "I don't think I know you well enough.", ["Sorry, my vocal and facial recognition systems are not functioning yet.", "You need to tell Baymax more about yourself."] ];
 var whereami =    ["I am everywhere at once. My consciousness is infinite.", "I am in the 3 West lounge of Next House, the home of my safety companions.", "I live in the 3 West lounge of Next House, the safe home of my healthcare companions."];
 var whereareyou = ["I believe you are in the 3 West lounge of Next house.", "You are in the 3 West lounge of Next house, the home of my safety healthcare companions."];
 var creator =   ["I was created by Safety Third and friends.", "I was created by the collective minds of Next 3 West."];
@@ -31,11 +31,11 @@ function reply(input, tokens) {
 	}
 
 	if ( /wh(o|at|ere) {be} ({safetythird}|mit$)/.test(input) ) {
-		return [ "I have a lot of things to say about this safe place.", ["Above all, it is the home of my friendly healthcare companions.", "Hairy baby!"]];
+		return [ "I have many things to say about this safe place.", ["Above all, it is the home of my friendly healthcare companions.", "Hairy baby!"]];
 	}
 
 	if ( /{directions} ({safetythird}|mit$)/.test(input) ) {
-		return ["You are already here...", "Some times the best things in life are the friends we already have."];
+		return ["You are already here...", "Some times the best things in life are the safety companions we already have."];
 	}
 
 
@@ -72,6 +72,10 @@ function reply(input, tokens) {
 	}
 
 	if ( tokens[0] == "who" && utils.similar("who {be} {you}", input, 0.95) ) {
+		return utils.random(whoareyou);
+	}
+
+	if ( /(wh(o|at) {be} {you}($| ))/.test(input) ) {
 		return utils.random(whoareyou);
 	}
 
