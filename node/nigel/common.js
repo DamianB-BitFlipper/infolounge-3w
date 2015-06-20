@@ -141,6 +141,10 @@ function reply(input, tokens) {
 		return utils.random(love);
 	}
 
+	if ( /should {you} /.test(input) ) {
+		return (Math.random() < 0.5) ? utils.random(randomResponses.no) : utils.random(randomResponses.yes)
+	}
+
 	if ( utils.similar(input, "{be} {baymax} satisfied with", 0.9) ) {
 		return ["Very funny. That's my question to ask.", "Tell me... Are you satisfied with your care?"];
 	}
@@ -168,6 +172,15 @@ function reply(input, tokens) {
 	if ( /(^| )(help|health)($| )/.test(input) ) {
 		return [utils.random(randomResponses.health), "Are you satisfied with your care?"]
 	}
+
+	if ( /(^| )mit better than($| )/.test(input) ) {
+		return utils.random(randomResponses.yes);
+	}
+
+	if ( /(^| )better than mit($| )/.test(input) ) {
+		return utils.random(randomResponses.no);
+	}
+
 	return "";
 }
 

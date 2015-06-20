@@ -5,6 +5,10 @@ random["what"] = ["Hairy baby!", "Hairy baby!", "You should ask Siri instead.", 
 random["where"] = ["I've been a lot of places and still I do not know.", "One does not simply walk in to that place.", "Hairy baby!", "We jumped out a window!"];
 random["why"] = ["Hairy baby!", "I suggest that you ask Siri.", "How would I know. You tell me.", "Quite simply because: God made it that way.", "Quite simply because: I made it that way.", "We jumped out a window!"];
 random["how"] = ["Very, very carefully.", "Am I supposed to know the answer to that?", "You should ask Siri.", "I suggest that you ask Siri.", "Hairy baby!"];
+
+random["yes"] = ["Of course.", "Yes, of course.", "Undoubtedly!", "Without a doubt.", "Baymax thinks so."];
+random["no"] = ["I'm afraid not.", "Of course not.", "I'm afraid the answer is, no.", "Baymax does not think so."];
+
 random["stop"] = ["If you say so.", "Your wish is my command.", "Very well, your wish is my command.", "Hairy baby!"];
 random["shutdown"] = ["Baymax is shutting down. Good bye.", "Your wish is my command. Baymax is shutting down.", "Baymax will shut down now."]
 random["startup"] = ["Baymax is starting up.", ["Baymax is starting up", "Hairy baby!"],  ["Baymax is starting up", "We jumped out a window!"] ]
@@ -43,15 +47,16 @@ random["insult"] = [
 
 random["helpful"] = ["You can adjust my humorous, sassiness, or intelligence parameters.", 
     ["I am programmed to respond to everyone's safety, and healthcare needs.", "What can I do to improve your physical or emotional state?"],
-    ["I know many people in Safetythird.", "Whom do you want to know more about?"],
+    ["I know many people in Safety third.", "Whom do you want to know more about?"],
     ["I know my safety companions in 3 West very well.", "Whom do you want to know more about?"],
     ["You seem to be asking nonsensical questions.", "What can Baymax do to improve your mental state?"]
     ["It seems to me that you are blabbering.", "Do you want your healthcare needs assessed?"],
     ["You seem to be talking nonsense.", "Do you want your healthcare needs assessed?"],
     ["You can ask Baymax to play music. ", "Please request a selection by title, artist, genre, or emotional affect."],
     ["You can ask Baymax for directions to places on campus or in Cambridge-Boston.", "Where do you want to go?"],
-    "You can ask Baymax to send notifications to safetythird, or e-mail his fellow 3 West companions.",
-    "You can ask Baymax to assess your physical or emotional state, and long-term safety or health needs."
+     "You can ask Baymax to send notifications to Safety third, or e-mail his fellow 3 West companions.",
+     "You can ask Baymax to assess your physical or emotional state, and long-term safety needs.",
+     "You can ask Baymax to tell jokes, read stories, or compose funny haikus."
 ];
 random["unsatisfied"] = [
     ["Was that not the answer you were looking for?", "You can adjust my humorous, sassiness, or intelligence parameters."],

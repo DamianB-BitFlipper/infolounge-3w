@@ -8,6 +8,8 @@ var common = require('../nigel/common');
 var profile = require('../nigel/profile');
 var youtube = require('../nigel/media');
 var people = require('../nigel/people');
+var MIT = require('../nigel/mit');
+var entertainment = require('../nigel/entertainment');
 var wolfram = require('../nigel/wolfram');
 var pronounce = require('../nigel/pronounce').key;
 var mail = require('../nigel/mail');
@@ -44,7 +46,7 @@ function respond(req, res) {
 	}
 
 	// echo command
-	response = (input.indexOf("echo") > -1) ? input.replace("echo", "").trim() : response;
+	response = (/echo/.test(s_input)) ? input.replace("echo", "").trim() : response;
 
 	// common things that people will ask
 	response = response ? response : common.reply(s_input, tokens);
@@ -62,7 +64,7 @@ function respond(req, res) {
 		response = result.response; confidence = result.confidence;
 	}
 
-	if ( /{baymax} know /.test(s_input) ) {
+	if ( /{do} {baymax} know /.test(s_input) ) {
 		var person = utils.after(s_input.replace(" {be}", ""), "know ").trim();
 		var result = people.query(person, tokens);
 		response = result.confidence == 1 ? result.response : response;
@@ -130,10 +132,39 @@ function respond(req, res) {
 		confidence = response ? 1 : 0;
 	}
 
+	// jokes/poetry/stories
+	if ( /{tell} /.test(s_input) ) {
+		var result = entertainment.query(input, s_input, tokens, stems)
+		if (result.response) {
+			response = result.response;
+			followup = result.followup;
+		}
+	}
+
 	// play music
 	if ( /{play} /.test(s_input) ) {
 		mainThread = false;
 		youtube.query(input, s_input, tokens, sms, res);
+	}
+
+	// MIT courses
+	if ( /(who|what|when) (({be}|{do})( the)?) ([\d\s\.]{2,8})( meet| final)?$/.test(utils.digitize(s_input)) ) {
+		var parsedSubject = MIT.parseSubject(utils.digitize(s_input).replace(/(who|what|when) (({be}|{do})( the)?) ([\d\s\.]+)( meet| final)?$/, "$5"));
+		if (parsedSubject.classNo) { 
+			response = "MIT subject query: " + parsedSubject.courseNo + "." + parsedSubject.classNo;
+			confidence = 1;
+			mainThread = false;
+			MIT.querySubject(parsedSubject, function(error, result) {
+				if (error) {
+					response = "Sorry, I don't know that M.I.T. subject number.";
+				} else {
+					response = result.string;
+				}
+				var o = {req: input, std: s_input, res: response, followup: "", cmd: "", sms: sms || true, media: ""};
+				nigelRef.update(o);
+				res.json(o);
+			});
+		}
 	}
 
 	// map directions
@@ -144,6 +175,7 @@ function respond(req, res) {
 			origin = utils.between(destination, "from ", "to").trim() || utils.after(destination, "from ");
 			destination = utils.between(s_input, "{directions} ", "from").trim() || utils.after(destination, "to ");
 		}
+		origin = utils.standardizeLocation(origin);
 		destination = utils.standardizeLocation(destination);
 		response = ["Okay, Baymax will pull up directions from " + origin + " to " + destination + " on info lounge.", 
 		            "Let me know if you want to go somewhere else."];
@@ -186,6 +218,9 @@ function respond(req, res) {
 	}
 	if ( !response && utils.similar(input, "i solemnly swear that i am up to no good", 0.70) ) {
 		response = "Close, but the map will not open for you. Try again.";
+	}
+	if ( !response && input.indexOf("marauders") > -1 ) {
+		response = "Sorry, that requires a secret pass phrase.";
 	}
 	// hide marauder's map
 	if ( /mischief managed/.test(input) || utils.similar(input, "mischief managed", 0.95) ) {

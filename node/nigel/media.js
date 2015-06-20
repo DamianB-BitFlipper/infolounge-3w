@@ -11,11 +11,11 @@ var affirm = ["Very well: ", "Sure thing: ", "Of course: ", "My pleasure: ", "Al
 var playing = ["I will play: ", "Baymax will play: ", "Baymax will play: "];
 var enjoy = ["", "Enjoy the music.", "I hope you enjoy.", "I hope you enjoy the music.", "Let me know if you want a different selection."];
 var another = ["Let me know if you want another song.", "Let me know if you want a different selection."];
-var rand = [/something else/, /another/, /different/, /^music$/, /song$/];
+var rand = [/something( else| random)/, /another/, /different/, /^music$/, /song$/];
 var titles = ["Beethoven's Fifth Symphony",
     "selections from Sound of Music",
     "Human by Christina Perri",
-    "One Day More from Lay Mis",
+    "One Day More from Lay. Mis",
     "Bohemian Rhapsody",
     "Somewhere Over the Rainbow",
     "Oh the Thinks you Can Think from Seussical",
@@ -26,7 +26,7 @@ var titles = ["Beethoven's Fifth Symphony",
 
 function query(input, s_input, tokens, sms, res) {
     var response = ""; var followup = ""; var random = false;
-    var request = utils.after(input.replace(/(play some|play a|play|^sing) /, "{play} "), "{play} ").trim();
+    var request = utils.after(input.replace(/(^| )(play|sing)( (we|me|us))?( some| a)? /, "{play} "), "{play} ").trim();
     for (var i in rand) {
         if (rand[i].test(request)) {
             request = utils.random(titles);
