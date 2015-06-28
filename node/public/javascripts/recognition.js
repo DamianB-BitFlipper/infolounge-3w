@@ -1,9 +1,7 @@
 var transcript = "";
 var recognition = new webkitSpeechRecognition();
-var startup = /b(a|e)y( )?max( |$)/
+var startup = /.*?ma(x|cs)/
 setUpRecognition = function() {
-	//recognition.continuous = false;
-	//recognition.interimResults = false;
 	recognition.onstart = function(event) {
 		console.log("recognition started");
 	}
@@ -36,21 +34,4 @@ setUpRecognition = function() {
 		}
 	}
 	recognition.start();
-}
-
-
-processSpeech = function(input) {
-	transcript = "";
-	request = {input: input, previous: previousResponse}
-	$.ajax('/demand', {
-		type: "POST",
-		dataType : "json",
-		data: request,
-		success: function(response) {
-			console.log("Response from server: " + JSON.stringify(response, null, '\t'));
-		},
-		error: function(info) {
-			console.log("Error in processing request: " + JSON.stringify(input, null, '\t'))
-		}
-	});
 }

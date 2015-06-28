@@ -11,7 +11,6 @@ var fs = require('fs')
   , https = require('https')
   , path = require('path')
   , info = require('./routes/info')
-  , nigel = require('./nigel/index')
 
 var options = {
 	key: fs.readFileSync('secrets/key.pem'),
@@ -46,8 +45,6 @@ app.get('/news.json', info.getNews);
 app.get('/img.json', info.getImg);
 app.get('/mbta_alerts.json', info.getMBTA);
 app.get('/', routes.index);
-app.get('/heard/:input', nigel.respond);
-app.post('/demand', nigel.respond);
 app.get('/:num', routes.index);
 
 http.createServer(app).listen(1010, function(){

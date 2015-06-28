@@ -1,5 +1,3 @@
-var composingMail = false;
-
 var processCommand = function(command) {
     if (!command) {
         return;
@@ -14,31 +12,35 @@ var processCommand = function(command) {
         $("#weatherpanel").find('div').slideDown();
         $("#tweetpanel").find('div').slideDown();
     }
-    if (/^hide/.test(command)) {
-        $('#' + command.split(" ")[1] + "panel").find('div').slideUp();
+    if (/hide/.test(command)) {
+        var panel = command.replace(/(.*)?hide ([\w]+)(.*)?/, "$2panel");
+        $('#' + panel).find('div').slideUp();
     }
-    if (/^show/.test(command)) {
-        $('#' + command.split(" ")[1] + "panel").find('div').slideDown();
+    if (/show/.test(command)) {
+        var panel = command.replace(/(.*)?show ([\w]+)(.*)?/, "$2panel");
+        $('#' + panel).find('div').slideDown();
     }
-    if (/^show (video|map)/.test(command)) {
-        $('#' + command.split(" ")[1] + "panel").slideDown();
+    if (/show (video|map)/.test(command)) {
+        var panel = command.replace(/(.*)?show (video|map)(.*)?/, "$2panel");
+        $('#' + panel).slideDown();
         $("#weatherpanel").find('div').slideUp();
         $("#tweetpanel").find('div').slideUp();
     }
-    if (/^hide (video|map)/.test(command)) {
-        $('#' + command.split(" ")[1] + "panel").slideUp();
+    if (/hide (video|map)/.test(command)) {
+        var panel = command.replace(/(.*)?hide (video|map)(.*)?/, "$2panel");
+        $('#' + panel).slideUp();
         $("#tweetpanel").find('div').slideDown();
         $("#weatherpanel").find('div').slideDown();
     }
-    if (/^show marauder/.test(command)) {
+    if (/show marauder/.test(command)) {
         $("#maraudermap").hide();
         $("#weatherpanel").find('div').slideUp();
         $("#tweetpanel").find('div').slideUp();
         $("#marauderpanel").slideDown(1000, function() {
-            setTimeout($("#maraudermap").fadeIn(1500))
-        })
+            setTimeout($("#maraudermap").fadeIn(1500));
+        });
     }
-    if (/^hide marauder/.test(command)) {
+    if (/hide marauder/.test(command)) {
         $("#maraudermap").fadeOut(1000, function() {
             $("#marauderpanel").slideUp(500, function() {
                 $("#weatherpanel").find('div').slideDown();
