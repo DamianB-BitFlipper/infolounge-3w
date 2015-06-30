@@ -9,6 +9,7 @@ lib-cov
 pids
 logs
 results
+node/secrets
 
 npm-debug.log
 
