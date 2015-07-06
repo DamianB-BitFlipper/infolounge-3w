@@ -48,5 +48,19 @@ var processCommand = function(command) {
             });
         });
     }
+
+    if (/baymax/.test(command)) {
+        $('#content').slideUp(1000, function() {
+            $("#baymax").fadeIn(1000);
+            setInterval(function() {
+                if (new Date().getTime() - lastAction > 60000) {
+                    $("#baymax").fadeOut(1000, function() {
+                        $('#content').slideDown();
+                    });
+                }
+            }, 60000);
+        });
+    }
+
     return;
 }

@@ -1,7 +1,8 @@
-var baymaxRef = new Firebase("https://rliu42.firebaseio.com/baymax");
+var baymaxRef = new Firebase("https://safetybaymax.firebaseio.com/global/speech");
 var firstLoad = true;
 var isSpeaking = false;
 var isSleeping = false;
+var lastAction = new Date().getTime();
 var baymax = /baymax/.test(location.href);
 var https = /^https/.test(location.href);
 var startBeep = new Audio('sounds/startBeep.mp3');
@@ -99,6 +100,7 @@ baymaxRef.on("value", function (ss) {
     if (!firstLoad) {
         previousResponse = data;
         processResponse(data);
+        lastAction = new Date().getTime();
     }
     firstLoad = false;
 }, function (error) {
@@ -106,15 +108,7 @@ baymaxRef.on("value", function (ss) {
 });
 
 var processResponse = function (result) {
-    var speechParams = {accent: 0}
-    if (result.cmd && result.cmd.voice) {
-        speechParams.accent = (result.cmd.voice == "british") ? 2 : (result.cmd.voice ==
-            "spanish") ? 3 : (result.cmd.voice == "french") ? 4 : 0;
-    }
-    if (result.res && https && !isSleeping) {
-        speak(result.res, result.followup, result.cmd, speechParams);
-    }
-    if (result.media && !baymax) {
+    if (result.media) {
         if (result.media.type == "video") {
             var url = (https ? 'https' : 'http') +
                 "://www.youtube.com/embed/" + result.media.link +
@@ -127,9 +121,9 @@ var processResponse = function (result) {
             $("#googlemap").attr("src", result.media.link);
         }
     }
-    if (result.cmd && !baymax) {
+    if (result.command) {
         try {
-            processCommand(result.cmd)
+            processCommand(result.command);
         } catch (e) {}
     }
 }
