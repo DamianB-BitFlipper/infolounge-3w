@@ -1,0 +1,88 @@
+#baymax {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+
+#baymax-eyes {
+   z-index: 1;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   background-size: 900px 675px;
+   width: 900px;
+   height: 675px;
+   margin-top: -480px;
+   margin-left: -450px; /* Half the width */
+   border: none;
+   background-image: url("https://runpengliu.com/baymax/docs/images/baymax_blink_sequence.gif");
+}
+
+#siri {
+  position: absolute;
+  display: none;
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-size: cover;
+  z-index: 2;
+  background-repeat: no-repeat;
+  background-image: url("https://runpengliu.com/baymax/docs/images/apple_animation.gif");
+}
+
+#jarvis {
+  position: absolute;
+  display: none;
+  background-size: 408px 700px;
+  height: 700px;
+  width: 408px;
+  top: 50%;
+  left: 50%;
+  margin-left: -204px;
+  margin-top: -390px;
+  z-index: 3;
+  opacity: 0.65;
+  background-repeat: no-repeat;
+  background-image: url("https://runpengliu.com/baymax/docs/images/jarvis_animation.gif");
+}
+
+#baymax-image {
+  position: absolute;
+  width: 600px;
+  margin-top: 100px;
+  margin-left: -300px; /* Half the width */
+  left: 50%;
+  top: 50%;
+  border: none;
+  z-index: 10;
+  opacity: 0.6;
+}
+
+#wave {
+  position: absolute;
+  margin: 0;
+  width: 99%;
+  height: 20%;
+  top: 75%;
+  z-index: 9999;
+}
+
+/** Large screen **/ 
+
+@media (min-height: 960px) and (min-width: 1200px) {
+  #baymax-eyes {
+      background-size: 1200px 900px;
+      width: 1200px;
+      height: 900px;
+      margin-top: -650px;
+      margin-left: -600px; /* Half the width */
+  }
+  #baymax-image {
+    margin-top: 100px;
+    left: 50%;
+    top: 50%;
+  }
+}
+
+
+

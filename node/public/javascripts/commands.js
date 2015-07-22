@@ -2,10 +2,12 @@ var processCommand = function(command) {
     if (!command) {
         return;
     }
-    console.log("Command: " + command);
     command = command.text || command;
-    if (command == "stop") {
+    entity = (command.voice || {}).entity || "Baymax";
+    console.log("Command: " + command);
+    if (/stop/.test(command)) {
         $("#player").attr("src", "");
+        $("#wave").fadeOut(1000, function(){wave.stop();});
     }
     if ($("#player").attr("src") == "") {
         $("#videopanel").slideUp();
@@ -17,6 +19,11 @@ var processCommand = function(command) {
         $('#' + panel).find('div').slideUp();
     }
     if (/show/.test(command)) {
+        if ($("#baymax").css("display") != "none") {
+            $("#baymax").fadeOut(1000, function() {
+                $("#content").slideDown();
+            });
+        }
         var panel = command.replace(/(.*)?show ([\w]+)(.*)?/, "$2panel");
         $('#' + panel).find('div').slideDown();
     }
@@ -48,19 +55,73 @@ var processCommand = function(command) {
             });
         });
     }
+    if (!/show/.test(command)) {
+        showBaymax();
+        if (entity == "Siri") {
+            showSiri();
+        } else {
+            $("#siri").fadeOut(500);
+        }
+        if (entity == "Jarvis") {
+            showJarvis();
+        } else {
+            $("#jarvis").fadeOut(500, function(){
+                $('#baymax').css("background-color", "white");
+                $("#baymax-eyes").fadeIn(500);
+                wave.color = "192,192,192";
+            });
+        }
+    }
+    if (/deactivate/.test(command)) {
+        setTimeout(function() {
+            hideBaymax();
+        }, 10000);
+    }
+    return;
+}
 
-    if (/baymax/.test(command)) {
+function showBaymax() {
+    if ($('#content').css("display") != "none") {
         $('#content').slideUp(1000, function() {
-            $("#baymax").fadeIn(1000);
-            setInterval(function() {
-                if (new Date().getTime() - lastAction > 60000) {
-                    $("#baymax").fadeOut(1000, function() {
-                        $('#content').slideDown();
-                    });
-                }
-            }, 60000);
+                $("#baymax").fadeIn(1000, function() {
+                    wave.start();
+                });
         });
     }
+}
 
-    return;
+function hideBaymax() {
+    if ($('#baymax').css("display") != "none") {
+        $("#wave").fadeOut(1000, function(){wave.stop();});
+        $('#baymax').fadeOut(1000, function() {
+                $("#content").slideDown(1000);
+        });
+    }
+}
+
+function showSiri() {
+    $("#jarvis").fadeOut();
+    $("#siri").fadeIn();
+    wave.color = "192,192,192";
+}
+
+function showJarvis() {
+    $("#baymax-eyes").fadeOut(function(){
+        $('#baymax').css("background-color", "black");
+        $("#jarvis").fadeIn();
+        wave.color = "25,192,192";
+    });
+}
+
+function showImage(url) {
+    I = new Image();
+    I.src = url; h = I.height; w = I.width;
+    me = $("#baymax-image");
+    me.fadeOut(100, function() {
+        me.css("width", "600px");
+        me.css("height", Math.floor(600*h/w) + "px");
+        me.css("background-size", "600px " + Math.floor(600*h/w) + "px");
+        me.css("background-image", "url('" + url + "')");
+        me.fadeIn(1000);
+    });
 }

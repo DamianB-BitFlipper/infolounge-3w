@@ -301,19 +301,25 @@ function handlePredictions1(data) {
 
 function getPredictions() {
     elem = '';
-    $.getJSON(predictionsTEK, handlePredictions2);
-    $.getJSON(predictionsSFBOS, handlePredictions2);
+    try {
+      $.getJSON(predictionsTEK, handlePredictions2);
+      $.getJSON(predictionsSFBOS, handlePredictions2);
+    } catch (e) {}
     tone = 0;
     setTimeout(southtime, 1500);
     function southtime() {
        	tone = 0;
-	      $.getJSON(predictionsCT2S, handlePredictions2);
+        try { 
+	       $.getJSON(predictionsCT2S, handlePredictions2);
+        } catch(e) {}
     }
     tone = 1;
     setTimeout(northtime, 3000);
     function northtime() {
 	      tone = 1;
-        $.getJSON(predictionsCT2N, handlePredictions2);
+        try {
+          $.getJSON(predictionsCT2N, handlePredictions2);
+        } catch(e) {}
     }
     setTimeout(rollup, 2000);
     function rollup() {
