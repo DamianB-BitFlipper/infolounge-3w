@@ -57,7 +57,7 @@ function getDate() {
         }
     }
 
-    for (var i = 0; i < people.length; i++) {
+    for (var i in people) {
         var age = 0;
         var date = new Date(people[i][1]);
         while (date < now) {
