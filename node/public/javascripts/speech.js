@@ -1,20 +1,18 @@
 var baymaxRef = new Firebase("https://safetybaymax.firebaseio.com/global/speech");
+var baymax = /baymax/.test(location.href);
+var https = /^https/.test(location.href);
+
+/* Baymax states */
 var firstLoad = true;
 var isSpeaking = false;
 var isSleeping = false;
-var lastAction = new Date().getTime();
-var baymax = /baymax/.test(location.href);
-var https = /^https/.test(location.href);
-var startBeep = new Audio('sounds/startBeep.mp3');
-var endBeep = new Audio('sounds/endBeep.mp3');
-var baymaxWindow = new Audio('sounds/window.mp3');
-var hairyBaby = new Audio('sounds/hairybaby.mp3');
-endBeep.volume = 0.6;
-startBeep.volume = 0.6;
+var isMobile = false;
+var isPlayingMusic = false;
+
+/* Baymax speech variables */
 var accent = 0;
-var pitch = 0.60;
-var beeps = [startBeep, endBeep];
-var longPause = 2000;
+var pitch = 0.5;
+var longPause = 2500;
 var previousResponse = {};
 
 var speak = function (phrase, followup, command, params) {
@@ -38,47 +36,23 @@ var speak = function (phrase, followup, command, params) {
     }
     BAYMAX.voice = speechSynthesis.getVoices()[params.accent || 0];
     BAYMAX.text = first;
-    BAYMAX.volume = 10;
-    BAYMAX.pitch = params.pitch || 0.60;
+    BAYMAX.volume = 0;
+    BAYMAX.pitch = params.pitch || 0.50;
     BAYMAX.rate = params.rate || 1.0;
-    if (first.indexOf("window") > -1) {
-        BAYMAX.volume = 0;
-        baymaxWindow.play();
-    }
-    if (first.indexOf("Hairy baby") > -1) {
-        BAYMAX.volume = 0;
-        hairyBaby.play();
-    }
-    if (first.length == 1) {
-        BAYMAX.volume = 0;
-    }
-    if (/start.*?up/.test(first)) {
-        console.log("Play startup sound effect.");
-    }
-    if (/shut.*?down/.test(first)) {
-        isSleeping = true;
-    }
     BAYMAX.onstart = function () {
+        wave.start(); $("#wave").fadeIn(); 
         isSpeaking = true;
-        recognition.stop();
     }
     if (next || followup) {
         BAYMAX.onend = function () {
+            $("#wave").fadeOut(1000, function(){wave.stop();});
             setTimeout(function () {
                 speak(next, followup, command, params);
             }, pauseDuration);
-            if (beep) {
-                rand(beeps).play();
-            }
         }
     } else {
         BAYMAX.onend = function () {
-            if (baymax) {
-                rand(beeps).play();
-            }
-            if (isSleeping) {
-                console.log("Play shutdown sound effect.");
-            }
+            $("#wave").fadeOut(1000, function(){wave.stop();});
             isSpeaking = false;
             if (https) {
                 try {
@@ -114,19 +88,63 @@ var processResponse = function (result) {
                 "://www.youtube.com/embed/" + result.media.link +
                 "?autoplay=1&start=3&controls=0&iv_load_policy=3&modestbranding=1";
             $("#player").attr("src", url);
+            wave.start();
+            $("#wave").fadeIn(); 
         }
         if (result.media.type == "map") {
             var url = result.media.link.replace(/^http(s)?/, (https ?
                 'https' : 'http'));
             $("#googlemap").attr("src", result.media.link);
         }
+        if (result.media.type == "image") {
+            $('#content').slideUp(1000, function() {
+                $("#baymax").fadeIn(1000, function() {
+                    showImage(result.media.url);
+                });
+            });
+        }
     }
     if (result.command) {
         try {
             processCommand(result.command);
         } catch (e) {}
+    } else if (result.response.speech) {
+        showBaymax();
+        $("#siri").fadeOut(500);
+        $("#jarvis").fadeOut(500, function(){
+            $("#baymax").css("background-color", "white");
+            $("#baymax-eyes").fadeIn();
+            wave.color = "192,192,192";
+        });
+    }
+    if (result.response.speech) {
+        wave.start(); $("#wave").fadeIn();
+        sentences = result.response.text.match(/(\.|\?|\!)($|\s[A-Z])/g) || "";
+        speechDuration = result.response.text.length/17*1000 + 500*sentences.length;
+        setTimeout(function(){
+            $("#wave").fadeOut(1000, function(){wave.stop();}); 
+            if (result.response.followup) {
+                setTimeout(function(){
+                    wave.start(); $("#wave").fadeIn();
+                    setTimeout(function(){
+                        $("#wave").fadeOut(1000, function(){wave.stop();}); 
+                    }, 4000)
+                }, longPause);
+            }
+        }, speechDuration);
     }
 }
+
+$(document).ready(function(){
+    setInterval(function() {
+        if (new Date().getTime() - lastAction > 60000 && $("#baymax").css("display") != "none") {
+            $("#baymax").fadeOut(1000, function() {
+                $('#content').slideDown();
+                $("#baymax-image").hide();
+            });
+        }
+    }, 60000);
+});
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {

@@ -1,7 +1,11 @@
 var now = new Date();
 var graduation = (now.getMonth() == 5 && now.getDate() <= 6);
 var people;
-var birthdaysRef = new Firebase("https://rliu42.firebaseio.com/infolounge/birthdays")
+var birthdaysRef = new Firebase("https://rliu42.firebaseio.com/infolounge/birthdays");
+birthdaysRef.on("value", function(ss) {
+    people = ss.val() || people;
+});
+
 function getDate() {
 
     var aprilfools = [
@@ -16,12 +20,6 @@ function getDate() {
         ['Steph McHugh', '#39DB4F'],
         ['Piper', '#4099FF']
     ];
-
-    if (!people) {
-        birthdaysRef.once("value", function(ss) {
-            people = ss.val();
-        });
-    }
     
     var toDisplay = 3;
     var bg_color;
@@ -59,7 +57,7 @@ function getDate() {
         }
     }
 
-    for (var i = 0; i < people.length; i++) {
+    for (var i in people) {
         var age = 0;
         var date = new Date(people[i][1]);
         while (date < now) {
