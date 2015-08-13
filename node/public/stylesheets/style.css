@@ -102,6 +102,10 @@ b {
 #MITalertspanel {
     display: none;
 }
+#MITalerts h2 {
+    color: black;
+    opacity: 1;
+}
 .EMRGpanel {
     color: #ffffff;
     background-color: yellow;
