@@ -81,7 +81,7 @@ function getDate() {
             elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
             var bg_color = aprilfools[r][1] || "orange";
         } else {
-            if (Number(fracpart) < 0.0025) {
+            if (Number(fracpart) < 0.0025 && !(now.getHours()>=2 || now.getHours()<=7) ) {
                 elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";
             }
@@ -90,9 +90,9 @@ function getDate() {
             $('.birthday').find('div').html('<h1>' + elem + '</h1>');
             $('.birthday').css('background-color', bg_color);
             $('.birthday').show();
-            $('.warning').hide();
+          //$('.warning').hide();
         } else {
-            //$('.birthday').hide();
+            $('.birthday').hide();
             //$('.warning').show();
         }
         dict.push([fracpartInc, '<div class="subdate">' + people[i][0] + ' is ' + ageStr + ' years old</div>']);
