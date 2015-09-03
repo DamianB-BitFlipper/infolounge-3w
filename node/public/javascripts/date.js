@@ -81,7 +81,7 @@ function getDate() {
             elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
             var bg_color = aprilfools[r][1] || "orange";
         } else {
-            if (Number(fracpart) < 0.0025 && !(now.getHours()>=2 || now.getHours()<=7) ) {
+            if (Number(fracpart) < 0.0025 && !(now.getHours()>=2 && now.getHours()<=7) ) {
                 elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";
             }
