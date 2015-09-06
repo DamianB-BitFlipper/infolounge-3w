@@ -4,6 +4,7 @@ var menuCache = {};
 
 function getMenu() {
     $.getJSON(menuURL, function(data) {
+        console.log(data)
         if (jQuery.isEmptyObject(data)) {
             $("#menupanel").slideUp("slow");
             return;
@@ -30,7 +31,7 @@ function getMenu() {
             if (menuCache[query]) {
                 document.getElementById("menu").innerHTML += menuCache[query];
             } else {
-                $.getScript("https://www.googleapis.com/customsearch/v1?key=AIzaSyDrATZhqJcmBUE700msJtCWFOe96FIVsx8&cx=013902053734636094783:5ckniww7ndi&q=" + encodeURIComponent(query) + "&callback=menuHandler&searchType=image");
+                $.getScript("https://www.googleapis.com/customsearch/v1?key=AIzaSyDZcmb4LtkINHd6OiJq-Ae_x43ulSJ20Tw&cx=013902053734636094783:5ckniww7ndi&q=" + encodeURIComponent(query) + "&callback=menuHandler&searchType=image");
             }
         }
         // $('.menu-img').fadeIn();
