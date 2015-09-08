@@ -293,6 +293,10 @@ ul.jta-tweet-list li a {
     top: 30% !important;
     left: 45% !important;
 }
+.bus-item {
+    line-height: 64px;
+    font-size: 2.0vw;
+}
 .red {
     color: #ddd;
     font-weight: bold;

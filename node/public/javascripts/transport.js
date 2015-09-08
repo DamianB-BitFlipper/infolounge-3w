@@ -53,7 +53,7 @@ var busUpdate = function nextBusUpdate() {
                             }
 
 
-                            bus3 += "<span style='line-height:64px;'><span style='background-color:rgba(0,0,0,0.4);color:#EEEEEE;'>&nbsp;" + route + "&nbsp;</span>";
+                            bus3 += "<span class='bus-item'><span style='background-color:rgba(0,0,0,0.6);color:#EEEEEE;'>&nbsp;" + route + "&nbsp;</span>";
 
                             var num_pred = curr_dir['prediction'].length;
                             if (typeof num_pred == 'undefined') {
@@ -70,14 +70,14 @@ var busUpdate = function nextBusUpdate() {
                                 if (typeof curr_pred['affectedByLayover'] != 'undefined') {
 
                                     if (k < 3) {
-                                        bus3 += "&nbsp;<span style='background-color:#EEEEEE;font-weight:600;color:rgba(0,0,0,0.2);'>&nbsp;" + curr_pred['minutes'] + "m";
+                                        bus3 += "&nbsp;<span style='background-color:#EEEEEE;font-weight:600;color:rgba(0,0,0,0.4);'>&nbsp;" + curr_pred['minutes'] + "m";
                                     }
                                 } else if (k < 2) {
 
-                                    bus3 += "&nbsp;<span style='background-color:#EEEEEE;font-weight:600;color:rgba(0,0,0,0.8);'>&nbsp;" + curr_pred['minutes'] + "m";
+                                    bus3 += "&nbsp;<span style='background-color:#EEEEEE;font-weight:600;color:rgba(0,0,0,0.9);'>&nbsp;" + curr_pred['minutes'] + "m";
 
-                                    var tempStringg = route + ' in ' + curr_pred['minutes'] + ' speakTag: ' + speakTag;
-                                    console.log(tempStringg);
+                                    // var tempStringg = route + ' in ' + curr_pred['minutes'] + ' speakTag: ' + speakTag;
+                                    // console.log(tempStringg);
 
                                     /* if (curr_pred['minutes'] == 1 && (route == '354' || route == '351' || route == '352') && speakTag == 0) {
                                         var textSpeak = '';
