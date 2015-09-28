@@ -1,12 +1,16 @@
 var now = new Date();
 var graduation = (now.getMonth() == 5 && now.getDate() <= 6);
 var people = [];
+var cruft = [];
 var toDisplay;
 var remindHoursBeforeMidnight = 14;
 var remindersSent = {}
-var birthdaysRef = new Firebase("https://rliu42.firebaseio.com/infolounge/birthdays");
-var remindersRef = new Firebase("https://rliu42.firebaseio.com/infolounge/birthdayReminders");
-var constantsRef = new Firebase("https://rliu42.firebaseio.com/infolounge/constants");
+var root = new Firebase("https://rliu42.firebaseio.com/infolounge");
+var birthdaysRef = root.child("birthdays")
+var remindersRef = root.child("birthdayReminders")
+var constantsRef = root.child("constants")
+var cruftRef = root.child("cruft")
+
 birthdaysRef.on("value", function(ss) {
     people = ss.val() || people;
 });
@@ -17,7 +21,9 @@ constantsRef.on("value", function(ss) {
     toDisplay = ss.val().birthdayDisplay || toDisplay;
     remindHoursBeforeMidnight = ss.val().remindHoursBeforeMidnight || remindHoursBeforeMidnight;
 });
-
+cruftRef.on("value", function(ss){
+    cruft = ss.val() || cruft;
+})
 
 function getDate() {
 
@@ -136,7 +142,12 @@ function remindBirthday(kerberos) {
         remindersSent[kerberos] = [now.getYear()];
     }
     $.ajax("/birthday", {
+        data: {
+            kerberos: kerberos,
+            cruft: cruft.indexOf(kerberos) > -1
+        },
         success: function(data) {
+            console.log(data)
             if (data.success) {
                 remindersRef.child(kerberos).once("value", function(ss) {
                     var sent = ss.val() || [];

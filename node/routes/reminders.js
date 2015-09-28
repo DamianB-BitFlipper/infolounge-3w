@@ -1,12 +1,13 @@
 var request = require('request');
-var birthdayURL = "http://72.29.29.198:1337/birthday/"
 
 function remindBirthday(req, res) {
-	console.log(birthdayURL + req.params.kerberos)
-    request(birthdayURL + req.params.kerberos, function(error, response, body) {
+	var kerberos = req.query.kerberos;
+	req.query.test = false;
+	var birthdayURL = req.query.test ? "http://localhost:1337/birthday" : " http://72.29.29.198:1337/birthday"
+    request.get(birthdayURL + "?kerberos=" + kerberos + "&cruft=" + req.query.cruft + "&test=" + req.query.test,  function(error, response, body) {
         if (error || response.statusCode != 200) {
             console.log(error);
-            res.json({});
+            res.json(error || {});
             return;
         };
         res.json({success:true})
