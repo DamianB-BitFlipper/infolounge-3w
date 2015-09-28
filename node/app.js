@@ -45,9 +45,10 @@ app.get('/institute_alerts.json', info.getMITAlert);
 app.get('/news.json', info.getNews);
 app.get('/img.json', info.getImg);
 app.get('/mbta_alerts.json', info.getMBTA);
+app.get("/birthday", reminders.birthday)
 app.get('/', routes.index);
 app.get('/:num', routes.index);
-app.get("/birthday/:kerberos", reminders.birthday)
+
 
 http.createServer(app).listen(1010, function(){
   console.log("Express HTTP server listening on port 1010");
