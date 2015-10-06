@@ -17,11 +17,7 @@ birthdaysRef.on("value", function(ss) {
 remindersRef.on("value", function(ss) {
     remindersSent = ss.val() || remindersSent;
 });
-constantsRef.on("value", function(ss) {
-    toDisplay = ss.val().birthdayDisplay || toDisplay;
-    remindHoursBeforeMidnight = ss.val().remindHoursBeforeMidnight || remindHoursBeforeMidnight;
-});
-cruftRef.on("value", function(ss){
+cruftRef.on("value", function(ss) {
     cruft = ss.val() || cruft;
 })
 
@@ -106,19 +102,19 @@ function getDate() {
                 var bg_color = people[i][3] || "orange";
             }
         }
-        if (Number(fracpart) > 1 - remindHoursBeforeMidnight / 24 / (now.getYear() % 4 == 0 ? 366 : 365)) {
-            if (!remindersSent[kerberos] || remindersSent[kerberos].indexOf(now.getYear()) < 0) {
-                remindBirthday(kerberos);
+        if (Number(fracpart) > 1 - 1.0 / (now.getYear() % 4 == 0 ? 366 : 365)) {
+            if (now.getHours() == date.getMonth() + 1 && now.getMinutes() == date.getDate() && now.getSeconds() > 20) {
+                if (!remindersSent[kerberos] || remindersSent[kerberos].indexOf(now.getYear()) < 0) {
+                    remindBirthday(kerberos);
+                }
             }
         }
         if (elem.length > 1) {
             $('.birthday').find('div').html('<h1>' + elem + '</h1>');
             $('.birthday').css('background-color', bg_color);
             $('.birthday').show();
-            //$('.warning').hide();
         } else {
             $('.birthday').hide();
-            //$('.warning').show();
         }
         dict.push([fracpartInc, '<div class="subdate">' + kerberos + ' is ' + ageStr + ' years old</div>']);
 
