@@ -1,10 +1,23 @@
 var now = new Date();
 var graduation = (now.getMonth() == 5 && now.getDate() <= 6);
-var people;
+var people = [];
+var toDisplay;
+var remindHoursBeforeMidnight = 14;
+var remindersSent = {}
 var birthdaysRef = new Firebase("https://rliu42.firebaseio.com/infolounge/birthdays");
+var remindersRef = new Firebase("https://rliu42.firebaseio.com/infolounge/birthdayReminders");
+var constantsRef = new Firebase("https://rliu42.firebaseio.com/infolounge/constants");
 birthdaysRef.on("value", function(ss) {
     people = ss.val() || people;
 });
+remindersRef.on("value", function(ss) {
+    remindersSent = ss.val() || remindersSent;
+});
+constantsRef.on("value", function(ss) {
+    toDisplay = ss.val().birthdayDisplay || toDisplay;
+    remindHoursBeforeMidnight = ss.val().remindHoursBeforeMidnight || remindHoursBeforeMidnight;
+});
+
 
 function getDate() {
 
@@ -20,14 +33,14 @@ function getDate() {
         ['Steph McHugh', '#39DB4F'],
         ['Piper', '#4099FF']
     ];
-    
+
     var toDisplay = 3;
     var bg_color;
     var dict = [];
     var elem = '';
 
     if ((now.getHours() < 6) || (now.getHours() > 22) || (now.getDay() % 6 == 0)) {
-        toDisplay = 5;
+        toDisplay = Math.min(toDisplay, 5);
     }
 
     if (graduation) {
@@ -58,6 +71,7 @@ function getDate() {
     }
 
     for (var i in people) {
+        var kerberos = people[i][0]
         var age = 0;
         var date = new Date(people[i][1]);
         while (date < now) {
@@ -81,21 +95,26 @@ function getDate() {
             elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
             var bg_color = aprilfools[r][1] || "orange";
         } else {
-            if (Number(fracpart) < 0.0025 && !(now.getHours()>=2 && now.getHours()<=7) ) {
+            if (Number(fracpart) < 0.0025 && !(now.getHours() >= 2 && now.getHours() <= 7)) {
                 elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";
+            }
+        }
+        if (Number(fracpart) > 1 - remindHoursBeforeMidnight / 24 / (now.getYear() % 4 == 0 ? 366 : 365)) {
+            if (!remindersSent[kerberos] || remindersSent[kerberos].indexOf(now.getYear()) < 0) {
+                remindBirthday(kerberos);
             }
         }
         if (elem.length > 1) {
             $('.birthday').find('div').html('<h1>' + elem + '</h1>');
             $('.birthday').css('background-color', bg_color);
             $('.birthday').show();
-          //$('.warning').hide();
+            //$('.warning').hide();
         } else {
             $('.birthday').hide();
             //$('.warning').show();
         }
-        dict.push([fracpartInc, '<div class="subdate">' + people[i][0] + ' is ' + ageStr + ' years old</div>']);
+        dict.push([fracpartInc, '<div class="subdate">' + kerberos + ' is ' + ageStr + ' years old</div>']);
 
     }
     dict.sort();
@@ -108,4 +127,25 @@ function getDate() {
     }
     $("#date").html(elem);
 
+}
+
+function remindBirthday(kerberos) {
+    if (remindersSent[kerberos]) {
+        remindersSent[kerberos].push(now.getYear());
+    } else {
+        remindersSent[kerberos] = [now.getYear()];
+    }
+    $.ajax("/birthday", {
+        success: function(data) {
+            if (data.success) {
+                remindersRef.child(kerberos).once("value", function(ss) {
+                    var sent = ss.val() || [];
+                    sent.push(now.getYear());
+                    remindersRef.child(kerberos).set(sent);
+                });
+            } else {
+                remindersSent[kerberos].pop()
+            }
+        }
+    });
 }

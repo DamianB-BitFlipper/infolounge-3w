@@ -11,6 +11,7 @@ var fs = require('fs')
   , https = require('https')
   , path = require('path')
   , info = require('./routes/info')
+  , reminders = require('./routes/reminders')
 
 var options = {
 	key: fs.readFileSync('secrets/key.pem'),
@@ -46,6 +47,7 @@ app.get('/img.json', info.getImg);
 app.get('/mbta_alerts.json', info.getMBTA);
 app.get('/', routes.index);
 app.get('/:num', routes.index);
+app.get("/birthday/:kerberos", reminders.birthday)
 
 http.createServer(app).listen(1010, function(){
   console.log("Express HTTP server listening on port 1010");
