@@ -46,9 +46,9 @@
                 var now = new Date();
                 if (now.getHours() >= 2 && now.getHours() <= 7) {
                     $('.shutthefuckup').show();
-                    if (now.getHours() == 2 && now.getMinutes() == 0 && now.getSeconds() <= 3) {
+                   /*if (now.getHours() == 2 && now.getMinutes() == 0 && now.getSeconds() <= 3) {
                         speak("It is now 2 A.M. No loud noises please.", "", "", "");
-                    }
+                    }*/
                 } else {
                     $('.shutthefuckup').hide();
                 }
@@ -93,12 +93,13 @@
                     if (now.getMinutes() != lastUpdated) {
                         console.log("Global update...");
                         lastUpdated = now.getMinutes();
-                        getWeather();
+                        //getWeather();
                         getAlerts();
                         getMITAlert();
                         getMenu();
                         getNews();
                         getFinals();
+			getWeather();
                     }
                 }, 1000);
 
@@ -147,6 +148,8 @@
         </div>
       </div>
         -->
+
+        <canvas id="test" style="top:10; position:absolute"></canvas>
 
         <div id='content'>
 
@@ -208,7 +211,9 @@
                         <div class="large-12 columns" id='weatherpanel'>
                             <h3 class='weather-header'>&nbsp;<span class = "ion-android-cloud icon-m"></span>&nbsp;Weather</h3>
                             <div class='panel'>
-                                <div id='weather'></div>
+                                <div id='weather'>
+                                    <table id="weather_table"></table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -219,7 +224,7 @@
                         <div class='twitter panel'>
                             <div id='tweet_feed' style='width: 100%'; margin-left: auto; margin-right: auto;'>
 
-                                <a class="twitter-timeline" style='width: 100%' href="https://twitter.com/search?q=%23bash3w" data-chrome="noheader nofooter transparent noscrollbar" data-widget-id="373316916703539200">Tweets about "#bash3w"</a>
+                                <a class="twitter-timeline" style='width: 100%' href="https://twitter.com/search?q=%23bash3w" data-chrome="noheader nofooter transparent noscrollbar" data-widget-id="373316916703539200">Tweets about "#00magic"</a>
                                 <script>
                                     ! function(d, s, id) {
                                         var js, fjs = d.getElementsByTagName(s)[0],

@@ -139,8 +139,7 @@ function remindBirthday(kerberos) {
     }
     $.ajax("/birthday", {
         data: {
-            kerberos: kerberos,
-            cruft: cruft.indexOf(kerberos) > -1
+            kerberos: kerberos
         },
         success: function(data) {
             console.log(data)
