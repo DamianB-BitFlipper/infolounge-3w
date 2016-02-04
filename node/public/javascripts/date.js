@@ -103,11 +103,11 @@ function getDate() {
             }
         }
         if (Number(fracpart) > 1 - 1.0 / (now.getYear() % 4 == 0 ? 366 : 365)) {
-            if (now.getHours() == date.getMonth() + 1 && now.getMinutes() == date.getDate() && now.getSeconds() > 20) {
-                if (!remindersSent[kerberos] || remindersSent[kerberos].indexOf(now.getYear()) < 0) {
-                    remindBirthday(kerberos);
-                }
+            //if (now.getHours() == date.getMonth() + 1 && now.getMinutes() == date.getDate() && now.getSeconds() > 20) {
+            if (!remindersSent[kerberos] || remindersSent[kerberos].indexOf(now.getYear()) < 0) {
+                remindBirthday(kerberos);
             }
+            //}
         }
         if (elem.length > 1) {
             $('.birthday').find('div').html('<h1>' + elem + '</h1>');
@@ -137,10 +137,7 @@ function remindBirthday(kerberos) {
     } else {
         remindersSent[kerberos] = [now.getYear()];
     }
-    $.ajax("/birthday", {
-        data: {
-            kerberos: kerberos
-        },
+    $.ajax("/birthday?kerberos=" + kerberos, {
         success: function(data) {
             console.log(data)
             if (data.success) {
