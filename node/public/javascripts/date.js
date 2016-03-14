@@ -26,13 +26,9 @@ function getDate() {
     var aprilfools = [
         ['Tiffany', '#00FFFF'],
         ['Tracy', '#FF3700'],
-        ['Anita', '#551a8b'],
-        ['Neil'],
-        ['Kim', '#ADFFAD'],
         ['William', '#990033'],
         ['Noelle', '#00CED1'],
         ['Abra', '#ADFFAD'],
-        ['Steph McHugh', '#39DB4F'],
         ['Piper', '#4099FF']
     ];
 
@@ -102,7 +98,7 @@ function getDate() {
                 var bg_color = people[i][3] || "orange";
             }
         }
-        if (Number(fracpart) > 1 - 1.0 / (now.getYear() % 4 == 0 ? 366 : 365)) {
+        if (Number(fracpart) > 1 - 1.0 / (now.getYear() % 4 == 0 ? 366 : 365) / 2) {
             //if (now.getHours() == date.getMonth() + 1 && now.getMinutes() == date.getDate() && now.getSeconds() > 20) {
             if (!remindersSent[kerberos] || remindersSent[kerberos].indexOf(now.getYear()) < 0) {
                 remindBirthday(kerberos);

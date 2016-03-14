@@ -14,8 +14,8 @@ var fs = require('fs')
   , reminders = require('./routes/reminders')
 
 var options = {
-	key: fs.readFileSync('secrets/key.pem'),
-	cert: fs.readFileSync('secrets/cert.pem')
+	key: fs.readFileSync(path.join(__dirname, 'secrets/key.pem')),
+	cert: fs.readFileSync(path.join(__dirname, 'secrets/cert.pem'))
 }
 
 var app = express();
