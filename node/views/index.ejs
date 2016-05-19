@@ -21,7 +21,17 @@
         <script src="/javascripts/jquery.tweets.js" charset="utf-8"></script>
         <script src="/javascripts/jquery.simpleWeather.js" charset="utf-8"></script>
         <script src="/javascripts/jquery.jtweetsanywhere-1.3.1.js"></script>
-        <script src='//cdn.firebase.com/js/client/2.2.7/firebase.js'></script>
+        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyCqRijZ1iCRLqyFziZ0Fh00X3GrRtjydQE",
+            authDomain: "rliu42.firebaseapp.com",
+            databaseURL: "https://rliu42.firebaseio.com",
+            storageBucket: "project-7838915160715416262.appspot.com",
+          };
+          firebase.initializeApp(config);
+        </script>
         <script src='//api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
         <script src="/javascripts/dateformat.js"></script>
         <script src="/javascripts/date.js"></script>

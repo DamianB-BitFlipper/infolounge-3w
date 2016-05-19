@@ -3,13 +3,12 @@ var graduation = (now.getMonth() == 5 && now.getDate() <= 6);
 var people = [];
 var cruft = [];
 var toDisplay;
-var remindHoursBeforeMidnight = 14;
 var remindersSent = {}
-var root = new Firebase("https://rliu42.firebaseio.com/infolounge");
-var birthdaysRef = root.child("birthdays")
-var remindersRef = root.child("birthdayReminders")
-var constantsRef = root.child("constants")
-var cruftRef = root.child("cruft")
+var root = firebase.database().ref().child("infolounge");
+var birthdaysRef = root.child("birthdays");
+var remindersRef = root.child("birthdayReminders");
+var constantsRef = root.child("constants");
+var cruftRef = root.child("cruft");
 
 birthdaysRef.on("value", function(ss) {
     people = ss.val() || people;
@@ -22,15 +21,6 @@ cruftRef.on("value", function(ss) {
 })
 
 function getDate() {
-
-    var aprilfools = [
-        ['Tiffany', '#00FFFF'],
-        ['Tracy', '#FF3700'],
-        ['William', '#990033'],
-        ['Noelle', '#00CED1'],
-        ['Abra', '#ADFFAD'],
-        ['Piper', '#4099FF']
-    ];
 
     var toDisplay = 3;
     var bg_color;
@@ -89,14 +79,10 @@ function getDate() {
         // April fools
         if (now.getMonth() == 3 && now.getDate() == 1) {
             document.body.className = 'transform';
-            r = Math.floor(Math.random() * aprilfools.length);
-            elem = 'Happy (un)Birthday <b>' + aprilfools[r][0] + '</b>! &nbsp;';
-            var bg_color = aprilfools[r][1] || "orange";
-        } else {
-            if (Number(fracpart) < 0.0025 && !(now.getHours() >= 2 && now.getHours() <= 7)) {
+        }
+        if (Number(fracpart) < 0.0025 && !(now.getHours() >= 2 && now.getHours() <= 7)) {
                 elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";
-            }
         }
         if (Number(fracpart) > 1 - 1.0 / (now.getYear() % 4 == 0 ? 366 : 365) / 2) {
             //if (now.getHours() == date.getMonth() + 1 && now.getMinutes() == date.getDate() && now.getSeconds() > 20) {

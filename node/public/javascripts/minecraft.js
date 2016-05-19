@@ -1,4 +1,4 @@
-  var url = "https://simple-minecraft.firebaseIO.com/userStatus/";
+  /*var url = "https://simple-minecraft.firebaseIO.com/userStatus/";
   var myRootRef = new Firebase(url);
   myRootRef.on('value', function(snapshot) {
       data = snapshot.val()
@@ -15,4 +15,4 @@
           html = html.slice(0, -2);
       }
       $('.minecraft').html(html);
-  });
+  });*/
