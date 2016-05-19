@@ -6,7 +6,8 @@
     "start": "node app"
   },
   "dependencies": {
+    "ejs": "*",
     "express": "3.1.0",
-    "ejs": "*"
+    "firebase": "^2.4.2"
   }
 }
