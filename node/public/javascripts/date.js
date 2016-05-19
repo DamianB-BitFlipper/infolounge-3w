@@ -4,12 +4,11 @@ var people = [];
 var cruft = [];
 var toDisplay;
 var remindersSent = {}
-var root = firebase.database().ref().child("infolounge");
-var birthdaysRef = root.child("birthdays");
-var remindersRef = root.child("birthdayReminders");
-var constantsRef = root.child("constants");
-var cruftRef = root.child("cruft");
-
+var root = new Firebase("https://rliu42.firebaseio.com/infolounge");
+var birthdaysRef = root.child("birthdays")
+var remindersRef = root.child("birthdayReminders")
+var constantsRef = root.child("constants")
+var cruftRef = root.child("cruft")
 birthdaysRef.on("value", function(ss) {
     people = ss.val() || people;
 });
