@@ -50,7 +50,7 @@ var adjustScreenSize = function() {
     $('#menu').removeClass('menu').addClass('menu-m');
     $('#predictions').removeClass('pred').addClass('pred-m');
     $('.weather-temp').addClass('weather-temp-m').removeClass('weather-temp');
-    $('.weather-feel').addClass('weather-feel-m').removeClass('weather-feel');
+    $('.weather-temp-small').addClass('weather-temp-small-m').removeClass('weather-temp-small');
     $('.icon-m').show();
     $('#clock').hide();
     $('.birthday').hide();

@@ -13,15 +13,17 @@ var fs = require('fs')
   , info = require('./routes/info')
   , reminders = require('./routes/reminders')
 
+/*ADDED
 var options = {
 	key: fs.readFileSync(path.join(__dirname, 'secrets/key.pem')),
 	cert: fs.readFileSync(path.join(__dirname, 'secrets/cert.pem'))
-}
+}*/
 
 var app = express();
 
 app.configure(function(){
-  app.set('port', 521);
+  app.set('http-port', 8080);
+  app.set('https-port', 8081);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.favicon());
@@ -50,10 +52,11 @@ app.get('/', routes.index);
 app.get('/:num', routes.index);
 
 
-http.createServer(app).listen(1010, function(){
-  console.log("Express HTTP server listening on port 1010");
+http.createServer(app).listen(app.get('http-port'), function(){
+  console.log("Express HTTP server listening on port " + app.get('http-port'));
 });
 
-https.createServer(options, app).listen(app.get('port'), function(){
-  console.log("Express HTTPS server listening on port " + app.get('port'));
-});
+//ADDED
+//https.createServer(options, app).listen(app.get('https-port'), function(){
+//  console.log("Express HTTPS server listening on port " + app.get('https-port'));
+//});

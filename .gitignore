@@ -30,3 +30,4 @@ npm-debug.log
 # Text editor temp files
 *.swp
 *~
+\#*
