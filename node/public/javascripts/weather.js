@@ -63,6 +63,7 @@ function getWeather()
         success: function(weather) {            
             html = '<div class="row">';
 
+            //Populate for today and 3 days in the future
             for(day = 0; day < 4; day++)
             {
                 //The rendering for today's weather is handled differently

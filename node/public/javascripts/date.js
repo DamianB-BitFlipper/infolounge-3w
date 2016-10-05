@@ -79,6 +79,7 @@ function getDate() {
         if (now.getMonth() == 3 && now.getDate() == 1) {
             document.body.className = 'transform';
         }
+        //Birthdays
         if (Number(fracpart) < 0.0025 && !(now.getHours() >= 2 && now.getHours() <= 7)) {
                 elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
                 var bg_color = people[i][3] || "orange";

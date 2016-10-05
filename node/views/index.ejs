@@ -98,7 +98,7 @@
                 // Update the time
                 window.setInterval(function() {
                     now = new Date();
-                    document.getElementById('clock').innerHTML = dateFormat(now, 'H:MM');
+                    //document.getElementById('clock').innerHTML = dateFormat(now, 'H:MM');
                     getDate();
                     if (now.getMinutes() != lastUpdated) {
                         console.log("Global update...");
@@ -171,7 +171,7 @@
                 </div>
 
                 <div class="large-6 columns">
-                    <div id='clock'></div>
+                    <div id='clock'>10:23</div>
                 </div>
             </div>
 
