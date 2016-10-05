@@ -1,6 +1,12 @@
 //A handy function to build a standard, single block of the weather panel
-buildWeatherBlock = function(forecastElem) {
-    var weatherBlock = '<div class="small-3 columns">'
+buildWeatherBlock = function(forecastElem) 
+{
+    var weatherBlock = '<div class="small-3 columns">';
+    
+    //Populate the day
+    weatherBlock += '<span class="weather-temp-small">' + forecastElem.day + '</span>';
+
+    weatherBlock += '<br/>'; //Add some line break space
 
     //Populate the weather icon
     weatherBlock += '<img src="images/weather/' + forecastElem.code + '.png"><br/>';
@@ -9,8 +15,10 @@ buildWeatherBlock = function(forecastElem) {
     weatherBlock += '<span class="weather-temp">' + forecastElem.alt.high + '&deg; / ' + 
         forecastElem.alt.low + '&deg;</span>';
 
+    weatherBlock += '<br/><br/>'; //Add some line break space
+
     //Populate the small temperature numbers (C)
-    weatherBlock += '<br/><br/><span class="weather-temp-small">' + forecastElem.high + '&deg;C / ' + 
+    weatherBlock += '<span class="weather-temp-small">' + forecastElem.high + '&deg;C / ' + 
         forecastElem.low + '&deg;C</span>';
     
     weatherBlock += '</div>';
@@ -18,40 +26,53 @@ buildWeatherBlock = function(forecastElem) {
     return weatherBlock;
 }
 
-function getWeather() {
+//Builds the block of html for the weather right now
+buildWeatherNowBlock = function(weatherNow) 
+{
+    var weatherBlock = '<div class="small-3 columns">';
+
+    //Populate the day
+    weatherBlock += '<span class="weather-temp-small">' + 'Current' + '</span>';
+
+    weatherBlock += '<br/>'; //Add some line break space
+
+    //Populate the weather icon
+    weatherBlock += '<img src="images/weather/' + weatherNow.code + '.png"><br/>';
+
+    //Populate the actual temperature
+    weatherBlock += '<span class="weather-temp">' + (weatherNow.alt.temp) + 
+        '&deg; (' + weatherNow.temp + '&deg;C)</span>';
+    
+    weatherBlock += '<br/><br/>'; //Add some line break space
+
+    //Populate the "feels like" temperature
+    weatherBlock += '<span class="weather-temp-small">Feel ' + weatherNow.wind.chill + '&deg; (' + 
+        ((weatherNow.wind.chill - 32) *  5 / 9).toFixed()  + '&deg;C)</span>';
+    
+    weatherBlock += '</div>';
+
+    return weatherBlock;
+}
+
+function getWeather() 
+{
     $.simpleWeather({
         location: 'Cambridge, MA',
         woeid: '',
         unit: 'c',
-        success: function(weather) {
-            html = '<span class="weather-temp-small"><div class="row">';
-            html += '<div class="small-3 columns">Current</div>';
-            html += '<div class="small-3 columns">' + weather.forecast[0].day + '</div>';
-            html += '<div class="small-3 columns">' + weather.forecast[1].day + '</div>';
-            html += '<div class="small-3 columns">' + weather.forecast[2].day + '</div>';
-            html += '</div></span>';
+        success: function(weather) {            
+            html = '<div class="row">';
 
-            //console.log(weather.forecast[0].day);
-            //console.log(weather.temp);
-
-            html += '<div class="row">';
-
-            //The weather right now
+            for(day = 0; day < 4; day++)
             {
-                html += '<div class="small-3 columns"><img src="images/weather/' + weather.code + '.png"><br/>';
-                html += '<span class="weather-temp">' + (weather.alt.temp) + 
-                    '&deg; (' + weather.temp + '&deg;C)</span>';
-
-                html += '<br/><br/><span class="weather-temp-small">Feel ' + weather.wind.chill + '&deg; (' + ((weather.wind.chill - 32) *  5 / 9).toFixed()  + '&deg;C)</span>';
-
-                html += '</div>';
+                //The rendering for today's weather is handled differently
+                if(!day)
+                    html += buildWeatherNowBlock(weather)
+                else
+                    html += buildWeatherBlock(weather.forecast[day]);
             }
 
-            //Populate the forecasts for today, plus the next two days (3 in total)
-            for(day = 0; day < 3; day++)
-                html += buildWeatherBlock(weather.forecast[day]);
-
-            //Row div
+            //Weather Blocks row div
             html += '</div>';
 
             $("#weather").html(html);
