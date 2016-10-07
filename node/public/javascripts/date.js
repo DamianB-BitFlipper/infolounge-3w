@@ -42,7 +42,16 @@ function getDate() {
         var bg_color = seniors[r][1] || "#860000";
         $('.birthday').find('div').html('<h1>' + elem + '</h1>');
         $('.birthday').css('background-color', bg_color);
-        $('.birthday').show();
+        
+        //Show the birthday banner (that encloses the senior)
+        if(!bannersArray.includes('.birthday'))
+            bannersArray.push('.birthday')
+
+        //Remove the warning banner
+        var index = bannersArray.indexOf('.warning');
+        if(index > -1) 
+            bannersArray.splice(index, 1);
+
         $('.warning').hide();
     }
 
@@ -81,8 +90,9 @@ function getDate() {
         }
         //Birthdays
         if (Number(fracpart) < 0.0025 && !(now.getHours() >= 2 && now.getHours() <= 7)) {
-                elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
-                var bg_color = people[i][3] || "orange";
+            elem += 'Happy Birthday <b>' + people[i][2] + '</b>! &nbsp;';
+            var bg_color = people[i][3] || "orange";
+            
         }
         if (Number(fracpart) > 1 - 1.0 / (now.getYear() % 4 == 0 ? 366 : 365) / 2) {
             //if (now.getHours() == date.getMonth() + 1 && now.getMinutes() == date.getDate() && now.getSeconds() > 20) {
@@ -91,17 +101,30 @@ function getDate() {
             }
             //}
         }
-        if (elem.length > 1) {
-            $('.birthday').find('div').html('<h1>' + elem + '</h1>');
-            $('.birthday').css('background-color', bg_color);
-            $('.birthday').show();
-        } else {
-            $('.birthday').hide();
-        }
         dict.push([fracpartInc, '<div class="subdate">' + kerberos + ' is ' + ageStr + ' years old</div>']);
 
     }
     dict.sort();
+
+    //After going through all of the people, populate the `birthday` field with the data in `elem`
+    if (elem.length > 1) {
+        $('.birthday').find('div').html('<h1>' + elem + '</h1>');
+        $('.birthday').css('background-color', bg_color);
+        
+        //Show the birthday banner
+        if(!bannersArray.includes('.birthday'))
+            bannersArray.push('.birthday')
+
+    } else {
+        //Remove the birthday banner
+        var index = bannersArray.indexOf('.birthday');
+        if(index > -1) 
+            bannersArray.splice(index, 1);
+        
+        $('.birthday').hide();
+    }
+
+
     if (now.getMonth() == 8)
         var elem = dateFormat(now, 'ddd, d mmm');
     else

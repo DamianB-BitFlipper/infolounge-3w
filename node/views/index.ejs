@@ -33,8 +33,13 @@
           firebase.initializeApp(config);
         </script>
         <script src='//api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+
+        <!-- Banner related files and their dependencies -->
+        <script src="/javascripts/banners.js"></script>
         <script src="/javascripts/dateformat.js"></script>
         <script src="/javascripts/date.js"></script>
+        <script src="/javascripts/is_it_late.js"></script>
+
         <script src="/javascripts/weather.js"></script>
         <script src="/javascripts/transport.js"></script>
         <script src="/javascripts/menu.js"></script>
@@ -51,21 +56,6 @@
         <script src="/javascripts/recognition.js"></script>
 
         <script type='text/javascript'>
-            lastUpdated = -1;
-            var isItLateYet = function() {
-                var now = new Date();
-                if (now.getHours() >= 2 && now.getHours() <= 7) {
-                    $('.shutthefuckup').show();
-                    /*if (now.getHours() == 2 && now.getMinutes() == 0 && now.getSeconds() <= 3) {
-                        speak("It is now 2 A.M. No loud noises please.", "", "", "");
-                    }*/
-                } else {
-                    $('.shutthefuckup').hide();
-                }
-                setTimeout(isItLateYet, 5000);
-            }
-            $('.shutthefuckup').hide();
-
             $(document).ready(function() {
                 isItLateYet();
                 $('#tweet_feed').jTweetsAnywhere({
@@ -95,10 +85,10 @@
                     }
                 });
 
-                // Update the time
+                // Update the time, checking every second
                 window.setInterval(function() {
                     now = new Date();
-                    //document.getElementById('clock').innerHTML = dateFormat(now, 'H:MM');
+                    document.getElementById('clock').innerHTML = dateFormat(now, 'H:MM');
                     getDate();
                     if (now.getMinutes() != lastUpdated) {
                         console.log("Global update...");
@@ -110,7 +100,7 @@
                         getFinals();
 			getWeather();
                     }
-                }, 1000);
+                }, 1 * 1000);
 
                 $("#tweetpanel").delay(600).slideDown("slow");
             });
@@ -150,13 +140,13 @@
             </div>
         </div>
 
-        <!--
+       <!--
       <div class='warning flash-header'>
         <div class='block'>
           <h1>EMERGENCY; MBTA trains closed 19:00-Wed</h1>
-        </div>
-      </div>
-        -->
+        </div> 
+      </div> -->
+        
 
         <canvas id="test" style="top:10; position:absolute"></canvas>
 
@@ -171,7 +161,7 @@
                 </div>
 
                 <div class="large-6 columns">
-                    <div id='clock'>10:23</div>
+                    <div id='clock'></div>
                 </div>
             </div>
 
